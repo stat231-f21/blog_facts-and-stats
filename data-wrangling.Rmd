@@ -1,0 +1,31 @@
+---
+title: "data-wrangling"
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+# load packages
+library(readxl)
+library(mdsr)
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(janitor)
+# set code chunk defaults
+knitr::opts_chunk$set(tidy = F, # display code as typed
+                      size = "small", # slightly smaller code font
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "\t") 
+# set black & white default plot theme 
+# theme_set(theme_classic()) # uncomment this line if desired
+# improve digit and NA display 
+options(scipen = 1, knitr.kable.NA = '')
+```
+
+## Data Import
+
+```{r, eval = TRUE}
+
+```

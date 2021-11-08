@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include = FALSE}
 library(tidyverse)
-library(kableExtra) # for example code; delete if not needed
+library(kableExtra) 
 
 # Set code chunk defaults 
 knitr::opts_chunk$set(echo = FALSE, 
