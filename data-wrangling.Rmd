@@ -70,4 +70,8 @@ incarceration_trends_2018 <- incarceration_trends %>%
 
 # combine both dataframes with the us county shapefile respectively
 incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 'fips', 'fips', how = "left")
+
+leaflet(data = incarceration_1970_map) %>% 
+  addTiles() %>%
+  addPolygons(fillColor = topo.colors(10, alpha = NULL))
 ```
