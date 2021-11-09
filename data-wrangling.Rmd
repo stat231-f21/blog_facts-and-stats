@@ -46,7 +46,7 @@ head(incarceration_trends_jail_jurisdiction)
 # read in shapefile
 unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
 county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
-  janitor::clean_names()
+  janitor::clean_names() 
 
 # add leading zeros to flip codes in incarceration trends dataset
 incarceration_trends <- incarceration_trends %>%
@@ -56,10 +56,18 @@ incarceration_trends <- incarceration_trends %>%
 # combine statefp and countyns in new column called fips (to match our incarceration trends data)
 county_shapefile <- county_shapefile %>%
   mutate(fips = parse_number(paste0(statefp, countyfp))) %>%
-  select(-statefp, -countyfp)
+  select(-statefp, -countyfp) %>%
+  mutate(fips = as.character(fips))
 ```
 
 # static visualizations
 ```{r, eval = TRUE}
+# filter the years that I want to focus on in static maps
+incarceration_trends_1970 <- incarceration_trends %>%
+  filter(year == "1970")
+incarceration_trends_2018 <- incarceration_trends %>%
+  filter(year == "2018")
 
+# combine both dataframes with the us county shapefile respectively
+incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 'fips', 'fips', how = "left")
 ```
