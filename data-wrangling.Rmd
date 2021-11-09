@@ -42,6 +42,9 @@ head(incarceration_trends_jail_jurisdiction)
 ## Data Wrangling
 
 ```{r, eval = TRUE}
-
+# read in shapefile
+unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
+county_shapefile <- read_sf("cb_2018_us_county_500k.shp")
+tail(county_shapefile)
 
 ```
