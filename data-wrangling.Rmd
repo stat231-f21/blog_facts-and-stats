@@ -57,7 +57,9 @@ incarceration_trends <- incarceration_trends %>%
 county_shapefile <- county_shapefile %>%
   mutate(fips = parse_number(paste0(statefp, countyfp))) %>%
   select(-statefp, -countyfp)
+```
 
-
+# static visualizations
+```{r, eval = TRUE}
 
 ```
