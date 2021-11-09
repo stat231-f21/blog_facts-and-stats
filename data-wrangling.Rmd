@@ -12,6 +12,12 @@ library(dplyr)
 library(knitr)
 library(ggplot2)
 library(janitor)
+library(vroom) # fast reading/importing data
+library(sf) # spacial data
+library(tigris) # geojoin
+library(leaflet) # interactive maps
+library(htmlwidgets) # interactive map labels
+
 # set code chunk defaults
 knitr::opts_chunk$set(tidy = F, # display code as typed
                       size = "small", # slightly smaller code font
@@ -28,13 +34,14 @@ options(scipen = 1, knitr.kable.NA = '')
 
 ```{r, eval = TRUE}
 # Incarceration Trends
-incarceration_trends <-read_csv("incarceration_trends.csv")
-incarceration_trends_jail_jurisdiction <-read_csv("incarceration_trends_jail_jurisdiction.csv")
+incarceration_trends <- vroom("incarceration_trends.csv")
+incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
 head(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
 ```
 ## Data Wrangling
 
 ```{r, eval = TRUE}
+
 
 ```
