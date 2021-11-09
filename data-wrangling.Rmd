@@ -33,3 +33,8 @@ incarceration_trends_jail_jurisdiction <-read_csv("incarceration_trends_jail_jur
 head(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
 ```
+## Data Wrangling
+
+```{r, eval = TRUE}
+
+```
