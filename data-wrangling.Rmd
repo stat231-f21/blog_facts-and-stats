@@ -12,6 +12,12 @@ library(dplyr)
 library(knitr)
 library(ggplot2)
 library(janitor)
+library(vroom) # fast reading/importing data
+library(sf) # spacial data
+library(tigris) # geojoin
+library(leaflet) # interactive maps
+library(htmlwidgets) # interactive map labels
+
 # set code chunk defaults
 knitr::opts_chunk$set(tidy = F, # display code as typed
                       size = "small", # slightly smaller code font
@@ -28,8 +34,44 @@ options(scipen = 1, knitr.kable.NA = '')
 
 ```{r, eval = TRUE}
 # Incarceration Trends
-incarceration_trends <-read_csv("incarceration_trends.csv")
-incarceration_trends_jail_jurisdiction <-read_csv("incarceration_trends_jail_jurisdiction.csv")
+incarceration_trends <- vroom("incarceration_trends.csv")
+incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
 head(incarceration_trends)
+tail(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
+```
+## Data Wrangling
+
+```{r, eval = TRUE}
+# read in shapefile
+unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
+county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
+  janitor::clean_names() 
+
+# add leading zeros to flip codes in incarceration trends dataset
+incarceration_trends <- incarceration_trends %>%
+  mutate(fips = ifelse(nchar(fips) == 4, paste0("00", fips), fips)) %>%
+  mutate(fips = ifelse(nchar(fips) == 5, paste0("0", fips), fips))
+
+# combine statefp and countyns in new column called fips (to match our incarceration trends data)
+county_shapefile <- county_shapefile %>%
+  mutate(fips = parse_number(paste0(statefp, countyfp))) %>%
+  select(-statefp, -countyfp) %>%
+  mutate(fips = as.character(fips))
+```
+
+# static visualizations
+```{r, eval = TRUE}
+# filter the years that I want to focus on in static maps
+incarceration_trends_1970 <- incarceration_trends %>%
+  filter(year == "1970")
+incarceration_trends_2018 <- incarceration_trends %>%
+  filter(year == "2018")
+
+# combine both dataframes with the us county shapefile respectively
+incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 'fips', 'fips', how = "left")
+
+leaflet(data = incarceration_1970_map) %>% 
+  addTiles() %>%
+  addPolygons(fillColor = topo.colors(10, alpha = NULL))
 ```
