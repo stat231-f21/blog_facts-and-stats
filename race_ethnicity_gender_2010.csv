@@ -1,0 +1,38 @@
+"Incarcerated populations by race/ethnicity and gender for each state, with comparative total population counts and incarceration rate per 100,000 calculations"
+
+Data as of: April 2010
+Spreadsheet prepared: March 2019
+Documentation last updated: March 2019
+Prepared by the Prison Policy Initiative and published at https://www.prisonpolicy.org/data/race_ethnicity_gender_2010.xlsx
+
+"There are only a few data sources for state-level data about racial disparities in the criminal justice system that encompass both prisons and jails, and even fewer that allow analysis by gender, or by race/ethnicity for groups other than just Black and white. The 2010 U.S. Census is one of those data sources, and we've organized the 2010 Census data into this spreadsheet. The next few tabs of this spreadsheet contain Census counts of incarcerated people broken out by race for the total population, for men, for women, and for the combined population of adult men and women. We’ve made this data available for the U.S. as a whole as well as for each state. Other researchers can follow our methodology to access this data down to the Census tract level."
+
+This data is available for nine categories of race and ethnicity:
+"* People are who are ""White alone"" (i.e. not in combination with other racial groups)."
+"* People are who are ""Black or African American alone"" (i.e. not in combination with other racial groups)."
+"* People are who are ""American Indian and Alaska Native alone"" (i.e. not in combination with other racial groups)."
+"* People are who are ""Asian alone"" (i.e. not in combination with other racial groups)."
+"* People are who are ""Native Hawaiian and other Pacific Islander alone"" (i.e. not in combination with other racial groups)."
+"* People are who are ""Some other race alone"" (i.e. not in combination with other racial groups)."
+"* People are who are of ""Two or more races"" (i.e. those who reported more than one race and are therefore not in any of the other previous categories)."
+"* People are who are of ""Hispanic or Latino"" ethnicity. (Note that Hispanic/Latino is an ethnicity and not a race, so people of Hispanic/Latino ethnicity will also be included in one of the racial categories above.)"
+"* People who are ""White alone, not Hispanic or Latino"". (This is a useful measure of the non-Hispanic white population. Unfortunately, this kind of breakdown is not available for other racial groups in the Census Bureau tables that have the correctional data.)"
+
+This data has a few disadvantages related to how the Census Bureau collects and publishes data:
+* It is based on how the U.S. Census Bureau chooses to collect and publish race and ethnicity data. (https://www.census.gov/topics/population/race/about.html ) 
+"* It is based on the Census Bureau's residence rules that treat the place of incarceration as the place of residence. (This methodology quirk is why this data reports a large number of Native Hawaiians incarcerated in Arizona. High Native Hawaiian incarceration in Arizona has less do with a bias against Native Hawaiians by Arizona law enforcement or courts, and more to do with the fact that a large private prison that contracts with the Hawaii state government happens to be located in Arizona. Similarly, the large number of African-Americans incarcerated in West Virginia is in part because that state hosts federal Bureau of Prisons facilities that contain many people from Washington, D.C., which does not have its own prison system.)"
+"* It is based on the Census Bureau's classification of facilities. (This was a larger problem in the 2000 Census, but if the Bureau was to make the small mistake of classifying a military base, for example, as a correctional facility, this “military” population could skew the “correctional” data for a given state. Advanced researchers can use our Correctional Facility Locator tool at https://www.prisonersofthecensus.org/locator2010/ to look for errors like this.) "
+"* The data is largely based on administrative records held by the facilities. This has two weaknesses, which also apply to almost all other data sources on race/ethnicity in the criminal justice system:"
+"*   These records may not be based on self-reported race and ethnicity, which would be more accurate than facility observation."
+"*   The facilities may be collecting race/ethnicity data in a way that is incompatible with how the federal government collects race/ethnicity data and must be statistically imputed to fit those categories. (For example, few states collect or publish data on people of more than one race, New York State considers ""Hispanic"" to be a race, and the Maryland prison system does not collect or publish data on the Hispanic/Latino ethnicity at all.)"
+* The data is only available down to the level of Census tracts.
+"* People who are under the age of 18 and incarcerated in adult correctional facilities are not included in the Census Bureau tables that report data by both race/ethnicity and gender. Our previous research, such as our report at https://www.prisonpolicy.org/reports/rates.html used the total correctional population in adult correctional facilities, but sharp-eyed readers will notice that the data for men and women in this file are, when combined, slightly lower than the combined numbers we have used before. The difference is people under the age of 18 who are incarcerated in adult facilities."
+
+Policy recommendations:
+"Because a large portion of the researchers and facility staff who might be reading this methodology note may be in a position to advocate for changes to how race and ethnicity data is collected by their state's criminal justice system, we have some policy recommendations:"
+"* The federal government should give the Bureau of Justice Statistics sufficient resources so that it can collect and publish more detailed race/ethnicity/gender data in all parts of the criminal justice system, starting with regularly published data that includes both prisons and jails and then expanding to other critical questions."
+"* Federal and state governments should encourage state and local governments to collect and publish more and better data about racial, ethnic, and gender disparities in incarceration and criminal justice system involvement. "
+"* States should collect data in a form that matches the 1997 Office of Management and Budget standards on race and ethnicity [https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf ]. Currently, for example, the New York State prison system considers ""Hispanic"" to be a race, whereas the federal government considers it an ethnicity separate from race, and Maryland's prison system doesn't collect Hispanic status at all, so data analysts that wish to use data from these states must invest unnecessary effort to impute or convert this data."
+"* If your state chooses to collect more detailed information about race, ethnicity or national origin because that data is relevant in your state, care should be taken to ensure that the data can be aggregated to remain compatible with federal race and ethnicity definitions."
+"* Because the Office of Management and Budget’s guidance on race and ethnicity evolves (in order to keep pace with a changing nation), states should strive to keep their own definitions and data collection processes up to date with federal standards."
+"* To improve data accuracy, federal, state, and local data collectors should allow incarcerated people to self-report their race, ethnicity and gender."
