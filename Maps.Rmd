@@ -21,8 +21,7 @@ library(sf)
 # Incarceration Trends
 incarceration_trends <-read_csv("incarceration_trends.csv")
 incarceration_trends_jail_jurisdiction <-read_csv("incarceration_trends_jail_jurisdiction.csv")
-head(incarceration_trends)
-head(incarceration_trends_jail_jurisdiction)
+incarceration_rates
 ```
 
 ```{r pressure, echo=FALSE}
@@ -44,31 +43,28 @@ county_map <- maps::map("county", plot = FALSE, fill = TRUE) %>%
 county_map <-county_map %>%
   separate(ID, c("state","county"), sep = ',')
 
-county_map
-
 
 state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
   st_as_sf()
 
-incarceration_trends<- incarceration_trends %>%
-  separate(county_name, c("county",NA), sep = " ")
-
-incarceration_trends_2003<-incarceration_trends %>% filter(year==2003, state!="AK", state!="HI" )%>%
-  mutate(ID=tolower(incarceration_trends$county))
 
 
-tail(incarceration_trends_2003)
-tail(county_map)
 
-incarceration_map_2003 <- county_map %>% 
-  left_join(incarceration_trends_2003)
+
+incarceration_rates <- state_map %>% 
+  left_join(state_info) %>% 
+  left_join(incarceration_rates)
+
+class(incarceration_rates$Total_Incarcerated)
+
   
-
+#Map of States and Counties
 ggplot(data = state_map) +
   geom_sf(data=county_map, fill= "lightgrey", color = "white")+
   geom_sf(fill = NA, color = "black") +
   theme_void()
-ggplot(incarceration_trends, aes(fill = total_pop)) +
+
+ggplot(incarceration_rates, aes(fill = rate_per_100)) +
 geom_sf() +
   scale_fill_viridis(option = "magma", direction = -1) +
   theme_void()

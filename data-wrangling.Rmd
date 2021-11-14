@@ -36,6 +36,7 @@ options(scipen = 1, knitr.kable.NA = '')
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
 incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
+incarceration_rates <- read_csv("race_ethnicity_gender_2010.csv")
 head(incarceration_trends)
 tail(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
@@ -74,4 +75,26 @@ incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 
 leaflet(data = incarceration_1970_map) %>% 
   addTiles() %>%
   addPolygons(fillColor = topo.colors(10, alpha = NULL))
+```
+
+#Incarceration Trends Wrangling
+```{r, eval = TRUE}
+incarceration_trends<- incarceration_trends %>%
+  separate(county_name, c("county",NA), sep = " ")
+
+incarceration_trends_2003<-incarceration_trends %>% filter(year==2003, state!="AK", state!="HI" )
+
+incarceration_trends_2003<-incarceration_trends_2003 %>% mutate(county = tolower(incarceration_trends_2003$county))
+```
+
+#Incarceration by State Wrangling
+```{r, eval = TRUE}
+incarceration_rates <- incarceration_rates %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
+
+incarceration_rates <- incarceration_rates %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
+
+incarceration_rates <- incarceration_rates %>% mutate(ID = tolower(incarceration_rates$ID))
+
+incarceration_rates$rate_per_100<-gsub(",","",as.character(incarceration_rates$rate_per_100))
+incarceration_rates <- incarceration_rates  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
 ```
