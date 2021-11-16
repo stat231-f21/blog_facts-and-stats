@@ -15,6 +15,9 @@ library(ggplot2)
 library(janitor)
 library(viridis)
 library(sf)
+library(tigris) # geojoin
+library(leaflet) # interactive maps
+library(htmlwidgets) # interactive map labels
 ```
 
 # Import dataframes
