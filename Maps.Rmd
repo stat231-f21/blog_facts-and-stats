@@ -83,17 +83,25 @@ incarceration_2018_map <- geo_join(county_shapefile, incarceration_trends_2018, 
 
 # make a palette
 bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
-pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#aaff56")
+pal <- colorBin(palette = "OrRd", bins = bins, na.color = "grey")
 
 # create a map for 1970
 leaflet(data = incarceration_1970_map) %>% 
   addTiles() %>%
   addPolygons(fillColor = ~ pal(total_jail_pop_rate),
               stroke = FALSE,
+              smoothFactor = .5,
+              opacity = 1,
+              fillOpacity = 0.7,
               popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
                                "Total Jail Population: ", total_jail_pop, "<br>",
                                "Total Jail-Population rate: ",
-                                  total_jail_pop_rate %>% round(2)))
+                                  total_jail_pop_rate %>% round(2))) %>%
+  addLegend("bottomright",
+            pal = pal,
+            values = ~ total_jail_pop_rate,
+            title = "Total Jail Population Rate (per 100,000",
+            opacity = 0.7)
 
 # create a map for 2018
 leaflet(data = incarceration_2018_map) %>% 
