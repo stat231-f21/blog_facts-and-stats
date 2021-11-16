@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(scales)
 library(readxl)
 library(mdsr)
 library(tidyverse)
@@ -50,7 +51,6 @@ state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>%
 
 
 
-
 incarceration_rates <- state_map %>% 
   left_join(state_info) %>% 
   left_join(incarceration_rates)
@@ -68,6 +68,9 @@ ggplot(incarceration_rates, aes(fill = rate_per_100)) +
 geom_sf() +
   scale_fill_viridis(option = "magma", direction = -1) +
   theme_void()
+
+ggplot(incarceration_populations, aes(x=year, y=total_incarcerated, group=1)) +
+  geom_line() + 
+  scale_x_continuous(breaks=seq(1900, 2018, 5))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
