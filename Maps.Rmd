@@ -1,6 +1,6 @@
 ---
 title: "Maps"
-author: "Diego Duckenfield-Lopez"
+author: "Facts & Stats"
 date: "11/8/2021"
 output: html_document
 ---
@@ -78,13 +78,17 @@ geom_sf() +
 # Leaflet Maps by County (1970 vs 2018)
 ```{r, eval = TRUE}
 # combine the shapefile and the incarceration trends dataframe for both years respectively
-incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1980, 'fips', 'fips', how = "left")
+incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 'fips', 'fips', how = "left")
 incarceration_2018_map <- geo_join(county_shapefile, incarceration_trends_2018, 'fips', 'fips', how = "left")
+
+# make a palette
+bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
+pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#aaff56")
 
 # create a map for 1970
 leaflet(data = incarceration_1970_map) %>% 
   addTiles() %>%
-  addPolygons(fillColor = topo.colors(10, alpha = NULL),
+  addPolygons(fillColor = ~ pal(total_jail_pop_rate),
               stroke = FALSE,
               popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
                                "Total Jail Population: ", total_jail_pop, "<br>",
@@ -94,10 +98,14 @@ leaflet(data = incarceration_1970_map) %>%
 # create a map for 2018
 leaflet(data = incarceration_2018_map) %>% 
   addTiles() %>%
-  addPolygons(fillColor = topo.colors(10, alpha = NULL),
+  addPolygons(fillColor = ~ pal(total_jail_pop_rate),
               stroke = FALSE,
               popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
                                "Total Jail Population: ", total_jail_pop, "<br>",
                                "Total Jail-Population rate: ",
                                   total_jail_pop_rate %>% round(2)))
+
+# save the maps
+#saveWidget(incarceration_1970_map, "incarceration_1970_map.html")
+#saveWidget(incarceration_2018_map, title = "2018 map", file="incarceration_2018_map.html")
 ```
