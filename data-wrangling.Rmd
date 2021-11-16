@@ -36,7 +36,7 @@ options(scipen = 1, knitr.kable.NA = '')
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
 incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
-incarceration_rates <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
+incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_race.csv") # data from 2010
 head(incarceration_trends)
 tail(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
@@ -51,30 +51,18 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
 
 # add leading zeros to flip codes in incarceration trends dataset
 incarceration_trends <- incarceration_trends %>%
-  mutate(fips = ifelse(nchar(fips) == 4, paste0("00", fips), fips)) %>%
-  mutate(fips = ifelse(nchar(fips) == 5, paste0("0", fips), fips))
+  mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
 
-# combine statefp and countyns in new column called fips (to match our incarceration trends data)
+# take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
-  mutate(fips = parse_number(paste0(statefp, countyfp))) %>%
   select(-statefp, -countyfp) %>%
-  mutate(fips = as.character(fips))
-```
+  mutate(fips = geoid)
 
-# static visualizations
-```{r, eval = TRUE}
-# filter the years that I want to focus on in static maps
-incarceration_trends_1980 <- incarceration_trends %>%
-  filter(year == "1980")
+# filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
+incarceration_trends_1970 <- incarceration_trends %>%
+  filter(year == "1970")
 incarceration_trends_2018 <- incarceration_trends %>%
   filter(year == "2018")
-
-# combine both dataframes with the us county shapefile respectively
-incarceration_1980_map <- geo_join(county_shapefile, incarceration_trends_1980, 'fips', 'fips', how = "left")
-
-leaflet(data = incarceration_1980_map) %>% 
-  addTiles() %>%
-  addPolygons(fillColor = topo.colors(10, alpha = NULL))
 ```
 
 #Incarceration Trends Wrangling
@@ -91,14 +79,14 @@ incarceration_trends_2003<-incarceration_trends_2003 %>% mutate(county = tolower
 ```{r, eval = TRUE}
 
 
-incarceration_rates <- incarceration_rates %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
+incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 
-incarceration_rates <- incarceration_rates %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
+incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
 
-incarceration_rates <- incarceration_rates %>% mutate(ID = tolower(incarceration_rates$ID))
+incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))
 
-incarceration_rates$rate_per_100<-gsub(",","",as.character(incarceration_rates$rate_per_100))
-incarceration_rates <- incarceration_rates  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
+incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
+incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
 
-names(incarceration_rates ) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
+names(incarceration_rates_race) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
 ```
