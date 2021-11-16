@@ -36,7 +36,7 @@ options(scipen = 1, knitr.kable.NA = '')
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
 incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
-incarceration_rates <- read_csv("race_ethnicity_gender_2010.csv")
+incarceration_rates <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
 head(incarceration_trends)
 tail(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
@@ -89,6 +89,8 @@ incarceration_trends_2003<-incarceration_trends_2003 %>% mutate(county = tolower
 
 #Incarceration by State Wrangling
 ```{r, eval = TRUE}
+
+
 incarceration_rates <- incarceration_rates %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 
 incarceration_rates <- incarceration_rates %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
@@ -97,4 +99,6 @@ incarceration_rates <- incarceration_rates %>% mutate(ID = tolower(incarceration
 
 incarceration_rates$rate_per_100<-gsub(",","",as.character(incarceration_rates$rate_per_100))
 incarceration_rates <- incarceration_rates  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
+
+names(incarceration_rates ) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
 ```
