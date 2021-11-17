@@ -99,6 +99,7 @@ leaflet(data = incarceration_1970_map) %>%
                                                   color = "black",
                                                   bringToFront = TRUE),
               popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
+                               "State: ", state %>% str_to_title(), "<br>",
                                "Total Jail Population: ", total_jail_pop, "<br>",
                                "Total Jail-Population rate: ",
                                   total_jail_pop_rate %>% round(2))) %>%
@@ -122,6 +123,7 @@ leaflet(data = incarceration_2018_map) %>%
                                                   color = "black",
                                                   bringToFront = TRUE),
               popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
+                               "State: ", state %>% str_to_title(), "<br>",
                                "Total Jail Population: ", total_jail_pop, "<br>",
                                "Total Jail-Population rate: ",
                                   total_jail_pop_rate %>% round(2)))
