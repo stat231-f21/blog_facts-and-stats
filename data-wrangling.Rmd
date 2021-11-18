@@ -36,7 +36,14 @@ options(scipen = 1, knitr.kable.NA = '')
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
 incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
+
+incarceration_rates <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
+incarceration_populations <- read_csv("bjs_total_correctional_population_counts_by_status_TM 5_26_21.csv")
+
 incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_race.csv") # data from 2010
+
+rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
+
 head(incarceration_trends)
 tail(incarceration_trends)
 head(incarceration_trends_jail_jurisdiction)
@@ -88,5 +95,35 @@ incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(inc
 incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
 incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
 
-names(incarceration_rates_race) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
+
+#names(incarceration_rates ) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
+
 ```
+
+```{r, eval = TRUE}
+
+incarceration_populations <- incarceration_populations %>% rename(total_incarcerated = "...7") %>% rename( year = "Bureau of Justice Statistics") %>% rename(total_supervised = "...2")
+
+
+incarceration_populations <- incarceration_populations %>% filter(total_incarcerated!="Total/c")%>%filter(!row_number() %in% c(1))%>%
+  separate(year, c("year",NA), sep = "/d")
+
+incarceration_populations$total_incarcerated<-gsub(",","",as.character(incarceration_populations$total_incarcerated))
+
+incarceration_populations$total_supervised<-gsub(",","",as.character(incarceration_populations$total_supervised))
+
+incarceration_populations <- incarceration_populations  %>% mutate(total_incarcerated = as.numeric(total_incarcerated))%>% mutate(year = as.numeric(year)) %>% mutate(total_supervised = as.numeric(total_supervised))
+```
+
+```{r, eval = TRUE}
+rates_by_race <- rates_by_race %>% rename(ID = State ) 
+rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))
+rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))
+
+```
+
+```{r, eval = TRUE}
+
+
+```
+
