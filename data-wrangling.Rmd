@@ -59,13 +59,13 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
   janitor::clean_names() 
 
 # add leading zeros to flip codes in incarceration trends dataset
-incarceration_trends <- incarceration_trends %>%
-  mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
+#incarceration_trends <- incarceration_trends %>%
+  #mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
 
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
-  mutate(fips = geoid)
+  mutate(fips = as.numeric(geoid))
 
 # filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
 incarceration_trends_1970 <- incarceration_trends %>%

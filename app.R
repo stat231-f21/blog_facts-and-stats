@@ -12,7 +12,8 @@ incarceration_trends
 county_shapefile
 
 ## Widgets
-# For interactive maps widget
+# For interactive maps widget:
+year_choices <- unique(incarceration_trends$year)
 
 # Bar Graph
 
@@ -44,14 +45,19 @@ ui <- navbarPage(
 #MAP
 ui <- fluidPage(
   titlePanel("Jail Incarceration Rate 1970 - 2018"),
-      sliderInput(inputId = "yearInput", 
-                label = "Year", 
-                min = 1970, 
-                max = 2018, 
-                value = 1970, 
-                step = 1,
-                animate =
-                  animationOptions(interval = 300, loop = TRUE)),
+  selectInput(inputId = "yearInput",
+              label = "Year:",
+              choices = year_choices,
+              selected = "2018",
+              multiple = FALSE),
+  #sliderInput(inputId = "yearInput", 
+                #label = "Year", 
+                #min = 1970, 
+                #max = 2018, 
+                #value = 1970, 
+                #step = 1,
+                #animate =
+                  #animationOptions(interval = 300, loop = TRUE)),
     mainPanel(leafletOutput("mymap")
     )
   )
@@ -89,10 +95,11 @@ output$hist <- renderPlot({
 })
 
   year_jail <- reactive({
-    filtered <- county_shapefile %>% 
-      left_join(incarceration_trends[incarceration_trends$year == input$yearInput])
-      #incarceration_trends %>%
-      #filter(year == input$yearInput) %>%
+    filtered <- incarceration_trends %>%
+      filter(year == input$yearInput) 
+    
+      m <- left_join(county_shapefile, filtered, by = "fips")
+      return(m)
       #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
@@ -100,7 +107,8 @@ output$hist <- renderPlot({
     bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
-    year_jail() <- leaflet() %>% 
+    year_jail() %>% 
+      leaflet() %>% 
       addProviderTiles(provider = "CartoDB.Positron") %>%
       setView(-95.7129, 37.0902, zoom = 3) %>%
       addPolygons(fillColor = ~ pal(year_jail()$total_jail_pop_rate),
