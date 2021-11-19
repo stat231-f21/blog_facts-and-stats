@@ -14,7 +14,34 @@ county_shapefile
 ## Widgets
 # For interactive maps widget
 
+# Bar Graph
+
+state_options <- unique(rates_by_race$ID)
+
 ## UI
+ui <- navbarPage(
+  title = "Scores",
+  # Tab 1: Histogram
+  tabPanel(
+    title = "Histogram",
+    tabPanel(
+      title = "Histogram",
+      
+      sidebarLayout(
+        sidebarPanel(
+          selectInput(
+            inputId = "histvar",
+            label = "Choose a year:",
+            choices = state_options,
+            selected = "wisconsin"),
+          
+        ),
+        mainPanel(plotOutput(outputId = "hist", height= 700))
+      )
+    )
+  ),
+  
+#MAP
 ui <- fluidPage(
   titlePanel("Jail Incarceration Rate 1970 - 2018"),
       sliderInput(inputId = "yearInput", 
@@ -28,9 +55,39 @@ ui <- fluidPage(
     mainPanel(leafletOutput("mymap")
     )
   )
+)
 
 ## Server
 server <- function(input, output) {
+data_for_hist <- reactive({
+  data <- rates_by_race %>% filter(ID==input$histvar)
+})
+
+output$hist <- renderPlot({
+  
+  ggplot(data= data_for_hist(), aes(x=race, y=rate)) +
+    geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
+    labs(x = "Ethnicity",
+         y = "Rate of Incarceration (Prisoners per 100,000 residents)",
+         title = "Rates of Incarceration By Ethnicity)") +
+    
+    theme(
+      plot.title = element_text(family = "serif",             
+                                face = "bold",              
+                                color = 1,             
+                                size = 23),
+      plot.caption = element_text(size = 10),
+      axis.text.x = element_text(family = "serif",             
+                                 size = 12),
+      axis.text.y = element_text(family = "serif",             
+                                 size = 12),
+      axis.title.x = element_text(family = "serif",             
+                                  size = 16),
+      axis.title.y = element_text(family = "serif",             
+                                  size = 16))
+  
+})
+
   year_jail <- reactive({
     filtered <- county_shapefile %>% 
       left_join(incarceration_trends[incarceration_trends$year == input$yearInput])
