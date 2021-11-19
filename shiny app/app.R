@@ -142,7 +142,7 @@ server <- function(input, output) {
   # Map Overtime
   data_for_overtime <- reactive({
     filtered1 <- incarceration_trends %>%
-      filter(year == 2018) 
+      filter(year == input$yearInput) 
     
     m1 <- left_join(county_shapefile, filtered1, by = "fips")
     return(m1)
