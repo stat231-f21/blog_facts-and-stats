@@ -19,10 +19,11 @@ state_options <- unique(rates_by_race$ID)
 
 ## UI
 ui <- navbarPage(
-  title = "Incarceration Rates",
+  theme = shinytheme("simplex"),
+  title = "Incarceration Rates in America",
   # Tab 1: Histogram
     tabPanel(
-      title = "Histogram",
+      title = "Racial Comparison by States",
       sidebarLayout(
         sidebarPanel(
           selectInput(
@@ -37,7 +38,7 @@ ui <- navbarPage(
     ),
   # Tab 2: Map
   tabPanel(
-    title = "Maps",
+    title = "Interactive Maps 1970 - 2018",
     sidebarLayout(
       sidebarPanel(
         selectInput(inputId = "yearInput",
