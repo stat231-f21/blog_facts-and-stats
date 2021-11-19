@@ -6,6 +6,7 @@ library(sf)
 library(tigris) # geojoin
 library(htmlwidgets)
 library(shinythemes)
+library(viridis)
 
 ## Import Data
 incarceration_trends
@@ -38,7 +39,7 @@ ui <- navbarPage(
     ),
   # Tab 2: Map
   tabPanel(
-    title = "Interactive Maps 1970 - 2018",
+    title = "Interactive Maps",
     sidebarLayout(
       sidebarPanel(
         selectInput(inputId = "yearInput",
@@ -46,17 +47,26 @@ ui <- navbarPage(
                     choices = year_choices,
                     selected = "2018",
                     multiple = FALSE)),
-      #sliderInput(inputId = "yearInput", 
-      #label = "Year", 
-      #min = 1970, 
-      #max = 2018, 
-      #value = 1970, 
-      #step = 1,
-      #animate =
-      #animationOptions(interval = 300, loop = TRUE)),
       mainPanel(leafletOutput("mymap", height= 600))
     )
+  ),
+  
+  # Map over-time
+  tabPanel(
+    title = "Incarceration Trends overtime (1970-2018)",
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput(inputId = "yearInput", 
+        label = "Year", 
+        min = 1970, 
+        max = 2018, 
+        value = 1970, 
+        step = 1,
+        animate =
+        animationOptions(interval = 500, loop = TRUE))),
+      mainPanel(plotOutput(outputId = "overtime"))
   )
+)
 )
 
 ## Server
@@ -98,7 +108,6 @@ server <- function(input, output) {
     
     m <- left_join(county_shapefile, filtered, by = "fips")
     return(m)
-    #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
   output$mymap <- renderLeaflet({
@@ -118,7 +127,7 @@ server <- function(input, output) {
                                                     fillOpacity = 1,
                                                     color = "black",
                                                     bringToFront = TRUE),
-                popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
+                popup = ~ paste0("County Name: ", name %>% str_to_title(), "<br>",
                                  "State: ", state %>% str_to_title(), "<br>",
                                  "Total Jail Population: ", total_jail_pop, "<br>",
                                  "Total Jail-Population rate: ",
@@ -129,6 +138,23 @@ server <- function(input, output) {
               title = "Total Jail Population Rate (per 100,000",
               opacity = 0.7)
 })
+  
+  # Map Overtime
+  data_for_overtime <- reactive({
+    filtered1 <- incarceration_trends %>%
+      filter(year == 2018) 
+    
+    m1 <- left_join(county_shapefile, filtered1, by = "fips")
+    return(m1)
+  })
+  
+  output$overtime <- renderPlot({
+    ggplot(data_for_overtime(), aes(fill = total_jail_pop_rate)) +
+      geom_sf() +
+      scale_fill_viridis(option = "magma", direction = -1) +
+      theme_void() +
+      labs(title="Jail Incarceration Rate by County", fill = "per \n100,000 residents")
+  })
 }
 
 ##Shiny App
