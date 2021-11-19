@@ -68,7 +68,7 @@ output$hist <- renderPlot({
   ggplot(data= data_for_hist(), aes(x=race, y=rate)) +
     geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
     labs(x = "Ethnicity",
-         y = "Rate of Incarceration (Prisoners per 100,000 residents)",
+         y = "Rate of Incarceration (Prisoners per 100,000 residents",
          title = "Rates of Incarceration By Ethnicity)") +
     
     theme(
