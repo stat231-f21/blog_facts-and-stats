@@ -22,7 +22,18 @@ knitr::opts_chunk$set(echo = FALSE,
 options(knitr.kable.NA = '')
 ```
 
-# Header 1 (Section heading)
+# Introduction
+
+![Courtesy of Golden Cosmos](https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now)](img/Mass-Incarceration_TheNewYorker.jpeg)
+
+Mass incarceration in the United States is a relatively recent phenomenon. As documented in books such as The New Jim Crow: Mass Incarceration in the Age of Colorblindness and documentaries such as 13th, mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.
+
+What makes mass incarceration unique is that the laws driving the disproportionate incarceration of Black Americans make no mention of race. Michelle Williams, the author of The New Jim Crow shows how The War on Drugs played a leading role in the incarcerated population rising by over 300% between 1980 and 2018 (Source: Bureau of Justice Statistics). In contrast, the population of the United States only increased by about 65% according to the US census. 
+
+Mass incarceration has persisted even as the crime rate has been dropping consistently since the early 1990s. As a result, the United States currently makes up about 5% of the world’s population but has nearly 25% of the world’s prisoners.
+
+Our project’s goal is to use the Bureau of Justice’s incarceration dataset to illustrate mass incarceration’s takeover state-by-state and county-by-county from 1980 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.
+
 
 ## Header 2 (Subsection heading)
 
