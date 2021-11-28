@@ -24,7 +24,7 @@ options(knitr.kable.NA = '')
 
 # Introduction
 
-![Courtesy of Golden Cosmos](https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now)](img/Mass-Incarceration_TheNewYorker.jpeg)
+![Courtesy of [Golden Cosmos](https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now)](img/Mass-Incarceration_TheNewYorker.jpeg)
 
 Mass incarceration in the United States is a relatively recent phenomenon. As documented in books such as The New Jim Crow: Mass Incarceration in the Age of Colorblindness and documentaries such as 13th, mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.
 
