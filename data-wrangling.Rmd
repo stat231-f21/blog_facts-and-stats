@@ -105,7 +105,13 @@ incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = 
 #Population Time-Series wrangling
 ```{r, eval = TRUE}
 
-incarceration_populations <- incarceration_populations %>% rename(total_incarcerated = "...7") %>% rename( year = "Bureau of Justice Statistics") %>% rename(total_supervised = "...2")
+incarceration_populations <- incarceration_populations %>% 
+  rename(total_incarcerated = "...7") %>% 
+  rename( year = "Bureau of Justice Statistics") %>% 
+  rename(total_supervised = "...2") %>%
+  rename(local_jail = "...8") %>%
+  rename(state_prison = "...10") %>%
+  rename(federal_prison = "...11")
 
 
 incarceration_populations <- incarceration_populations %>% filter(total_incarcerated!="Total/c")%>%filter(!row_number() %in% c(1))%>%
