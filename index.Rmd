@@ -24,6 +24,7 @@ options(knitr.kable.NA = '')
 
 # Introduction
 ![Courtesy of [Golden Cosmos](https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now)](img/Mass-Incarceration_TheNewYorker.jpeg)
+
 Mass incarceration in the United States is a relatively recent phenomenon. As documented in books such as The New Jim Crow: Mass Incarceration in the Age of Colorblindness and documentaries such as 13th, mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.
 
 What makes mass incarceration unique is that the laws driving the disproportionate incarceration of Black Americans make no mention of race. Michelle Williams, the author of The New Jim Crow shows how The War on Drugs played a leading role in the incarcerated population rising by over 300% between 1980 and 2018 (Source: Bureau of Justice Statistics). In contrast, the population of the United States only increased by about 65% according to the US census. 
