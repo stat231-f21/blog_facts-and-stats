@@ -13,6 +13,8 @@ library(tidyverse)
 library(dplyr)
 library(knitr)
 library(ggplot2)
+library(gganimate)
+library(gifski)
 library(janitor)
 library(viridis)
 library(sf)
@@ -30,6 +32,7 @@ incarceration_rates_race # data frame wrangled in `data-wrangling`, 2010 data
 county_shapefile 
 incarceration_trends_1970
 incarceration_trends_2018
+incarceration_populations
 ```
 
 # Static Map by State (2010)
@@ -169,3 +172,15 @@ leaflet(data = incarceration_2018_map) %>%
 #saveWidget(incarceration_2018_map, title = "2018 map", file="incarceration_2018_map.html")
 ```
 
+# Timelaspe Incarcerated Population
+```{r, eval = TRUE}
+incarceration_populations
+incarceration_time_animation <- ggplot() + 
+  geom_line(data = incarceration_populations, aes(x = year, y = total_incarcerated)) +
+  geom_line(data = incarceration_populations, aes(x = year, y = local_jail)) +
+  geom_line(data = incarceration_populations, aes(x = year, y = state_prison)) +
+  geom_line(data = incarceration_populations, aes(x = year, y = federal_prison)) 
++
+  transition_reveal(year)
+incarceration_time_animation
+```

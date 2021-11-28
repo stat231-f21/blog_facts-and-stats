@@ -121,7 +121,14 @@ incarceration_populations$total_incarcerated<-gsub(",","",as.character(incarcera
 
 incarceration_populations$total_supervised<-gsub(",","",as.character(incarceration_populations$total_supervised))
 
-incarceration_populations <- incarceration_populations  %>% mutate(total_incarcerated = as.numeric(total_incarcerated))%>% mutate(year = as.numeric(year)) %>% mutate(total_supervised = as.numeric(total_supervised))
+incarceration_populations <- incarceration_populations  %>% 
+  mutate(total_incarcerated = as.numeric(total_incarcerated))%>% 
+  mutate(year = as.numeric(year)) %>% 
+  mutate(total_supervised = as.numeric(total_supervised)) %>% 
+  mutate(local_jail = as.numeric(local_jail)) %>%
+  mutate(state_prison = as.numeric(state_prison)) %>%
+  mutate(federal_prison = as.numeric(federal_prison))
+  
 ```
 
 ```{r, eval = TRUE}
