@@ -31,9 +31,13 @@ What makes mass incarceration unique is that the laws driving the disproportiona
 
 Mass incarceration has persisted even as the crime rate has been dropping consistently since the early 1990s. As a result, the United States currently makes up about 5% of the world’s population but has nearly 25% of the world’s prisoners.
 
-Our project’s goal is to use the Bureau of Justice’s incarceration dataset to illustrate mass incarceration’s takeover state-by-state and county-by-county from 1980 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.
+Our project’s goal is to use datasets we acquired online to illustrate mass incarceration’s takeover state-by-state and county-by-county from 1970 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.
 
 # Data
+The datasets we used include incarceration trends by U.S. counties from 1970 - 2018 from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends), prison population counts from [the Bureau of Justice Statistics (BJS)](https://bjs.ojp.gov/data/key-statistics), incarceration rates and ratio by race from [the Prison Policy Initiative](https://www.prisonpolicy.org/racialgeography/report.html) and [the Sentencing Project](https://www.sentencingproject.org/the-facts/#map). 
+All raw datasets are downloaded and imported into RStudio before the wrangling process. 
+
+For developing interactive maps, we also downloaded the cartographic boundary shapefile of counties from the [U.S. Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html).
 
 # Change in Incarceration Rates Overtime
 
@@ -48,6 +52,7 @@ Our project’s goal is to use the Bureau of Justice’s incarceration dataset t
 # Conclusion and Limitations
 
 ## Citations
+* Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.
 * Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Nov]. https://github.com/vera-institute/incarceration-trends. 
 
 
