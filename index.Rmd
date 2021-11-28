@@ -47,7 +47,7 @@ Our project’s goal is to use the Bureau of Justice’s incarceration dataset t
 
 # Conclusion and Limitations
 
-# Citations
+## Citations
 * Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Nov]. https://github.com/vera-institute/incarceration-trends. 
 
 
