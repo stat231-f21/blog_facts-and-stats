@@ -75,16 +75,16 @@ ggplot(incarceration_populations, aes(x=year, y=total_incarcerated, group=1)) +
 
 # Incarceration Rates by States (2020)
 
-```{r pressure, echo=FALSE, out.width = '100%'}
+```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("Incarceration_2010.png")
 ```
 
-
 # Racial Contrast
 
-```{r pressure, echo=FALSE, out.width = '100%'}
+```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("BW_Disparity.png")
 ```
+
 
 
 
