@@ -83,7 +83,7 @@ ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 geom_sf() +
   scale_fill_viridis(option = "magma", direction = -1) +
   theme_void() +
-  labs(title="Prison Incarceration Rate by State", fill = "Prisoners per \n100,000 residents")
+  labs(title=" Prison Incarceration Rate by State 2010", fill = "Prisoners per \n100,000 residents")
 
 ggplot(rates_by_race_map, aes(fill = Black)) +
 geom_sf() +
@@ -95,7 +95,7 @@ ggplot(ratio_bw_map, aes(fill = ratio)) +
 geom_sf() +
   scale_fill_viridis(direction = -1) +
   theme_void()+
-  labs(title="Incarceration Disparity Between Black and white Americans", fill = "Black/white Ratio ")
+  labs(title=" Incarceration Disparity Between Black and white Americans 2020", fill = "Black/white Ratio ")
 
 
 ggplot(incarceration_populations, aes(x=year, y=total_supervised, group=1)) +
