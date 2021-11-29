@@ -10,7 +10,22 @@ output:
 
 ```{r setup, include = FALSE}
 library(tidyverse)
-library(kableExtra) 
+library(kableExtra)
+library(viridis)
+library(scales)
+library(readxl)
+library(mdsr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(janitor)
+library(viridis)
+library(sf)
+library(tigris) # geojoin
+library(leaflet) # interactive maps
+library(htmlwidgets) # interactive map labels
 
 # Set code chunk defaults 
 knitr::opts_chunk$set(echo = FALSE, 
@@ -21,6 +36,7 @@ knitr::opts_chunk$set(echo = FALSE,
 # Set R environment options
 options(knitr.kable.NA = '')
 incarceration_populations <-  read_csv("incarceration_populations.csv")
+
 ```
 
 # Introduction
@@ -59,9 +75,22 @@ ggplot(incarceration_populations, aes(x=year, y=total_incarcerated, group=1)) +
 
 # Incarceration Rates by States (2020)
 
+```{r pressure, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("Incarceration_2010.png")
+```
+
+
 # Racial Contrast
 
+```{r pressure, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("BW_Disparity.png")
+```
+
+
+
+
 # Interactive Maps by County
+
 
 # Table of State Data
 
