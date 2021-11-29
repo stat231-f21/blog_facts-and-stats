@@ -73,6 +73,10 @@ ggplot(incarceration_populations, aes(x=year, y=total_incarcerated, group=1)) +
   labs(title="American Population Under State Supervision Over Time (1980-2018)", y = "Incarcerated Population", x= "Year")
 ```
 
+```{r, echo=FALSE, out.width = '75%'}
+knitr::include_graphics("incarceration_time_series.gif")
+```
+
 # Incarceration Rates by States (2020)
 
 ```{r, echo=FALSE, out.width = '100%'}
