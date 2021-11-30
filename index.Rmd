@@ -96,13 +96,9 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
   transition_reveal(year)
 ```
 
-<<<<<<< HEAD
+
 # Incarceration Rates by States (2010)
-This data comes from the (Prison Policy Initiative)[https://www.prisonpolicy.org/data/] and breaks down the incarceration rate by race/ethnicity.
-=======
-# Incarceration Rates by States (2020)
 This data comes from the [Prison Policy Initiative](https://www.prisonpolicy.org/data/) and breaks down the incarceration rate by race/ethnicity.
->>>>>>> 85633dab0ef7cb55ea44b8c31314858b9cfdceef
 
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("Incarceration_2010.png")
