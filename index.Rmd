@@ -36,7 +36,6 @@ knitr::opts_chunk$set(echo = FALSE,
 # Set R environment options
 options(knitr.kable.NA = '')
 incarceration_populations <-  read_csv("incarceration_populations.csv")
-
 ```
 
 # Introduction
@@ -97,23 +96,63 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
 ```
 
 # Incarceration Rates by States (2020)
+This data comes from the (Prison Policy Initiative)[https://www.prisonpolicy.org/data/] and breaks down the incarceration rate by race/ethnicity.
 
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("Incarceration_2010.png")
 ```
-This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the UN estimates that the average rate around the world is about 145 per 100,000. https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdf To put this into perspective any state in the purple has 1% of its population behind bars.
+This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the [UN](https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdfestimates) that the average rate around the world is about 145 per 100,000.  To put this into perspective any state in the purple has 1% of its population behind bars.
 
+We used this [dataset](https://www.prisonpolicy.org/data/race_ethnicity_gender_2010.xlsx) to make the heat map above. The code for wrangling the dataset and visualizing it is shown below. We wrangled the Prison Policy Initiative
+
+```{r heat map, echo = TRUE, eval=FALSE}
+incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
+
+#rename necessary columns
+incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
+#delete United States row and remove states and territories not in Continental United States
+incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
+#Make state names lowercase to match geom dataset
+incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))
+#Take out commas from rates column
+incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
+#Convert rates column to numeric
+incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
+
+#import geom dataset
+state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
+  st_as_sf()
+
+state_info <- data.frame(Region = state.region,
+                         # Match state variable name in map data
+                         ID = tolower(state.name), 
+                         # Match state variable name in summary data
+                         State = state.abb)
+
+#Join both datasets
+incarceration_rates_race <- state_map %>% 
+  left_join(state_info) %>% 
+  left_join(incarceration_rates_race)
+
+#GGplot Visialization
+states<-ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
+geom_sf() +
+  scale_fill_viridis(option = "magma", direction = -1) +
+  theme_void() +
+  labs(title=" Prison Incarceration Rate by State 2010", fill = "Prisoners per \n100,000 residents")
+
+```
 # Racial Contrast
 
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("BW_Disparity.png")
 ```
 
-<<<<<<< HEAD
+This [data](https://www.sentencingproject.org/the-facts/#map) was used for the map above. We manually made a dataset that listed all the ratios by state in order to make the dataset used for the visualization. 
+
 Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as "Three Strike, You're Out". This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a [study]((http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)) conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law's implementation found that black defendants made 43% of all three-strikes defendants.This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California's total populations. On top of this the law haas not been proven to reduce crime rates, but still remains in effect.
 
-In New York, the stop-and-frisk laws in New York City may be an explanation for the relatively high disparity between Black and white incarceration rates. Stop-and-frisk laws allowed police
->>>>>>> 2c08e8b483343de6f5e9a548becf3034b97e9d94
+In New York, the stop-and-frisk laws in New York City may be an explanation for the relatively high disparity between Black and white incarceration rates. Stop-and-frisk laws gave police the discretion to stop almost any person they found suspicious. Justicfication for stopping and searching could be as vague as saying the suspect made "furtive movements".
 
 
 
