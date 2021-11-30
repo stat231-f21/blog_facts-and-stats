@@ -3,9 +3,9 @@ title: "Incarceration Rates in America"
 author: "Facts & Stats"
 date: "Add a date"
 output:
-  rmdformats::readthedown:
+  rmdformats::downcute:
     thumbnails: false
-    highlight: "kate"
+    highlight: "espresso"
 ---
 
 ```{r setup, include = FALSE}
