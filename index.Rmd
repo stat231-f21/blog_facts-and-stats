@@ -6,6 +6,7 @@ output:
   rmdformats::downcute:
     thumbnails: false
     highlight: "espresso"
+    self_contained: false
 ---
 
 ```{r setup, include = FALSE}
@@ -158,8 +159,12 @@ In New York, the stop-and-frisk laws in New York City may be an explanation for 
 # Shiny App
 
 ```{r, echo = FALSE}
-  knitr::include_app("https://adeatrick.shinyapps.io/blog_facts-and-stats")
+  #knitr::include_app("https://adeatrick.shinyapps.io/blog_facts-and-stats")
+
 ```
+
+<iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=1000px width=1000px />
+
 
 # Conclusion and Limitations
 
