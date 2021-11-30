@@ -84,6 +84,7 @@ geom_sf() +
   scale_fill_viridis(option = "magma", direction = -1) +
   theme_void() +
   labs(title=" Prison Incarceration Rate by State 2010", fill = "Prisoners per \n100,000 residents")
+ggsave("Incarceration_2010.png")
 
 ggplot(rates_by_race_map, aes(fill = Black)) +
 geom_sf() +
@@ -97,6 +98,7 @@ geom_sf() +
   theme_void()+
   labs(title=" Incarceration Disparity Between Black and white Americans 2020", fill = "Black/white Ratio ")
 
+ggsave("Incarceration_2020.png")
 
 ggplot(incarceration_populations, aes(x=year, y=total_supervised, group=1)) +
   geom_line(color="red", size=2) + 

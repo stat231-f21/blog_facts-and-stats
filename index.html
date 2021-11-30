@@ -122,7 +122,7 @@
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#data">Data</a></li>
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
-            <li><a href="#incarceration-rates-by-states-2020">Incarceration Rates by States (2020)</a></li>
+            <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
             <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a></li>
             <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
@@ -196,8 +196,8 @@ incarceration_time_animation &lt;- ggplot(data = incarceration_populations_longe
   scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
   transition_reveal(year)</code></pre>
 </div>
-<div id="incarceration-rates-by-states-2020" class="section level1">
-<h1>Incarceration Rates by States (2020)</h1>
+<div id="incarceration-rates-by-states-2010" class="section level1">
+<h1>Incarceration Rates by States (2010)</h1>
 <p>This data comes from the (Prison Policy Initiative)[<a href="https://www.prisonpolicy.org/data/" class="uri">https://www.prisonpolicy.org/data/</a>] and breaks down the incarceration rate by race/ethnicity.</p>
 <p><img src="Incarceration_2010.png" width="100%" style="display: block; margin: auto;" /> This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the <a href="https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdfestimates">UN</a> that the average rate around the world is about 145 per 100,000. To put this into perspective any state in the purple has 1% of its population behind bars.</p>
 <p>We used this <a href="https://www.prisonpolicy.org/data/race_ethnicity_gender_2010.xlsx">dataset</a> to make the heat map above. The code for wrangling the dataset and visualizing it is shown below. We wrangled the Prison Policy Initiative</p>
@@ -238,7 +238,7 @@ geom_sf() +
 </div>
 <div id="racial-contrast" class="section level1">
 <h1>Racial Contrast</h1>
-<p><img src="BW_Disparity.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="Incarceration_2020.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>This <a href="https://www.sentencingproject.org/the-facts/#map">data</a> was used for the map above. We manually made a dataset that listed all the ratios by state in order to make the dataset used for the visualization.</p>
 <p>Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as “Three Strike, You’re Out”. This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a <a href="(http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)">study</a> conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law’s implementation found that black defendants made 43% of all three-strikes defendants.This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California’s total populations. On top of this the law haas not been proven to reduce crime rates, but still remains in effect.</p>
 <p>In New York, the stop-and-frisk laws in New York City may be an explanation for the relatively high disparity between Black and white incarceration rates. Stop-and-frisk laws gave police the discretion to stop almost any person they found suspicious. Justicfication for stopping and searching could be as vague as saying the suspect made “furtive movements”.</p>

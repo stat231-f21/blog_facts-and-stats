@@ -96,7 +96,7 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
   transition_reveal(year)
 ```
 
-# Incarceration Rates by States (2020)
+# Incarceration Rates by States (2010)
 This data comes from the (Prison Policy Initiative)[https://www.prisonpolicy.org/data/] and breaks down the incarceration rate by race/ethnicity.
 
 ```{r, echo=FALSE, out.width = '100%'}
@@ -146,7 +146,7 @@ geom_sf() +
 # Racial Contrast
 
 ```{r, echo=FALSE, out.width = '100%'}
-knitr::include_graphics("BW_Disparity.png")
+knitr::include_graphics("Incarceration_2020.png")
 ```
 
 This [data](https://www.sentencingproject.org/the-facts/#map) was used for the map above. We manually made a dataset that listed all the ratios by state in order to make the dataset used for the visualization. 
