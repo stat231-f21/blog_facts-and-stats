@@ -69,7 +69,7 @@ Surprisingly, the federal prison population didn't grow much relatively. As ment
 
 Our findings also support the claim of Fordham University criminal justice expert [John Pfaff](https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in). "The federal government’s war on drugs never played much of a role in incarceration because the federal government just doesn’t play much of a role in incarceration overall," said Pfaff.
 
-All 5 types of correctional observations display a trend of slight decrease starting in 2007. According to [PEW](https://www.pewtrusts.org/en/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth), since 2007, more than 30 states have enacted policies to reverse incarceration growth and costs, while maintaining the long-term, nationwide decline in the crime rate that began in the early 1990s. These changes are good to see while we also have to keep in mind that the United States remains as the world leader in its rate of incarceration, locking up its citizens at 5-10 times the rate of other industrialized nations. According to [the Sentencing Project](https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141), at the current rate of decline it will take 75 years to cut the prison population by 50%.
+All 5 types of correctional observations display a trend of slight decrease starting in 2007. According to [PEW](https://www.pewtrusts.org/en/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth), since 2007, more than 30 states have enacted policies to reverse incarceration growth and costs, while maintaining the long-term, nationwide decline in the crime rate that began in the early 1990s. These changes are crucial for the dismantling of the prison industrial complex, while we also have to keep in mind that the United States remains as the world leader in its rate of incarceration, locking up its citizens at 5-10 times the rate of other industrialized nations. According to [the Sentencing Project](https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141), at the current rate of decline it will take 75 years to cut the prison population by 50%.
 
 Despite the slight descreases, these trends have continue to result in prison overcrowding and fiscal burdens on states to accommodate a rapidly expanding penal system, despite [increasing evidence](https://www.vera.org/downloads/publications/for-the-record-prison-paradox_02.pdf) that large-scale incarceration is not an effective means of achieving public safety.
 
@@ -118,7 +118,7 @@ In New York, the stop-and-frisk laws in New York City may be an explanation for 
 
 
 
-# Interactive Maps by County
+# Interactive Map by County
 
 
 # Table of State Data
