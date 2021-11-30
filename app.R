@@ -8,10 +8,42 @@ library(htmlwidgets)
 library(shinythemes)
 library(shinycssloaders)
 library(shinyjs)
+library(reactable)
 
+# ====================================================
 ## Import data
-incarceration_trends
-county_shapefile
+incarceration_trends <- read_csv("incarceration_trends_wrangled.csv")
+
+filtered <- incarceration_trends
+
+# read in shapefile
+county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
+  janitor::clean_names() 
+
+# add leading zeros to flip codes in incarceration trends dataset
+#incarceration_trends <- incarceration_trends %>%
+#mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
+
+# take out statefp and countyfp and rename geoid column into fips
+county_shapefile <- county_shapefile %>%
+  select(-statefp, -countyfp) %>%
+  mutate(fips = as.numeric(geoid))
+
+# filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
+incarceration_trends_1970 <- incarceration_trends %>%
+  filter(year == "1970")
+incarceration_trends_2018 <- incarceration_trends %>%
+  filter(year == "2018")
+
+rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
+
+rates_by_race <- rates_by_race %>% rename(ID = State ) 
+rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))
+rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
+
+rates_by_race <- rates_by_race %>%
+  pivot_longer(!ID, names_to = "race", values_to = "rate")
+# ==========================================================
 
 ## Widgets
 # For interactive maps widget:
@@ -23,86 +55,84 @@ state_options <- unique(rates_by_race$ID)
 
 ## UI
 ui <- navbarPage(
-  title = "Scores",
+  theme = shinytheme("sandstone"),
+  title = "Incarceration Rates in America",
   # Tab 1: Histogram
   tabPanel(
     title = "Histogram",
-    tabPanel(
-      title = "Histogram",
-      
-      sidebarLayout(
-        sidebarPanel(
-          selectInput(
-            inputId = "histvar",
-            label = "Choose a year:",
-            choices = state_options,
-            selected = "wisconsin"),
-          
-        ),
-        mainPanel(plotOutput(outputId = "hist", height= 700))
-      )
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(
+          inputId = "histvar",
+          label = "Choose a year:",
+          choices = state_options,
+          selected = "wisconsin"),
+        
+      ),
+      mainPanel(plotOutput(outputId = "hist", height= 700))
     )
+  ),tabPanel(
+    title=("Interactive Map"),
+    titlePanel("Jail Incarceration Rate 1970 - 2018"),
+    sidebarPanel(selectInput(inputId = "yearInput",
+                             label = "Year:",
+                             choices = year_choices,
+                             selected = "2018",
+                             multiple = FALSE),),
+    mainPanel(leafletOutput("mymap"))
   ),
-  
-#MAP
-ui <- fluidPage(
-  titlePanel("Jail Incarceration Rate 1970 - 2018"),
-  selectInput(inputId = "yearInput",
-              label = "Year:",
-              choices = year_choices,
-              selected = "2018",
-              multiple = FALSE),
-  #sliderInput(inputId = "yearInput", 
-                #label = "Year", 
-                #min = 1970, 
-                #max = 2018, 
-                #value = 1970, 
-                #step = 1,
-                #animate =
-                  #animationOptions(interval = 300, loop = TRUE)),
-    mainPanel(leafletOutput("mymap")
+  tabPanel(
+    title = "Table",
+    sidebarLayout(
+      sidebarPanel(
+        #actionButton("download", "Download Selected Data"),
+        selectInput("state_filter", "Select a state:", unique(filtered$state), multiple = TRUE),
+        selectInput("county_filter", "Select a county:", unique(filtered$county), multiple = TRUE),
+        selectInput("year_filter", "Select a year:", unique(filtered$year), multiple = TRUE),
+      ),
+      mainPanel(reactableOutput("table"))
     )
   )
 )
 
 ## Server
 server <- function(input, output) {
-data_for_hist <- reactive({
-  data <- rates_by_race %>% filter(ID==input$histvar)
-})
-
-output$hist <- renderPlot({
+  data_for_hist <- reactive({
+    data <- rates_by_race %>% filter(ID==input$histvar)
+  })
   
-  ggplot(data= data_for_hist(), aes(x=race, y=rate)) +
-    geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
-    labs(x = "Ethnicity",
-         y = "Rate of Incarceration (Prisoners per 100,000 residents)",
-         title = "Rates of Incarceration By Ethnicity") +
+  output$hist <- renderPlot({
     
-    theme(
-      plot.title = element_text(family = "serif",             
-                                face = "bold",              
-                                color = 1,             
-                                size = 23),
-      plot.caption = element_text(size = 10),
-      axis.text.x = element_text(family = "serif",             
-                                 size = 12),
-      axis.text.y = element_text(family = "serif",             
-                                 size = 12),
-      axis.title.x = element_text(family = "serif",             
-                                  size = 16),
-      axis.title.y = element_text(family = "serif",             
-                                  size = 16))
+    ggplot(data= data_for_hist(), aes(x=race, y=rate)) +
+      geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
+      labs(x = "Ethnicity",
+           y = "Rate of Incarceration (Prisoners per 100,000 residents)",
+           title = "Rates of Incarceration By Ethnicity") +
+      
+      theme(
+        plot.title = element_text(family = "serif",             
+                                  face = "bold",              
+                                  color = 1,             
+                                  size = 23),
+        plot.caption = element_text(size = 10),
+        axis.text.x = element_text(family = "serif",             
+                                   size = 12),
+        axis.text.y = element_text(family = "serif",             
+                                   size = 12),
+        axis.title.x = element_text(family = "serif",             
+                                    size = 16),
+        axis.title.y = element_text(family = "serif",             
+                                    size = 16))
+    
+  })
   
-})
-
   year_jail <- reactive({
     filtered <- incarceration_trends %>%
       filter(year == input$yearInput) 
     
-      m <- left_join(county_shapefile, filtered, by = "fips")
-      return(m)
-      #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
+    m <- left_join(county_shapefile, filtered, by = "fips")
+    return(m)
+    #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
   output$mymap <- renderLeaflet({
@@ -122,7 +152,7 @@ output$hist <- renderPlot({
                                                       fillOpacity = 1,
                                                       color = "black",
                                                       bringToFront = TRUE),
-                  popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
+                  popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
                                    "State: ", state %>% str_to_title(), "<br>",
                                    "Total Jail Population: ", total_jail_pop, "<br>",
                                    "Total Jail-Population rate: ",
@@ -133,6 +163,67 @@ output$hist <- renderPlot({
                 title = "Total Jail Population Rate (per 100,000",
                 opacity = 0.7)
   })
+  
+  
+  output$table <- renderReactable({
+    
+    reactable(
+      incarceration_trends[,],
+      filterable = TRUE,
+      searchable = TRUE,
+      fullWidth = TRUE,
+      bordered = TRUE,
+      striped = TRUE,
+      selection = "multiple",
+      details = colDef(
+        name = "JSON for Row",
+        details = JS("function(rowInfo) {
+          return 'Details for row: ' + rowInfo.index +
+          '<pre>' + JSON.stringify(rowInfo.row._original, null, 2) + '</pre>'
+        }"),
+        html = TRUE,
+        width = 60
+      )
+    )
+  }
+  )
+  
+  observe({
+    # Filter data
+    filtered <- if (length(input$state_filter) > 0) {
+      incarceration_trends[incarceration_trends$state %in% input$state_filter, ]
+    } else {
+      incarceration_trends
+    }
+    
+    current_selection <- reactiveVal(input$county_filter)
+    
+    if (length(input$state_filter) > 0) {
+      updateSelectInput(
+        session = getDefaultReactiveDomain(),
+        "county_filter",
+        choices = unique(filtered$county),
+        selected = current_selection
+      )
+    }
+      
+    filtered <- if (length(input$county_filter) > 0) {
+      filtered[filtered$county %in% input$county_filter, ]
+    } else {
+      filtered
+    }
+    
+    filtered <- if (length(input$year_filter) > 0) {
+      filtered[filtered$year %in% input$year_filter, ]
+    } else {
+      filtered
+    }
+    
+    input$state_filter
+    
+    updateReactable("table", data = filtered)
+  })
+  
 }
 
 ##Shiny App

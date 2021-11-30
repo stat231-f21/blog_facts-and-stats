@@ -1,0 +1,14 @@
+name: blog_facts-and-stats
+title: blog_facts-and-stats
+username:
+account: adeatrick
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5233111
+bundleId: 5310028
+url: https://adeatrick.shinyapps.io/blog_facts-and-stats/
+when: 1638284640.67758
+lastSyncTime: 1638284640.67758
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: bjs_total_correctional_population_counts_by_status_TM 5_26_21.csv|blog-instructions.pdf|blog-rubric.pdf|BW_Disparity.png|data-wrangling.Rmd|img/Kenesha-Sneed_safe-space.jpeg|img/Mass-Incarceration_TheNewYorker.jpeg|Incarceration_2010.png|Incarceration_2020.png|incarceration_populations.csv|incarceration_time_series.gif|incarceration_trends.csv|incarceration_trends_jail_jurisdiction.csv|index.html|index.Rmd|Kenesha-Sneed_safe-space.jpeg|Maps.Rmd|prison_policy_initiative_incarceration_by_race.csv|race_ethnicity_gender_2010.csv|ratio_bw.csv|README.md|shiny app/app.html|shiny app/app.R

@@ -1,10 +1,7 @@
 
 server <- function(input, output, session) {
-    zone.rg <- readOGR(dsn="FAF_Zones/faf4_zone2.shp",layer="faf4_zone2", encoding = "UTF-8")
-    
-    od_mode_vol <- read.csv(file = 'od_mode_vol_45.csv')
-    
-    centroid <- read.csv(file = 'centroid.csv')
+    zone.rg <- readOGR(dsn="data/cb_2018_us_county_500k/cb_2018_us_county_500k.shp",layer="counties", encoding = "UTF-8")
+    data <- vroom("incarceration_trends.csv")
     
     click_count <- 0
     type <- 0
@@ -13,10 +10,10 @@ server <- function(input, output, session) {
     origin_id <- 0
     dest_id <- 0
     
-    selected_zone <- reactive({
-      p <- input$Zone_shape_click
-      subset(centroid, id==p$id )
-    })
+    #selected_zone <- reactive({
+    #  p <- input$Zone_shape_click
+    #  subset(centroid, id==p$id )
+    #})
     
     selected_od <- reactive({
       p <- input$Zone_shape_click
