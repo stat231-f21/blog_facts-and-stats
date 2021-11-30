@@ -78,7 +78,7 @@ ggplot(incarceration_populations, aes(x=year, y=total_incarcerated, group=1)) +
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("Incarceration_2010.png")
 ```
-This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the UN estimates that the average rate around the world is about 145 per 100,000. 
+This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the UN estimates that the average rate around the world is about 145 per 100,000. https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdf To put this into perspective any state in the purple has 1% of its population behind bars.
 
 # Racial Contrast
 
@@ -86,7 +86,9 @@ This map shows incarceration rates near the peak of incarceration in the United 
 knitr::include_graphics("BW_Disparity.png")
 ```
 
-Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as "Three Strike, You're Out". This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a study conducted by the Center of Juvenile and Criminal Justice in 1996 (http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf) only a year after the law's implementation found that black defendants made 43% of all three-strikes defendants.
+Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as "Three Strike, You're Out". This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a study conducted by the Center of Juvenile and Criminal Justice in 1996, (http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf) only a year after the law's implementation, found that black defendants made 43% of all three-strikes defendants. This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California's total populations. On top of this the law haas not been proven to reduce crime rates, but still remains in effect.
+
+In New York, the stop-and-frisk laws in New York City may be an explanation for the relatively high disparity between Black and white incarceration rates. Stop-and-frisk laws allowed police
 
 
 
