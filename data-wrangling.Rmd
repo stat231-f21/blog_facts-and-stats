@@ -67,6 +67,8 @@ county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
   mutate(fips = as.numeric(geoid))
 
+head(county_shapefile)
+
 # filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
 incarceration_trends_1970 <- incarceration_trends %>%
   filter(year == "1970")
@@ -82,6 +84,8 @@ incarceration_trends<- incarceration_trends %>%
 incarceration_trends_2003<-incarceration_trends %>% filter(year==2003, state!="AK", state!="HI" )
 
 incarceration_trends_2003<-incarceration_trends_2003 %>% mutate(county = tolower(incarceration_trends_2003$county))
+
+write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```
 
 #Incarceration by State Wrangling
