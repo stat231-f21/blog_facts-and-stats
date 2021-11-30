@@ -189,7 +189,8 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
   theme(plot.title = element_text(family = "serif", size = 20),
         plot.subtitle = element_text(family = "serif", size = 15),
         axis.text.x = element_text(angle = 30, hjust = 1, size = rel(1))) +
-  scale_y_continuous(labels = comma) +
+  scale_y_continuous(breaks = seq(0, 7000000, by = 1000000),
+                     labels = comma) +
   scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
   transition_reveal(year)
 incarceration_time_animation

@@ -56,14 +56,39 @@ All raw datasets are downloaded and imported into RStudio before the wrangling p
 
 For developing interactive maps, we also downloaded the cartographic boundary shapefile of counties from the [U.S. Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html).
 
-# Change in Incarceration Population Overtime
+# Change in Incarceration Population
+The “tough-on-crime” rhetoric characterized American politics during the 1980s and ’90s. It appeals to people's worst fears regarding their safety and perpetuates a framing that has justified for the racial profiling, police brutality, and unreasonably harsh sentencing that have together contributed to the rise of mass incarceration. Below, we utilized datasets that described population statistics surrounding incarceration from 1980 to 2018 to create an animation that shows the dramatic climbing of the population in prisons and jails. We juxtaposed trends of different variables to see the possibilities of associations among them and examine whether certain gaps are widening or closing. 
 
 ```{r, echo=FALSE, out.width = '75%'}
 knitr::include_graphics("incarceration_time_series.gif")
 ```
 
-This visualization shows the amount of people in the US in jails and prisons in the United States. The incarcerated population grew extremely fast between 1980 and 2007 from 500,000 to well over 2,000,000. Since then the incarcerated population has started to decrease but only slightly.
+The visualization shows the amount of people under supervision, in jails and prisons in the United States from 1980 through 2018. The population under supervision grew extremely fast starting in 1980 and peaked in 2007 before it started slowly decreasing. The number of people almost quadrupled, from around 2,000,000 to almost 8,000,000, over the course of 30 years. The incarcerated population also grew dramatically fast between 1980 and 2007 from 500,000 to well over 2,000,000. Since then the incarcerated population has started to decrease but only slightly. The population in local jails and state prisons also grew significantly under the same time frame. Surprisingly and interestingly, the federal prison population didn't grow much relatively. 
 
+These trends have resulted in prison overcrowding and fiscal burdens on states to accommodate a rapidly expanding penal system, despite [increasing evidence](https://www.vera.org/downloads/publications/for-the-record-prison-paradox_02.pdf) that large-scale incarceration is not an effective means of achieving public safety.
+
+Below is the main code that we used to make the time lapse visualization. First, we pivoted longer the incarceration populations dataset. Then, we used `ggplot` to create static plots that show trends of multiple variables and used `gganimate` to bring it from a static plot to a timelapse.
+
+```{r animation code, echo = TRUE}
+incarceration_populations_longer <- incarceration_populations %>%
+  select(year, total_supervised, total_incarcerated, local_jail, state_prison, federal_prison) %>%
+  pivot_longer(!year, names_to = "variables", values_to = "counts") %>%
+  mutate(variables = as.factor(variables))
+
+incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
+  geom_line(aes(group = variables, color = variables)) +
+  labs(title = "Change in Incarceration Population Overtime",
+       subtitle = "1980 - 2018",
+       x = "Year",
+       y = "Number of People",
+       color = "Type") +
+  theme(plot.title = element_text(family = "serif", size = 20),
+        plot.subtitle = element_text(family = "serif", size = 15),
+        axis.text.x = element_text(angle = 30, hjust = 1, size = rel(1))) +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
+  transition_reveal(year)
+```
 
 # Incarceration Rates by States (2020)
 
@@ -78,7 +103,7 @@ This map shows incarceration rates near the peak of incarceration in the United 
 knitr::include_graphics("BW_Disparity.png")
 ```
 
-Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as "Three Strike, You're Out". This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a study conducted by the Center of Juvenile and Criminal Justice in 1996 (http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf) only a year after the law's implementation found that black defendants made 43% of all three-strikes defendants.
+Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as "Three Strike, You're Out". This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a [study]((http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)) conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law's implementation found that black defendants made 43% of all three-strikes defendants.
 
 
 
