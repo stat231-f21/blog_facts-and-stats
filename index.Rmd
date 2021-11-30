@@ -163,7 +163,7 @@ Wisconsin has an unusually high disparity. As this [article](https://www.nbcnews
 
 ```
 
-<iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px />
+<iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px></iframe>
 
 
 # Conclusion and Limitations
