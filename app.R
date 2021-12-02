@@ -12,7 +12,7 @@ library(reactable)
 
 # ====================================================
 ## Import data
-incarceration_trends <- read_csv("incarceration_trends_wrangled.csv")
+incarceration_trends <- read_csv("incarceration_trends_wrangled_7.csv")
 
 filtered <- incarceration_trends
 
@@ -29,12 +29,6 @@ county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
   mutate(fips = as.numeric(geoid))
 
-# filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
-incarceration_trends_1970 <- incarceration_trends %>%
-  filter(year == "1970")
-incarceration_trends_2018 <- incarceration_trends %>%
-  filter(year == "2018")
-
 rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
 
 rates_by_race <- rates_by_race %>% rename(ID = State ) 
@@ -48,6 +42,7 @@ rates_by_race <- rates_by_race %>%
 ## Widgets
 # For interactive maps widget:
 year_choices <- unique(incarceration_trends$year)
+demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
 
 # Bar Graph
 
@@ -64,7 +59,7 @@ ui <- navbarPage(
       sidebarPanel(
         selectInput(
           inputId = "histvar",
-          label = "Choose a year:",
+          label = "Choose a state:",
           choices = state_options,
           selected = "wisconsin"),
         
@@ -73,16 +68,23 @@ ui <- navbarPage(
     )
   ),tabPanel(
     title=("Interactive Map"),
-    titlePanel("Jail Incarceration Rate 1970 - 2018"),
-    sidebarPanel(selectInput(inputId = "yearInput",
+    titlePanel("Prison + Jail Incarceration Rate 1970 - 2018"),
+    sidebarPanel(sliderInput(inputId = "yearInput",
                              label = "Year:",
-                             choices = year_choices,
+                             value=2010,
+                             min=1970,
+                             max=2018,
+                             sep=''),
+                 selectInput(inputId = "demographicInput",
+                             label = "Demographics:",
+                             choices = demographic_choices,
                              selected = "2018",
                              multiple = FALSE),),
     mainPanel(leafletOutput("mymap"))
   ),
   tabPanel(
     title = "Table",
+    titlePanel("Data Table for Interactive Map: Prison + Jail Incarceration Rate 1970 - 2018"),
     sidebarLayout(
       sidebarPanel(
         #actionButton("download", "Download Selected Data"),
@@ -107,7 +109,8 @@ server <- function(input, output) {
       geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
       labs(x = "Ethnicity",
            y = "Rate of Incarceration (Prisoners per 100,000 residents)",
-           title = "Rates of Incarceration By Ethnicity") +
+           title = "Rates of Incarceration By Ethnicity",
+           subtitle = "Source: U.S. Bureau of Justice Statistics data for 2019.") +
       
       theme(
         plot.title = element_text(family = "serif",             
@@ -126,24 +129,31 @@ server <- function(input, output) {
     
   })
   
-  year_jail <- reactive({
+  year_prison <- reactive({
     filtered <- incarceration_trends %>%
       filter(year == input$yearInput) 
     
     m <- left_join(county_shapefile, filtered, by = "fips")
     return(m)
-    #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
+  #year_demographics <- reactive({
+  #  filtered <- year_prison() %>% select(c("yfips","year","total_jail_pop_rate","total_prison_pop_rate","fips","state","county","total_pop","total_jail_pop", "total_prison_pop"),input$demographicInput)
+  #  
+  #  return(filtered)
+  #})
+  
   output$mymap <- renderLeaflet({
-    bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
+    bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
-    year_jail() %>% 
+    data = year_prison()
+      
+    year_prison() %>% 
       leaflet() %>% 
       addProviderTiles(provider = "CartoDB.Positron") %>%
-      setView(-95.7129, 37.0902, zoom = 3) %>%
-      addPolygons(fillColor = ~ pal(year_jail()$total_jail_pop_rate),
+      setView(-95.7129, 37.0902, zoom = 4) %>%
+      addPolygons(fillColor = ~ pal(data[[paste0(input$demographicInput)]]),
                   stroke = FALSE,
                   smoothFactor = .5,
                   opacity = 1,
@@ -154,13 +164,15 @@ server <- function(input, output) {
                                                       bringToFront = TRUE),
                   popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
                                    "State: ", state %>% str_to_title(), "<br>",
-                                   "Total Jail Population: ", total_jail_pop, "<br>",
-                                   "Total Jail-Population rate: ",
-                                   total_jail_pop_rate %>% round(2))) %>%
+                                   "Total Population: ", total_pop,"<br>",
+                                   "Total Jail Population Rate: ", total_jail_pop_rate, "<br>",
+                                   "Total Prison Population Rate: ", total_prison_pop_rate, "<br>",
+                                   "Total Jail-Prison Population rate: ",
+                                   total_jail_prison_pop_rate %>% round(2))) %>%
       addLegend("bottomright",
                 pal = pal,
-                values = ~ total_jail_pop_rate,
-                title = "Total Jail Population Rate (per 100,000",
+                values = ~ total_jail_prison_pop_rate,
+                title = "Total Prison Population Rate (per 100,000",
                 opacity = 0.7)
   })
   
@@ -196,7 +208,7 @@ server <- function(input, output) {
       incarceration_trends
     }
     
-    current_selection <- reactiveVal(input$county_filter)
+    current_selection <- input$county_filter
     
     if (length(input$state_filter) > 0) {
       updateSelectInput(
