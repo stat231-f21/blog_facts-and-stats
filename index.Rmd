@@ -156,6 +156,8 @@ Interestingly, when it comes to racial disparity in incarceration rates Southern
 
 Wisconsin has an unusually high disparity. As this [article](https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160) explains, that Wisconsin has some of the most residentially segregated counties in the country. This has made it easier for police to occupy neighborhoods that are almost entirely Black. As a result, about 1 in every 36 black residents in Wisconsin are currently in prison according to [a report by The Sentencing Project.](https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf)
 
+New Jersey also has very high racial disparity. As discussed in this [article](https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html), one possible cause for this are mandatory minimum sentences associated with nonviolent
+
 # More Exploration through Shiny App {.tabset .tabset-fade .tabset-pills}
 
 <iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px></iframe>
