@@ -156,7 +156,7 @@ Interestingly, when it comes to racial disparity in incarceration rates Southern
 
 Wisconsin has an unusually high disparity. As this [article](https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160) explains, that Wisconsin has some of the most residentially segregated counties in the country. This has made it easier for police to occupy neighborhoods that are almost entirely Black. As a result, about 1 in every 36 black residents in Wisconsin are currently in prison according to [a report by The Sentencing Project.](https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf)
 
-New Jersey also has very high racial disparity. As discussed in this [article](https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html), one possible cause for this are mandatory minimum sentences associated with nonviolent
+New Jersey also has very high racial disparity. As discussed in this [article](https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html), one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.
 
 # More Exploration through Shiny App {.tabset .tabset-fade .tabset-pills}
 
@@ -169,6 +169,8 @@ New Jersey also has very high racial disparity. As discussed in this [article](h
 ## Table
 
 # Conclusion and Limitations
+
+As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It's very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply 
 
 ## Citations
 * Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.
