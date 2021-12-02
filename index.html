@@ -24,8 +24,6 @@
     <script src="index_files/downcute-0.1/downcute_styles.js"></script>
     <script src="index_files/downcute-0.1/downcute.js"></script>
     <script src="index_files/prism-1.22/prism.js"></script>
-    <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
-    <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
     
     
     
@@ -131,16 +129,6 @@
             </ul></li>
             <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
             <li><a href="#citations">Citations</a></li>
-            </ul></li>
-            <li><a href="#formatting">Formatting</a><ul>
-            <li><a href="#header-2-subsection-heading">Header 2 (Subsection heading)</a></li>
-            <li><a href="#including-code-and-plots">Including code and plots</a></li>
-            <li><a href="#including-links-and-imagesvideos">Including links and images/videos</a></li>
-            <li><a href="#including-equations">Including equations</a></li>
-            </ul></li>
-            <li><a href="#you-can-even-create-tabs-within-your-webpage-if-you-want">You can even create tabs within your webpage if you want!</a><ul>
-            <li><a href="#bulleted-list">Bulleted list</a></li>
-            <li><a href="#numbered-list">Numbered list</a></li>
             </ul></li>
             </ul>
           </div>
@@ -272,167 +260,13 @@ geom_sf() +
 </div>
 <div id="conclusion-and-limitations" class="section level1">
 <h1>Conclusion and Limitations</h1>
-<p>As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It’s very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply</p>
+<p>As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It’s very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It’s an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from luicrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It’ll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates significantly.</p>
 <div id="citations" class="section level2">
 <h2>Citations</h2>
 <ul>
 <li>Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.</li>
 <li>Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Nov].https://github.com/vera-institute/incarceration-trends.</li>
 </ul>
-</div>
-</div>
-<div id="formatting" class="section level1">
-<h1>Formatting</h1>
-<div id="header-2-subsection-heading" class="section level2">
-<h2>Header 2 (Subsection heading)</h2>
-<div id="header-3-subsubsection-heading" class="section level3">
-<h3>Header 3 (Subsubsection heading)</h3>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For example, you can include <strong>Bold</strong> and <em>Italic</em> and <code>Code</code> text. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>You should test out updating your GitHub Pages website:</p>
-<ul>
-<li>clone your group’s blog project repo in RStudio</li>
-<li>update “Your Project Title Here” to a new title in the YAML header</li>
-<li>knit <code>index.Rmd</code> (we will now knit to HTML by default instead of pdf)</li>
-<li>commit and push <strong>both</strong> <code>index.Rmd</code> and <code>index.html</code></li>
-<li>go to <a href="https://stat231-f21.github.io/blog_facts-and-stats/" class="uri">https://stat231-f21.github.io/blog_facts-and-stats/</a> to see the published test document (this is publicly available!)</li>
-</ul>
-</div>
-</div>
-<div id="including-code-and-plots" class="section level2">
-<h2>Including code and plots</h2>
-<p>You can embed code as normal, for example:</p>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
-<p>Let’s clean up the format of that output instead of using the standard R output:</p>
-<pre class="r"><code>summary(cars) %&gt;%
-  kable(col.names = c(&quot;Speed&quot;, &quot;Distance&quot;),
-        row.names = FALSE) %&gt;%
-  kable_styling(bootstrap_options = &quot;striped&quot;,
-                full_width = FALSE) %&gt;%
-  row_spec(0, bold = TRUE) %&gt;%
-  column_spec(1:2, width = &quot;1.5in&quot;) </code></pre>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-Speed
-</th>
-<th style="text-align:left;font-weight: bold;">
-Distance
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Min. : 4.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Min. : 2.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-1st Qu.:12.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-1st Qu.: 26.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Median :15.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Median : 36.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Mean :15.4
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Mean : 42.98
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-3rd Qu.:19.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-3rd Qu.: 56.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Max. :25.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Max. :120.00
-</td>
-</tr>
-</tbody>
-</table>
-<p>In a study from the 1920s, fifty cars were used to see how the speed of the car and the distance taken to stop were related. Speeds ranged between 4 and 25 mph. Distances taken to stop ranged between 2 and 120 feet, with the middle 50% falling between 26 and 56 feet.</p>
-<p>You can also embed plots as normal, for example:</p>
-<p><img src="index_files/figure-html/figure1-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Take note of the default code chunk options in the <code>setup</code> code chunk, and adjust individual code chunk options as needed. for example, unlike the rest of the Rmd files we worked in this semester, the default code chunk option is <code>echo = FALSE</code>, so you will need to set <code>echo  = TRUE</code> for any code chunks you would like to display in the blog.</p>
-</div>
-<div id="including-links-and-imagesvideos" class="section level2">
-<h2>Including links and images/videos</h2>
-<p>You can include <a href="https://www.datadreaming.org/post/r-markdown-theme-gallery/">links</a> and there are a few ways to embed images! Both options for embedding images below can be used interchangeably. They both work for png, pdf, jpg, and even gif formats, and both support filepaths that are either URLs (for videos, you can include links to any valid YouTube or Vimeo URLs; see <a href="https://bookdown.org/yihui/rmarkdown/learnr-videos.html">here</a> for more details) or point to a location within your project directory.</p>
-<div id="option-1-markdown-approach" class="section level3">
-<h3>Option 1: Markdown approach</h3>
-<div class="figure">
-<img src="img/Kenesha-Sneed_safe-space.jpeg" alt="" />
-<p class="caption">This is a figure caption. The artwork is called Safe Space by <a href="https://www.keneshasneed.com/#/safespace/">Kenesha Sneed</a></p>
-</div>
-</div>
-<div id="option-2-code-chunk-approach" class="section level3">
-<h3>Option 2: Code chunk approach</h3>
-<div class="figure" style="text-align: center">
-<img src="https://media.giphy.com/media/H7ZrrA9V2pd3Tehdds/giphy.gif" alt="This is also figure caption"  />
-<p class="caption">
-This is also figure caption
-</p>
-</div>
-</div>
-</div>
-<div id="including-equations" class="section level2">
-<h2>Including equations</h2>
-<p>Equations may be needed if you are explaining a new technique or perhaps providing some other relevant formulas in your exposition. There are two ways to include equations:</p>
-<ul>
-<li>Inline: <span class="math inline">\(b \sim N(0, \sigma^2_b)\)</span></li>
-<li>Display-style (displayed on its own line): <span class="math display">\[\frac{\sigma^2_b}{\sigma^2_b + \sigma^2_e}\]</span></li>
-</ul>
-<p>For typesetting equations appropriately, take a look at the <em>Symbols in math mode</em> section of this <a href="https://users.dickinson.edu/~richesod/latex/latexcheatsheet.pdf">cheat sheet</a> (or do some extra Googling—there are <em>many</em> resources).</p>
-</div>
-</div>
-<div id="you-can-even-create-tabs-within-your-webpage-if-you-want" class="section level1 tabset tabset-fade tabset-pills">
-<h1>You can even create tabs within your webpage if you want!</h1>
-<p>Every subsection heading (starting with <code>##</code>) until you create a new section heading (starting with <code>#</code>) will be a new tab.</p>
-<div id="bulleted-list" class="section level2">
-<h2>Bulleted list</h2>
-<p>You can make a bulleted list like this:</p>
-<ul>
-<li>item 1</li>
-<li>item 2</li>
-<li>item 3</li>
-</ul>
-</div>
-<div id="numbered-list" class="section level2">
-<h2>Numbered list</h2>
-<p>You can make a numbered list like this</p>
-<ol style="list-style-type: decimal">
-<li>First thing I want to say</li>
-<li>Second thing I want to say</li>
-<li>Third thing I want to say</li>
-</ol>
 </div>
 </div>
 </div>
