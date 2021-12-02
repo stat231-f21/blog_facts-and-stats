@@ -42,6 +42,7 @@ rates_by_race <- rates_by_race %>%
 ## Widgets
 # For interactive maps widget:
 year_choices <- unique(incarceration_trends$year)
+demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
 
 # Bar Graph
 
@@ -67,16 +68,23 @@ ui <- navbarPage(
     )
   ),tabPanel(
     title=("Interactive Map"),
-    titlePanel("Prison Incarceration Rate 1970 - 2018"),
-    sidebarPanel(selectInput(inputId = "yearInput",
+    titlePanel("Prison + Jail Incarceration Rate 1970 - 2018"),
+    sidebarPanel(sliderInput(inputId = "yearInput",
                              label = "Year:",
-                             choices = year_choices,
+                             value=2010,
+                             min=1970,
+                             max=2018,
+                             sep=''),
+                 selectInput(inputId = "demographicInput",
+                             label = "Demographics:",
+                             choices = demographic_choices,
                              selected = "2018",
                              multiple = FALSE),),
     mainPanel(leafletOutput("mymap"))
   ),
   tabPanel(
     title = "Table",
+    titlePanel("Data Table for Interactive Map: Prison + Jail Incarceration Rate 1970 - 2018"),
     sidebarLayout(
       sidebarPanel(
         #actionButton("download", "Download Selected Data"),
@@ -127,22 +135,25 @@ server <- function(input, output) {
     
     m <- left_join(county_shapefile, filtered, by = "fips")
     return(m)
-    #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
-  #year_race <- reactive({
-  #  filtered <- year_prison() %>% filter()
+  #year_demographics <- reactive({
+  #  filtered <- year_prison() %>% select(c("yfips","year","total_jail_pop_rate","total_prison_pop_rate","fips","state","county","total_pop","total_jail_pop", "total_prison_pop"),input$demographicInput)
+  #  
+  #  return(filtered)
   #})
   
   output$mymap <- renderLeaflet({
     bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
+    data = year_prison()
+      
     year_prison() %>% 
       leaflet() %>% 
       addProviderTiles(provider = "CartoDB.Positron") %>%
       setView(-95.7129, 37.0902, zoom = 4) %>%
-      addPolygons(fillColor = ~ pal(year_prison()$total_jail_prison_pop_rate),
+      addPolygons(fillColor = ~ pal(data[[paste0(input$demographicInput)]]),
                   stroke = FALSE,
                   smoothFactor = .5,
                   opacity = 1,
@@ -153,8 +164,9 @@ server <- function(input, output) {
                                                       bringToFront = TRUE),
                   popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
                                    "State: ", state %>% str_to_title(), "<br>",
-                                   "Total Jail Population: ", total_jail_pop, "<br>",
-                                   "Total Prison Population: ", total_prison_pop, "<br>",
+                                   "Total Population: ", total_pop,"<br>",
+                                   "Total Jail Population Rate: ", total_jail_pop_rate, "<br>",
+                                   "Total Prison Population Rate: ", total_prison_pop_rate, "<br>",
                                    "Total Jail-Prison Population rate: ",
                                    total_jail_prison_pop_rate %>% round(2))) %>%
       addLegend("bottomright",
