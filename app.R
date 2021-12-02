@@ -37,6 +37,8 @@ rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(La
 
 rates_by_race <- rates_by_race %>%
   pivot_longer(!ID, names_to = "race", values_to = "rate")
+
+rates_by_race <- rates_by_race%>% mutate(ID = toupper(rates_by_race$ID))
 # ==========================================================
 
 ## Widgets
