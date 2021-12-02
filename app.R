@@ -12,7 +12,7 @@ library(reactable)
 
 # ====================================================
 ## Import data
-incarceration_trends <- read_csv("incarceration_trends_wrangled.csv")
+incarceration_trends <- read_csv("incarceration_trends_wrangled_7.csv")
 
 filtered <- incarceration_trends
 
@@ -28,12 +28,6 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
 county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
   mutate(fips = as.numeric(geoid))
-
-# filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
-incarceration_trends_1970 <- incarceration_trends %>%
-  filter(year == "1970")
-incarceration_trends_2018 <- incarceration_trends %>%
-  filter(year == "2018")
 
 rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
 
@@ -64,7 +58,7 @@ ui <- navbarPage(
       sidebarPanel(
         selectInput(
           inputId = "histvar",
-          label = "Choose a year:",
+          label = "Choose a state:",
           choices = state_options,
           selected = "wisconsin"),
         
@@ -73,7 +67,7 @@ ui <- navbarPage(
     )
   ),tabPanel(
     title=("Interactive Map"),
-    titlePanel("Jail Incarceration Rate 1970 - 2018"),
+    titlePanel("Prison Incarceration Rate 1970 - 2018"),
     sidebarPanel(selectInput(inputId = "yearInput",
                              label = "Year:",
                              choices = year_choices,
@@ -107,7 +101,8 @@ server <- function(input, output) {
       geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
       labs(x = "Ethnicity",
            y = "Rate of Incarceration (Prisoners per 100,000 residents)",
-           title = "Rates of Incarceration By Ethnicity") +
+           title = "Rates of Incarceration By Ethnicity",
+           subtitle = "Source: U.S. Bureau of Justice Statistics data for 2019.") +
       
       theme(
         plot.title = element_text(family = "serif",             
@@ -126,7 +121,7 @@ server <- function(input, output) {
     
   })
   
-  year_jail <- reactive({
+  year_prison <- reactive({
     filtered <- incarceration_trends %>%
       filter(year == input$yearInput) 
     
@@ -135,15 +130,19 @@ server <- function(input, output) {
     #geo_join(county_shapefile, filtered, 'fips', 'fips', how = "left")
   })
   
+  #year_race <- reactive({
+  #  filtered <- year_prison() %>% filter()
+  #})
+  
   output$mymap <- renderLeaflet({
-    bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
+    bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
-    year_jail() %>% 
+    year_prison() %>% 
       leaflet() %>% 
       addProviderTiles(provider = "CartoDB.Positron") %>%
-      setView(-95.7129, 37.0902, zoom = 3) %>%
-      addPolygons(fillColor = ~ pal(year_jail()$total_jail_pop_rate),
+      setView(-95.7129, 37.0902, zoom = 4) %>%
+      addPolygons(fillColor = ~ pal(year_prison()$total_jail_prison_pop_rate),
                   stroke = FALSE,
                   smoothFactor = .5,
                   opacity = 1,
@@ -155,12 +154,13 @@ server <- function(input, output) {
                   popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
                                    "State: ", state %>% str_to_title(), "<br>",
                                    "Total Jail Population: ", total_jail_pop, "<br>",
-                                   "Total Jail-Population rate: ",
-                                   total_jail_pop_rate %>% round(2))) %>%
+                                   "Total Prison Population: ", total_prison_pop, "<br>",
+                                   "Total Jail-Prison Population rate: ",
+                                   total_jail_prison_pop_rate %>% round(2))) %>%
       addLegend("bottomright",
                 pal = pal,
-                values = ~ total_jail_pop_rate,
-                title = "Total Jail Population Rate (per 100,000",
+                values = ~ total_jail_prison_pop_rate,
+                title = "Total Prison Population Rate (per 100,000",
                 opacity = 0.7)
   })
   
@@ -196,7 +196,7 @@ server <- function(input, output) {
       incarceration_trends
     }
     
-    current_selection <- reactiveVal(input$county_filter)
+    current_selection <- input$county_filter
     
     if (length(input$state_filter) > 0) {
       updateSelectInput(
