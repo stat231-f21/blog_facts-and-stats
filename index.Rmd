@@ -59,7 +59,7 @@ For developing interactive maps, we also downloaded the cartographic boundary sh
 # Change in Incarceration Population
 The “tough-on-crime” rhetoric characterized American politics during the 1980s and ’90s. It appeals to people's worst fears regarding their safety and perpetuates a framing that has justified for the racial profiling, police brutality, and unreasonably harsh sentencing that have together contributed to the rise of mass incarceration. Below, we utilized datasets that described population statistics surrounding incarceration from 1980 to 2018 to create an animation that shows the dramatic climbing of the population in prisons and jails. We juxtaposed trends of different variables to see the possibilities of associations among them and examine whether certain gaps are widening or closing. 
 
-```{r, echo=FALSE, out.width = '75%'}
+```{r, echo=FALSE, out.width = '100%', out.height = '50%'}
 knitr::include_graphics("incarceration_time_series.gif")
 ```
 

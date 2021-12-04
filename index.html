@@ -11,21 +11,20 @@
     
     <title>Incarceration Rates in America</title>
 
+        <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
         <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-    <script src="index_files/navigation-1.1/tabsets.js"></script>
-    <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
-    <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
-    <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
-    <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
-    <script src="index_files/downcute-0.1/downcute_styles.js"></script>
-    <script src="index_files/downcute-0.1/downcute.js"></script>
-    <script src="index_files/prism-1.22/prism.js"></script>
-    <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
-    <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+        <script src="index_files/navigation-1.1/tabsets.js"></script>
+        <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
+        <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+        <script src="index_files/downcute-0.1/downcute_styles.js"></script>
+        <script src="index_files/downcute-0.1/downcute.js"></script>
+        <script src="index_files/prism-1.22/prism.js"></script>
     
     
     
@@ -112,7 +111,8 @@
 
 <body class="preload">
 
-                  <!-- downcute start -->   
+   	
+               <!-- downcute start -->   
    <div id="docute" class="Root theme-default">
      <div class="Page layout-narrow">
       <div class="Wrap">
@@ -124,23 +124,15 @@
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
             <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
-            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a><ul>
+            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
+            <ul>
             <li><a href="#histogram">Histogram</a></li>
             <li><a href="#interactive-map">Interactive Map</a></li>
             <li><a href="#table">Table</a></li>
             </ul></li>
-            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
+            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
+            <ul>
             <li><a href="#citations">Citations</a></li>
-            </ul></li>
-            <li><a href="#formatting">Formatting</a><ul>
-            <li><a href="#header-2-subsection-heading">Header 2 (Subsection heading)</a></li>
-            <li><a href="#including-code-and-plots">Including code and plots</a></li>
-            <li><a href="#including-links-and-imagesvideos">Including links and images/videos</a></li>
-            <li><a href="#including-equations">Including equations</a></li>
-            </ul></li>
-            <li><a href="#you-can-even-create-tabs-within-your-webpage-if-you-want">You can even create tabs within your webpage if you want!</a><ul>
-            <li><a href="#bulleted-list">Bulleted list</a></li>
-            <li><a href="#numbered-list">Numbered list</a></li>
             </ul></li>
             </ul>
           </div>
@@ -157,7 +149,8 @@
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
          <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
-         
+           
+
    
       
    
@@ -182,7 +175,7 @@
 <div id="change-in-incarceration-population" class="section level1">
 <h1>Change in Incarceration Population</h1>
 <p>The “tough-on-crime” rhetoric characterized American politics during the 1980s and ’90s. It appeals to people’s worst fears regarding their safety and perpetuates a framing that has justified for the racial profiling, police brutality, and unreasonably harsh sentencing that have together contributed to the rise of mass incarceration. Below, we utilized datasets that described population statistics surrounding incarceration from 1980 to 2018 to create an animation that shows the dramatic climbing of the population in prisons and jails. We juxtaposed trends of different variables to see the possibilities of associations among them and examine whether certain gaps are widening or closing.</p>
-<p><img src="incarceration_time_series.gif" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="incarceration_time_series.gif" width="100%" height="50%" style="display: block; margin: auto;" /></p>
 <p>The visualization shows the amount of people under supervision, in jails and prisons in the United States from 1980 through 2018. The population under supervision grew extremely fast starting in 1980 and peaked in 2007 before it started slowly decreasing. The number of people almost quadrupled, from around 2,000,000 to almost 8,000,000, over the course of 30 years. The incarcerated population also grew dramatically fast between 1980 and 2007 from 500,000 to well over 2,000,000. Since then the incarcerated population has started to decrease but only slightly. The population in local jails and state prisons also grew significantly under the same time frame.</p>
 <p>Surprisingly, the federal prison population didn’t grow much relatively. As mentioned in the Introduction, during the 1970s and ’80s, the federal government dramatically escalated its <a href="https://www.history.com/topics/crime/the-war-on-drugs">war on drugs</a>. This led to millions of people getting locked up for low-level drug offenses, causing the US prison population to spike. The standard narrative therefore goes: it’s mainly the federal government that’s behind mass incarceration. However, our findings help refute such myth. The prison system that the federal government runs is huge, but <a href="https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html">many states</a> also have systems that are fairly close to the federal one in size. Moreover, there are other types of correctional observation including local jail, parole, and probation. In light of all these massive state-operated structures, the federal prison falls out of first place in regards of leading mass incarceration.</p>
 <p>Our findings also support the claim of Fordham University criminal justice expert <a href="https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in">John Pfaff</a>. “The federal government’s war on drugs never played much of a role in incarceration because the federal government just doesn’t play much of a role in incarceration overall,” said Pfaff.</p>
@@ -254,10 +247,10 @@ geom_sf() +
 <p>This <a href="https://www.sentencingproject.org/the-facts/#map">data</a> was used for the map above. We manually made a dataset that listed all the ratios by state in order to make the dataset used for the visualization.</p>
 <p>Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as “Three Strike, You’re Out”. This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a <a href="(http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)">study</a> conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law’s implementation found that black defendants made 43% of all three-strikes defendants.This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California’s total populations. On top of this the law has not been proven to reduce crime rates, but still remains in effect.</p>
 <p>Wisconsin has an unusually high disparity. As this <a href="https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160">article</a> explains, that Wisconsin has some of the most residentially segregated counties in the country. This has made it easier for police to occupy neighborhoods that are almost entirely Black. As a result, about 1 in every 36 black residents in Wisconsin are currently in prison according to <a href="https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf">a report by The Sentencing Project.</a></p>
-<p>New Jersey also has very high racial disparity. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.</p>
+<p>New Jersey also has very high racial disparity. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with nonviolent</p>
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
-<h1>More Exploration through Shiny App</h1>
+<h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
 <iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
 </iframe>
 <div id="histogram" class="section level2">
@@ -278,160 +271,6 @@ geom_sf() +
 <li>Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.</li>
 <li>Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Nov].https://github.com/vera-institute/incarceration-trends.</li>
 </ul>
-</div>
-</div>
-<div id="formatting" class="section level1">
-<h1>Formatting</h1>
-<div id="header-2-subsection-heading" class="section level2">
-<h2>Header 2 (Subsection heading)</h2>
-<div id="header-3-subsubsection-heading" class="section level3">
-<h3>Header 3 (Subsubsection heading)</h3>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For example, you can include <strong>Bold</strong> and <em>Italic</em> and <code>Code</code> text. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>You should test out updating your GitHub Pages website:</p>
-<ul>
-<li>clone your group’s blog project repo in RStudio</li>
-<li>update “Your Project Title Here” to a new title in the YAML header</li>
-<li>knit <code>index.Rmd</code> (we will now knit to HTML by default instead of pdf)</li>
-<li>commit and push <strong>both</strong> <code>index.Rmd</code> and <code>index.html</code></li>
-<li>go to <a href="https://stat231-f21.github.io/blog_facts-and-stats/" class="uri">https://stat231-f21.github.io/blog_facts-and-stats/</a> to see the published test document (this is publicly available!)</li>
-</ul>
-</div>
-</div>
-<div id="including-code-and-plots" class="section level2">
-<h2>Including code and plots</h2>
-<p>You can embed code as normal, for example:</p>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
-<p>Let’s clean up the format of that output instead of using the standard R output:</p>
-<pre class="r"><code>summary(cars) %&gt;%
-  kable(col.names = c(&quot;Speed&quot;, &quot;Distance&quot;),
-        row.names = FALSE) %&gt;%
-  kable_styling(bootstrap_options = &quot;striped&quot;,
-                full_width = FALSE) %&gt;%
-  row_spec(0, bold = TRUE) %&gt;%
-  column_spec(1:2, width = &quot;1.5in&quot;) </code></pre>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-Speed
-</th>
-<th style="text-align:left;font-weight: bold;">
-Distance
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Min. : 4.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Min. : 2.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-1st Qu.:12.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-1st Qu.: 26.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Median :15.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Median : 36.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Mean :15.4
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Mean : 42.98
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-3rd Qu.:19.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-3rd Qu.: 56.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 1.5in; ">
-Max. :25.0
-</td>
-<td style="text-align:left;width: 1.5in; ">
-Max. :120.00
-</td>
-</tr>
-</tbody>
-</table>
-<p>In a study from the 1920s, fifty cars were used to see how the speed of the car and the distance taken to stop were related. Speeds ranged between 4 and 25 mph. Distances taken to stop ranged between 2 and 120 feet, with the middle 50% falling between 26 and 56 feet.</p>
-<p>You can also embed plots as normal, for example:</p>
-<p><img src="index_files/figure-html/figure1-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Take note of the default code chunk options in the <code>setup</code> code chunk, and adjust individual code chunk options as needed. for example, unlike the rest of the Rmd files we worked in this semester, the default code chunk option is <code>echo = FALSE</code>, so you will need to set <code>echo  = TRUE</code> for any code chunks you would like to display in the blog.</p>
-</div>
-<div id="including-links-and-imagesvideos" class="section level2">
-<h2>Including links and images/videos</h2>
-<p>You can include <a href="https://www.datadreaming.org/post/r-markdown-theme-gallery/">links</a> and there are a few ways to embed images! Both options for embedding images below can be used interchangeably. They both work for png, pdf, jpg, and even gif formats, and both support filepaths that are either URLs (for videos, you can include links to any valid YouTube or Vimeo URLs; see <a href="https://bookdown.org/yihui/rmarkdown/learnr-videos.html">here</a> for more details) or point to a location within your project directory.</p>
-<div id="option-1-markdown-approach" class="section level3">
-<h3>Option 1: Markdown approach</h3>
-<div class="figure">
-<img src="img/Kenesha-Sneed_safe-space.jpeg" alt="" />
-<p class="caption">This is a figure caption. The artwork is called Safe Space by <a href="https://www.keneshasneed.com/#/safespace/">Kenesha Sneed</a></p>
-</div>
-</div>
-<div id="option-2-code-chunk-approach" class="section level3">
-<h3>Option 2: Code chunk approach</h3>
-<div class="figure" style="text-align: center">
-<img src="https://media.giphy.com/media/H7ZrrA9V2pd3Tehdds/giphy.gif" alt="This is also figure caption"  />
-<p class="caption">
-This is also figure caption
-</p>
-</div>
-</div>
-</div>
-<div id="including-equations" class="section level2">
-<h2>Including equations</h2>
-<p>Equations may be needed if you are explaining a new technique or perhaps providing some other relevant formulas in your exposition. There are two ways to include equations:</p>
-<ul>
-<li>Inline: <span class="math inline">\(b \sim N(0, \sigma^2_b)\)</span></li>
-<li>Display-style (displayed on its own line): <span class="math display">\[\frac{\sigma^2_b}{\sigma^2_b + \sigma^2_e}\]</span></li>
-</ul>
-<p>For typesetting equations appropriately, take a look at the <em>Symbols in math mode</em> section of this <a href="https://users.dickinson.edu/~richesod/latex/latexcheatsheet.pdf">cheat sheet</a> (or do some extra Googling—there are <em>many</em> resources).</p>
-</div>
-</div>
-<div id="you-can-even-create-tabs-within-your-webpage-if-you-want" class="section level1 tabset tabset-fade tabset-pills">
-<h1>You can even create tabs within your webpage if you want!</h1>
-<p>Every subsection heading (starting with <code>##</code>) until you create a new section heading (starting with <code>#</code>) will be a new tab.</p>
-<div id="bulleted-list" class="section level2">
-<h2>Bulleted list</h2>
-<p>You can make a bulleted list like this:</p>
-<ul>
-<li>item 1</li>
-<li>item 2</li>
-<li>item 3</li>
-</ul>
-</div>
-<div id="numbered-list" class="section level2">
-<h2>Numbered list</h2>
-<p>You can make a numbered list like this</p>
-<ol style="list-style-type: decimal">
-<li>First thing I want to say</li>
-<li>Second thing I want to say</li>
-<li>Third thing I want to say</li>
-</ol>
 </div>
 </div>
 </div>

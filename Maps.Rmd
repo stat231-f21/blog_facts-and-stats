@@ -179,7 +179,8 @@ leaflet(data = incarceration_2018_map) %>%
 incarceration_populations_longer <- incarceration_populations %>%
   select(year, total_supervised, total_incarcerated, local_jail, state_prison, federal_prison) %>%
   pivot_longer(!year, names_to = "variables", values_to = "counts") %>%
-  mutate(variables = as.factor(variables))
+  mutate(variables = as.factor(variables),
+         variables = str_replace(variables, "_", " "))
 
 incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
   geom_line(aes(group = variables, color = variables)) +
@@ -188,14 +189,21 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
        x = "Year",
        y = "Number of People",
        color = "Type") +
-  theme(plot.title = element_text(family = "serif", size = 20),
-        plot.subtitle = element_text(family = "serif", size = 15),
-        axis.text.x = element_text(angle = 30, hjust = 1, size = rel(1))) +
+  # change font sizes for title, subtitle, legend, and x-axis labels
+  theme(plot.title = element_text(family = "serif", size = 30),
+        plot.subtitle = element_text(family = "serif", size = 24),
+        legend.title = element_text(family = "serif", size = 18),
+        legend.key.size = unit(1, 'cm'),
+        legend.text = element_text(family = "serif", size = 14),
+        # change the axis label sizes and adjust the label angle of the x axis
+        axis.title = element_text(family = "serif", size = 18),
+        axis.text.x = element_text(angle = 30, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12)) +
   scale_y_continuous(breaks = seq(0, 7000000, by = 1000000),
                      labels = comma) +
   scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
   transition_reveal(year)
-incarceration_time_animation
+animate(incarceration_time_animation)
 
-anim_save("incarceration_time_series.gif", incarceration_time_animation)
+anim_save("incarceration_time_series.gif", incarceration_time_animation, height = 600, width = 800)
 ```
