@@ -42,13 +42,21 @@ incarceration_populations <-  read_csv("incarceration_populations.csv")
 # Introduction
 ![Courtesy of [Golden Cosmos](https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now)](img/Mass-Incarceration_TheNewYorker.jpeg)
 
-Mass incarceration in the United States is a relatively recent phenomenon. As documented in books such as _The New Jim Crow: Mass Incarceration in the Age of Colorblindness_ and documentaries such as "13th", mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.
+**Mass incarceration** in the United States is a relatively recent phenomenon. As documented in books such as _The New Jim Crow: Mass Incarceration in the Age of Colorblindness_ and documentaries such as "13th", mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.
 
 What makes mass incarceration unique is that the laws driving the disproportionate incarceration of Black Americans make no mention of race. Michelle Williams, the author of The New Jim Crow shows how The War on Drugs played a leading role in the incarcerated population rising by over 300% between 1980 and 2018 (Source: Bureau of Justice Statistics). In contrast, the population of the United States only increased by about 65% according to the US census. 
 
 Mass incarceration has persisted even as the crime rate has been dropping consistently since the early 1990s. As a result, the United States currently makes up about 5% of the world’s population but has nearly 25% of the world’s prisoners.
 
-Our project’s goal is to use datasets we acquired online to illustrate mass incarceration’s takeover state-by-state and county-by-county from 1970 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.
+Our project’s goal is to use datasets we acquired online to illustrate mass incarceration’s takeover **state-by-state** and **county-by-county** from 1970 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.
+
+Our **framing questions** include:
+
+* How has the total incarcerated population in the U.S. changed overtime?
+* During the peak of incarceration in America, how does incarceration rates of each state compare to each other? Which states stand out, and why?
+* Is there a disparity in incarceration rates among different racial/ethnic groups? If so, how large is the disparity? How does the disparity differ between different states?
+* How does incarceration rates of each county compare to each other? Which counties stand out, and why?
+* How can we develop a tool that will facilitate quick data research regarding specific demographic questions surrounding incarceration in America?
 
 # Data
 The datasets we used include incarceration trends by U.S. counties from 1970 - 2018 from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends), prison population counts from [the Bureau of Justice Statistics (BJS)](https://bjs.ojp.gov/data/key-statistics), incarceration rates and ratio by race from [the Prison Policy Initiative](https://www.prisonpolicy.org/racialgeography/report.html) and [the Sentencing Project](https://www.sentencingproject.org/the-facts/#map). 
@@ -63,13 +71,13 @@ The “tough-on-crime” rhetoric characterized American politics during the 198
 knitr::include_graphics("incarceration_time_series.gif")
 ```
 
-The visualization shows the amount of people under supervision, in jails and prisons in the United States from 1980 through 2018. The population under supervision grew extremely fast starting in 1980 and peaked in 2007 before it started slowly decreasing. The number of people almost quadrupled, from around 2,000,000 to almost 8,000,000, over the course of 30 years. The incarcerated population also grew dramatically fast between 1980 and 2007 from 500,000 to well over 2,000,000. Since then the incarcerated population has started to decrease but only slightly. The population in local jails and state prisons also grew significantly under the same time frame. 
+The visualization shows the amount of people under supervision, in jails and prisons in the United States from 1980 through 2018. The population under supervision grew **extremely fast** starting in 1980 and **peaked** in 2007 before it started slowly decreasing. The number of people almost **quadrupled**, from around 2,000,000 to almost 8,000,000, over the course of 30 years. The incarcerated population also grew dramatically fast between 1980 and 2007 from 500,000 to well over 2,000,000. Since then the incarcerated population has started to decrease but only slightly. The population in local jails and state prisons also grew significantly under the same time frame. 
 
 Surprisingly, the federal prison population didn't grow much relatively. As mentioned in the Introduction, during the 1970s and ’80s, the federal government dramatically escalated its [war on drugs](https://www.history.com/topics/crime/the-war-on-drugs). This led to millions of people getting locked up for low-level drug offenses, causing the US prison population to spike. The standard narrative therefore goes: it's mainly the federal government that's behind mass incarceration. However, our findings help refute such myth. The prison system that the federal government runs is huge, but [many states](https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html) also have systems that are fairly close to the federal one in size. Moreover, there are other types of correctional observation including local jail, parole, and probation. In light of all these massive state-operated structures, the federal prison falls out of first place in regards of leading mass incarceration.
 
 Our findings also support the claim of Fordham University criminal justice expert [John Pfaff](https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in). "The federal government’s war on drugs never played much of a role in incarceration because the federal government just doesn’t play much of a role in incarceration overall," said Pfaff.
 
-All 5 types of correctional observations display a trend of slight decrease starting in 2007. According to [PEW](https://www.pewtrusts.org/en/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth), since 2007, more than 30 states have enacted policies to reverse incarceration growth and costs, while maintaining the long-term, nationwide decline in the crime rate that began in the early 1990s. These changes are crucial for the dismantling of the prison industrial complex, while we also have to keep in mind that the United States remains as the world leader in its rate of incarceration, locking up its citizens at 5-10 times the rate of other industrialized nations. According to [the Sentencing Project](https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141), at the current rate of decline it will take 75 years to cut the prison population by 50%.
+All 5 types of correctional observations display a trend of **slight decrease** starting in 2007. According to [PEW](https://www.pewtrusts.org/en/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth), since 2007, more than 30 states have enacted policies to **reverse** incarceration growth and costs, while maintaining the long-term, nationwide decline in the crime rate that began in the early 1990s. These changes are crucial for the dismantling of the prison industrial complex, while we also have to keep in mind that the United States remains as the world leader in its rate of incarceration, locking up its citizens at 5-10 times the rate of other industrialized nations. According to [the Sentencing Project](https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141), at the current rate of decline it will take 75 years to cut the prison population by 50%.
 
 Despite the slight descreases, these trends have continue to result in prison overcrowding and fiscal burdens on states to accommodate a rapidly expanding penal system, despite [increasing evidence](https://www.vera.org/downloads/publications/for-the-record-prison-paradox_02.pdf) that large-scale incarceration is not an effective means of achieving public safety.
 
@@ -183,7 +191,7 @@ New Jersey also has very high racial disparity. As discussed in this [article](h
 ## Histogram
 
 ## Interactive Map
-
+To better visualize mass incarceration's take-over county by county, we created an interactive map using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables including `fips`, `total_pop_15to64`, and `total_jail_pop`. 
 
 ## Table
 
