@@ -183,22 +183,40 @@
 <p>Despite the slight descreases, these trends have continue to result in prison overcrowding and fiscal burdens on states to accommodate a rapidly expanding penal system, despite <a href="https://www.vera.org/downloads/publications/for-the-record-prison-paradox_02.pdf">increasing evidence</a> that large-scale incarceration is not an effective means of achieving public safety.</p>
 <p>Below is the main code that we used to make the time lapse visualization. First, we pivoted longer the incarceration populations dataset. Then, we used <code>ggplot</code> to create static plots that show trends of multiple variables and used <code>gganimate</code> to bring it from a static plot to a timelapse.</p>
 <pre class="r"><code>incarceration_populations_longer &lt;- incarceration_populations %&gt;%
+  # select the columns needed for graphing
   select(year, total_supervised, total_incarcerated, local_jail, state_prison, federal_prison) %&gt;%
+  # pivot longer the `incarceration_populations` dataset to have all the variables
+#under one column named &quot;variables&quot;
   pivot_longer(!year, names_to = &quot;variables&quot;, values_to = &quot;counts&quot;) %&gt;%
-  mutate(variables = as.factor(variables))
+  # convert entries under &quot;variables&quot; into factors
+  mutate(variables = as.factor(variables),
+         # take out the &quot;_&quot; between words
+         variables = str_replace(variables, &quot;_&quot;, &quot; &quot;))
 
+# create a time-laspe using gganimate
 incarceration_time_animation &lt;- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
   geom_line(aes(group = variables, color = variables)) +
+  # add title, subtitle, and labels for axis and legend
   labs(title = &quot;Change in Incarceration Population Overtime&quot;,
        subtitle = &quot;1980 - 2018&quot;,
        x = &quot;Year&quot;,
        y = &quot;Number of People&quot;,
        color = &quot;Type&quot;) +
-  theme(plot.title = element_text(family = &quot;serif&quot;, size = 20),
-        plot.subtitle = element_text(family = &quot;serif&quot;, size = 15),
-        axis.text.x = element_text(angle = 30, hjust = 1, size = rel(1))) +
-  scale_y_continuous(labels = comma) +
+  # change font sizes for title, subtitle, legend, and x-axis labels
+  theme(plot.title = element_text(family = &quot;serif&quot;, size = 30),
+        plot.subtitle = element_text(family = &quot;serif&quot;, size = 24),
+        legend.title = element_text(family = &quot;serif&quot;, size = 18),
+        legend.key.size = unit(1, &#39;cm&#39;),
+        legend.text = element_text(family = &quot;serif&quot;, size = 14),
+        # change the axis label sizes and adjust the label angle of the x axis
+        axis.title = element_text(family = &quot;serif&quot;, size = 18),
+        axis.text.x = element_text(angle = 30, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12)) +
+  # adjust the max, min, and interval for both axes
+  scale_y_continuous(breaks = seq(0, 7000000, by = 1000000),
+                     labels = comma) +
   scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
+  # set time laspe interval as by each year
   transition_reveal(year)</code></pre>
 </div>
 <div id="incarceration-rates-by-states-2010" class="section level1">

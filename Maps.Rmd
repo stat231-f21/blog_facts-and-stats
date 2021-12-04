@@ -114,8 +114,6 @@ ggplot(data= rates_by_race, aes(x=race, y=rate)) +
   geom_bar(stat="identity", width=0.5)
 ```
 
-<<<<<<< HEAD
-=======
 # Leaflet Maps by County (1970 vs 2018)
 ```{r, eval = TRUE}
 # combine the shapefile and the incarceration trends dataframe for both years respectively
@@ -169,9 +167,6 @@ leaflet(data = incarceration_2018_map) %>%
                                "Total Jail-Population rate: ",
                                   total_jail_pop_rate %>% round(2)))
 
-# save the maps
-#saveWidget(incarceration_1970_map, "incarceration_1970_map.html")
-#saveWidget(incarceration_2018_map, title = "2018 map", file="incarceration_2018_map.html")
 ```
 
 # Timelaspe Incarcerated Population
