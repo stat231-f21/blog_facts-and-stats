@@ -177,13 +177,20 @@ leaflet(data = incarceration_2018_map) %>%
 # Timelaspe Incarcerated Population
 ```{r, eval = TRUE}
 incarceration_populations_longer <- incarceration_populations %>%
+  # select the columns needed for graphing
   select(year, total_supervised, total_incarcerated, local_jail, state_prison, federal_prison) %>%
+  # pivot longer the `incarceration_populations` dataset to have all the variables
+#under one column named "variables"
   pivot_longer(!year, names_to = "variables", values_to = "counts") %>%
+  # convert entries under "variables" into factors
   mutate(variables = as.factor(variables),
+         # take out the "_" between words
          variables = str_replace(variables, "_", " "))
 
+# create a time-laspe using gganimate
 incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
   geom_line(aes(group = variables, color = variables)) +
+  # add title, subtitle, and labels for axis and legend
   labs(title = "Change in Incarceration Population Overtime",
        subtitle = "1980 - 2018",
        x = "Year",
@@ -199,11 +206,15 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
         axis.title = element_text(family = "serif", size = 18),
         axis.text.x = element_text(angle = 30, hjust = 1, size = 12),
         axis.text.y = element_text(size = 12)) +
+  # adjust the max, min, and interval for both axes
   scale_y_continuous(breaks = seq(0, 7000000, by = 1000000),
                      labels = comma) +
   scale_x_continuous(breaks = seq(1980, 2018, by = 2)) +
+  # set time laspe interval as by each year
   transition_reveal(year)
+
 animate(incarceration_time_animation)
 
+# save the animation as a gif
 anim_save("incarceration_time_series.gif", incarceration_time_animation, height = 600, width = 800)
 ```
