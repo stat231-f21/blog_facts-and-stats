@@ -20,10 +20,6 @@ filtered <- incarceration_trends
 county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
   janitor::clean_names() 
 
-# add leading zeros to flip codes in incarceration trends dataset
-#incarceration_trends <- incarceration_trends %>%
-#mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
-
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
@@ -37,6 +33,8 @@ rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(La
 
 rates_by_race <- rates_by_race %>%
   pivot_longer(!ID, names_to = "race", values_to = "rate")
+
+rates_by_race <- rates_by_race%>% mutate(ID = toupper(rates_by_race$ID))
 # ==========================================================
 
 ## Widgets
@@ -45,7 +43,6 @@ year_choices <- unique(incarceration_trends$year)
 demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
 
 # Bar Graph
-
 state_options <- unique(rates_by_race$ID)
 
 ## UI
@@ -66,15 +63,17 @@ ui <- navbarPage(
       ),
       mainPanel(plotOutput(outputId = "hist", height= 700))
     )
-  ),tabPanel(
-    title=("Interactive Map"),
+  ),
+  # Tab 2: Interactive Map
+  tabPanel(
+    title = "Interactive Map",
     titlePanel("Prison + Jail Incarceration Rate 1970 - 2018"),
     sidebarPanel(sliderInput(inputId = "yearInput",
                              label = "Year:",
-                             value=2010,
-                             min=1970,
-                             max=2018,
-                             sep=''),
+                             value = 2010,
+                             min = 1970,
+                             max = 2018,
+                             sep = ''),
                  selectInput(inputId = "demographicInput",
                              label = "Demographics:",
                              choices = demographic_choices,
@@ -82,12 +81,12 @@ ui <- navbarPage(
                              multiple = FALSE),),
     mainPanel(leafletOutput("mymap"))
   ),
+  # Tab 3: Table
   tabPanel(
     title = "Table",
     titlePanel("Data Table for Interactive Map: Prison + Jail Incarceration Rate 1970 - 2018"),
     sidebarLayout(
       sidebarPanel(
-        #actionButton("download", "Download Selected Data"),
         selectInput("state_filter", "Select a state:", unique(filtered$state), multiple = TRUE),
         selectInput("county_filter", "Select a county:", unique(filtered$county), multiple = TRUE),
         selectInput("year_filter", "Select a year:", unique(filtered$year), multiple = TRUE),
@@ -100,18 +99,17 @@ ui <- navbarPage(
 ## Server
 server <- function(input, output) {
   data_for_hist <- reactive({
-    data <- rates_by_race %>% filter(ID==input$histvar)
+    data <- rates_by_race %>% filter(ID == input$histvar)
   })
   
   output$hist <- renderPlot({
     
-    ggplot(data= data_for_hist(), aes(x=race, y=rate)) +
-      geom_bar(stat="identity", width=0.5, fill = "#2c7fb8") +
+    ggplot(data = data_for_hist(), aes(x = race, y = rate)) +
+      geom_bar(stat ="identity", width = 0.5, fill = "#2c7fb8") +
       labs(x = "Ethnicity",
            y = "Rate of Incarceration (Prisoners per 100,000 residents)",
            title = "Rates of Incarceration By Ethnicity",
            subtitle = "Source: U.S. Bureau of Justice Statistics data for 2019.") +
-      
       theme(
         plot.title = element_text(family = "serif",             
                                   face = "bold",              
@@ -136,12 +134,6 @@ server <- function(input, output) {
     m <- left_join(county_shapefile, filtered, by = "fips")
     return(m)
   })
-  
-  #year_demographics <- reactive({
-  #  filtered <- year_prison() %>% select(c("yfips","year","total_jail_pop_rate","total_prison_pop_rate","fips","state","county","total_pop","total_jail_pop", "total_prison_pop"),input$demographicInput)
-  #  
-  #  return(filtered)
-  #})
   
   output$mymap <- renderLeaflet({
     bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
