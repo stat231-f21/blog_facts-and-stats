@@ -193,10 +193,15 @@ New Jersey also has very high racial disparity. As discussed in this [article](h
 ## Interactive Map
 To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map. Some of our codes creating this map are included below. 
 
-```{r animation code, echo = TRUE}
+```{r map code, echo = TRUE}
 # will include updated version
 ```
 
+Contrasting the state of incarceration of 1970, 2007 (peak of incarceration), and 2018. First, we can see the stark contrast between the colors of these three maps.
+
+<img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
 
 
 ## Table

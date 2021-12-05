@@ -79,7 +79,7 @@ ui <- navbarPage(
                              choices = demographic_choices,
                              selected = "2018",
                              multiple = FALSE),),
-    mainPanel(leafletOutput("mymap"))
+    mainPanel(leafletOutput("mymap", width = "900px", height = "600px"))
   ),
   # Tab 3: Table
   tabPanel(
@@ -176,7 +176,8 @@ server <- function(input, output) {
                 values = ~ total_jail_prison_pop_rate,
                 title = paste0(input$demographicInput),
                 opacity = 0.7)
-  })
+    }
+  )
   
   # Tab 3: Table
   output$table <- renderReactable({
