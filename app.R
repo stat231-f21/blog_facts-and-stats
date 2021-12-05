@@ -128,33 +128,41 @@ server <- function(input, output) {
   })
   
   # Tab 2: Interactive Map
+  # create reactive variable responsive to year option
   year_prison <- reactive({
+    # filter the data set to keep only the entries in the year selected
     filtered <- incarceration_trends %>%
       filter(year == input$yearInput) 
-    
+    # join the filtered dataset with county shapefile
     m <- left_join(county_shapefile, filtered, by = "fips")
     return(m)
   })
   
   output$mymap <- renderLeaflet({
+    # create customized color bins 
     bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
+    # choose a palette suitable for this map
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
     data = year_prison()
-      
+    # create the map using Leaflet  
     year_prison() %>% 
       leaflet() %>% 
       addProviderTiles(provider = "CartoDB.Positron") %>%
+      # set default zoom-in so it focuses on mainland America
       setView(-95.7129, 37.0902, zoom = 4) %>%
+      # add counties
       addPolygons(fillColor = ~ pal(data[[paste0(input$demographicInput)]]),
                   stroke = FALSE,
                   smoothFactor = .5,
                   opacity = 1,
                   fillOpacity = 0.7,
+                  # add hovering effects
                   highlightOptions = highlightOptions(weight = 5,
                                                       fillOpacity = 1,
                                                       color = "black",
                                                       bringToFront = TRUE),
+                  # add popup and fill in information that we want to display
                   popup = ~ paste0("County Name: ", county %>% str_to_title(), "<br>",
                                    "State: ", state %>% str_to_title(), "<br>",
                                    "Total Population: ", total_pop,"<br>",
@@ -162,6 +170,7 @@ server <- function(input, output) {
                                    "Total Prison Population Rate: ", total_prison_pop_rate, "<br>",
                                    "Total Jail-Prison Population rate: ",
                                    total_jail_prison_pop_rate %>% round(2))) %>%
+      # add a legend that shows the meaning of the color
       addLegend("bottomright",
                 pal = pal,
                 values = ~ total_jail_prison_pop_rate,
