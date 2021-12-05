@@ -197,11 +197,13 @@ To better visualize mass incarceration's take-over county by county, we created 
 # will include updated version
 ```
 
-Contrasting the state of incarceration of 1970, 2007 (peak of incarceration), and 2018. First, we can see the stark contrast between the colors of these three maps.
+Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right). The prison and jail incarceration rates combined are being shown. First, we can see the stark contrast between the colors of these three maps.
 
 <img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
+
+2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 500$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 1000$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Issaquena County, Mississippi, has a prison-jail incarceration rate high of $7599.82$ in 2007, which increased dramatically from $4698.01$ in 2000, and continued to climb to $8741.08$ in 2018 (despite the national-wide decrease in incarceration rate). 
 
 
 ## Table
