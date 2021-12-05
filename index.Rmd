@@ -191,7 +191,8 @@ New Jersey also has very high racial disparity. As discussed in this [article](h
 ## Histogram
 
 ## Interactive Map
-To better visualize mass incarceration's take-over county by county, we created an interactive map using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables including `fips`, `total_pop_15to64`, and `total_jail_pop`. 
+To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are selected, an interactive map that demonstrates 
+
 
 ## Table
 

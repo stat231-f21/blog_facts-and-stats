@@ -101,9 +101,9 @@ server <- function(input, output) {
   data_for_hist <- reactive({
     data <- rates_by_race %>% filter(ID == input$histvar)
   })
-  
+
+  # Tab 1: Histogram
   output$hist <- renderPlot({
-    
     ggplot(data = data_for_hist(), aes(x = race, y = rate)) +
       geom_bar(stat ="identity", width = 0.5, fill = "#2c7fb8") +
       labs(x = "Ethnicity",
@@ -127,6 +127,7 @@ server <- function(input, output) {
     
   })
   
+  # Tab 2: Interactive Map
   year_prison <- reactive({
     filtered <- incarceration_trends %>%
       filter(year == input$yearInput) 
@@ -164,11 +165,11 @@ server <- function(input, output) {
       addLegend("bottomright",
                 pal = pal,
                 values = ~ total_jail_prison_pop_rate,
-                title = "Total Prison Population Rate (per 100,000",
+                title = paste0(input$demographicInput),
                 opacity = 0.7)
   })
   
-  
+  # Tab 3: Table
   output$table <- renderReactable({
     
     reactable(
