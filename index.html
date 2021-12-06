@@ -11,19 +11,20 @@
     
     <title>Incarceration Rates in America</title>
 
+        <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
         <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-    <script src="index_files/navigation-1.1/tabsets.js"></script>
-    <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
-    <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
-    <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
-    <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
-    <script src="index_files/downcute-0.1/downcute_styles.js"></script>
-    <script src="index_files/downcute-0.1/downcute.js"></script>
-    <script src="index_files/prism-1.22/prism.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+        <script src="index_files/navigation-1.1/tabsets.js"></script>
+        <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
+        <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+        <script src="index_files/downcute-0.1/downcute_styles.js"></script>
+        <script src="index_files/downcute-0.1/downcute.js"></script>
+        <script src="index_files/prism-1.22/prism.js"></script>
     
     
     
@@ -110,7 +111,8 @@
 
 <body class="preload">
 
-                  <!-- downcute start -->   
+   	
+               <!-- downcute start -->   
    <div id="docute" class="Root theme-default">
      <div class="Page layout-narrow">
       <div class="Wrap">
@@ -122,10 +124,14 @@
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
             <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
-            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a><ul>
-            <li><a href="#interactive-map-histogram-and-table">Interactive Map, Histogram, and Table</a></li>
+            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
+            <ul>
+            <li><a href="#histogram">Histogram</a></li>
+            <li><a href="#interactive-map">Interactive Map</a></li>
+            <li><a href="#table">Table</a></li>
             </ul></li>
-            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
+            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
+            <ul>
             <li><a href="#citations">Citations</a></li>
             </ul></li>
             </ul>
@@ -143,7 +149,8 @@
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
          <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
-         
+           
+
    
       
    
@@ -271,17 +278,23 @@ geom_sf() +
 <p>New Jersey has the highest racial disparity in the country with about 12.5 Black prisoners per white prisoners. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.</p>
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
-<h1>More Exploration through Shiny App</h1>
+<h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
 <iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
 </iframe>
-<div id="interactive-map-histogram-and-table" class="section level2">
-<h2>Interactive Map, Histogram, and Table</h2>
-<p>The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost at least double between Black and white poplations.</p>
+<div id="histogram" class="section level2">
+<h2>Histogram</h2>
+<p>The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx ppeople. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates of Black people almost always double that of white people.</p>
+</div>
+<div id="interactive-map" class="section level2">
+<h2>Interactive Map</h2>
 <p>To better visualize mass incarceration’s take-over county by county, we created an interactive map in our shiny app using the <code>Leaflet</code> package. The data this visualization is based on is from <a href="https://github.com/vera-institute/incarceration-trends">the Vera Institute of Justice</a> and consists of a total of <span class="math inline">\(121\)</span> demographic and geographic variables that span 1970 to 2018, including <code>fips</code>, <code>total_pop_15to64</code>, and <code>total_jail_pop</code>. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the <strong>year</strong> selected on the slider bar and the <strong>demographic choice</strong> selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the <strong>jail/prison population rate</strong> of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a <strong>deeper shade of red</strong>, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don’t have sufficient information will appear grey on the map. Some of our codes creating this map are included below.</p>
 <pre class="r"><code># will include updated version</code></pre>
 <p>Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right). The prison and jail incarceration rates combined are being shown. First, we can see the stark contrast between the colors of these three maps.</p>
 <p><img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"> <img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"> <img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"></p>
 <p>2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of <span class="math inline">\(1000 - 5000\)</span> incarcerated per <span class="math inline">\(100,000\)</span>. Whereas in 1970, most of the country has a rate of <span class="math inline">\(0 - 500\)</span>. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of <span class="math inline">\(250 - 1000\)</span> which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Issaquena County, Mississippi, has a prison-jail incarceration rate high of <span class="math inline">\(7599.82\)</span> in 2007, which increased dramatically from <span class="math inline">\(4698.01\)</span> in 2000, and continued to climb to <span class="math inline">\(8741.08\)</span> in 2018 (despite the national-wide decrease in incarceration rate).</p>
+</div>
+<div id="table" class="section level2">
+<h2>Table</h2>
 </div>
 </div>
 <div id="conclusion-and-limitations" class="section level1">
