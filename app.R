@@ -51,7 +51,7 @@ ui <- navbarPage(
   title = "Incarceration Rates in America",
   # Tab 1: Histogram
   tabPanel(
-    title = "Histogram",
+    title = "Bar Graph",
     sidebarLayout(
       sidebarPanel(
         selectInput(

@@ -139,6 +139,7 @@ incarceration_populations <- incarceration_populations  %>%
   mutate(federal_prison = as.numeric(federal_prison))
 ```
 
+#Incarceration Rates by Race wrangling
 ```{r, eval = TRUE}
 rates_by_race <- rates_by_race %>% rename(ID = State ) 
 rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))
@@ -150,7 +151,7 @@ rates_by_race <- rates_by_race %>%
 rates_by_race <- rates_by_race%>% mutate(ID = toupper(rates_by_race$ID))
 
 ```
-
+#Ratio
 ```{r, eval = TRUE}
 
 ratio_bw <- ratio_bw %>% rename(ID = State ) %>% rename(ratio= "Ratio (B/W)" ) 
