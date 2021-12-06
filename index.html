@@ -11,20 +11,19 @@
     
     <title>Incarceration Rates in America</title>
 
-        <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
         <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-        <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-        <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-        <script src="index_files/navigation-1.1/tabsets.js"></script>
-        <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
-        <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
-        <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
-        <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
-        <script src="index_files/downcute-0.1/downcute_styles.js"></script>
-        <script src="index_files/downcute-0.1/downcute.js"></script>
-        <script src="index_files/prism-1.22/prism.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+    <script src="index_files/navigation-1.1/tabsets.js"></script>
+    <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+    <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+    <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
+    <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+    <script src="index_files/downcute-0.1/downcute_styles.js"></script>
+    <script src="index_files/downcute-0.1/downcute.js"></script>
+    <script src="index_files/prism-1.22/prism.js"></script>
     
     
     
@@ -111,8 +110,7 @@
 
 <body class="preload">
 
-   	
-               <!-- downcute start -->   
+                  <!-- downcute start -->   
    <div id="docute" class="Root theme-default">
      <div class="Page layout-narrow">
       <div class="Wrap">
@@ -124,14 +122,10 @@
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
             <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
-            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
-            <ul>
-            <li><a href="#histogram">Histogram</a></li>
-            <li><a href="#interactive-map">Interactive Map</a></li>
-            <li><a href="#table">Table</a></li>
+            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a><ul>
+            <li><a href="#interactive-map-histogram-and-table">Interactive Map, Histogram, and Table</a></li>
             </ul></li>
-            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
-            <ul>
+            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
             <li><a href="#citations">Citations</a></li>
             </ul></li>
             </ul>
@@ -149,8 +143,7 @@
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
          <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
-           
-
+         
    
       
    
@@ -162,8 +155,8 @@
 <img src="img/Mass-Incarceration_TheNewYorker.jpeg" alt="" />
 <p class="caption">Courtesy of <a href="https://www.newyorker.com/podcast/the-new-yorker-radio-hour/mass-incarceration-then-and-now">Golden Cosmos</a></p>
 </div>
-<p><strong>Mass incarceration</strong> in the United States is a relatively recent phenomenon. As documented in books such as <em>The New Jim Crow: Mass Incarceration in the Age of Colorblindness</em> and documentaries such as “13th”, mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.</p>
-<p>What makes mass incarceration unique is that the laws driving the disproportionate incarceration of Black Americans make no mention of race. Michelle Williams, the author of The New Jim Crow shows how The War on Drugs played a leading role in the incarcerated population rising by over 300% between 1980 and 2018 (Source: Bureau of Justice Statistics). In contrast, the population of the United States only increased by about 65% according to the US census.</p>
+<p><strong>Mass incarceration</strong> in the United States is a relatively recent phenomenon. As documented in books such as <em>The New Jim Crow: Mass Incarceration in the Age of Colorblindness</em> and documentaries such as <em>13th</em>, mass incarceration is the latest iteration of American society’s efforts to keep Black Americans, as well as other non-white racial and ethnic groups, in second-class citizenship status.</p>
+<p>What makes mass incarceration unique is that the laws driving the disproportionate incarceration of Black Americans make no mention of race. Michelle Williams, the author of <em>The New Jim Crow</em> shows how The War on Drugs played a leading role in the incarcerated population rising by over 300% between 1980 and 2018 (Source: Bureau of Justice Statistics). In contrast, the population of the United States only increased by about 65% according to the US census.</p>
 <p>Mass incarceration has persisted even as the crime rate has been dropping consistently since the early 1990s. As a result, the United States currently makes up about 5% of the world’s population but has nearly 25% of the world’s prisoners.</p>
 <p>Our project’s goal is to use datasets we acquired online to illustrate mass incarceration’s takeover <strong>state-by-state</strong> and <strong>county-by-county</strong> from 1970 onward. Most Americans know that mass incarceration exists, but few know when incarceration rates first spike in their community. More broadly, we hope the data science tools we have applied to the dataset help answer both broad and narrow questions about the when, where, and why of mass incarceration in America.</p>
 <p>Our <strong>framing questions</strong> include:</p>
@@ -229,8 +222,9 @@ incarceration_time_animation &lt;- ggplot(data = incarceration_populations_longe
 </div>
 <div id="incarceration-rates-by-states-2010" class="section level1">
 <h1>Incarceration Rates by States (2010)</h1>
-<p>This data comes from the <a href="https://www.prisonpolicy.org/data/">Prison Policy Initiative</a> and breaks down the incarceration rate by race/ethnicity.</p>
-<p><img src="Incarceration_2010.png" width="100%" style="display: block; margin: auto;" /> This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the <a href="https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdfestimates">UN</a> that the average rate around the world is about 145 per 100,000. To put this into perspective any state in the purple has 1% of its population behind bars.</p>
+<p>A standard measure for incarceration rates across the globe is to look at how many people are imprisoned for every 100,000 residents in the country, state, or county of interest. The data for thae map below comes from the <a href="https://www.prisonpolicy.org/data/">Prison Policy Initiative</a> and breaks down the incarceration rate by race/ethnicity.</p>
+<p><img src="Incarceration_2010.png" width="100%" style="display: block; margin: auto;" /> This map shows incarceration rates near the peak of incarceration in the United States. In general, southern states had higher incarceration rates, but barely any states had incarceration rates below 500 prisoners per 100,000 residents. This is still extremely high considering that the <a href="https://www.prisonstudies.org/sites/default/files/resources/downloads/wppl_12.pdfestimates">UN</a> that the average rate around the world is about 145 per 100,000. To put this into perspective any state in the purple has 1% of its population behind bars. This <a href="https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration">article</a> from the the Southern Poverty Law Center (SPLC) helps explain why some of the incarceration rates in the south are so high. The article calls attention to 3 states: Alabama, Florida, and Louisiana. In each of these states, the largest contributor to high incarceration rates is the purposeful denial of parole opportunities to the vast majority of prisoners. In Alabama, the Board of Pardons and Paroles is especially harsh and has led to overcrowded prisons. In Florida, there are still “truth in sentencing laws” that require incarcerated people to serve at least 85% of their sentence before being released. On top of this Florida has essentially abolished parole for any crimes committed after 1983. Louisiana is notorious for the amount of people it has locked up for life without the possibility of parole or for “virtual life” sentences of more than 50 years. Prisoners with these two sentences currently make up about one in five prisoners in Louisiana prisons (SPLC).</p>
+<p>As these practices show not only rates of arrest but excessively long sentences contribute to high incarceration rates.</p>
 <p>We used this <a href="https://www.prisonpolicy.org/data/race_ethnicity_gender_2010.xlsx">dataset</a> to make the heat map above. The code for wrangling the dataset and visualizing it is shown below. We wrangled the Prison Policy Initiative dataset in order to merge it with the states dataset from the maps package.</p>
 <pre class="r"><code>incarceration_rates_race &lt;- read_csv(&quot;prison_policy_initiative_incarceration_by_race.csv&quot;)
 
@@ -271,32 +265,27 @@ geom_sf() +
 <h1>Racial Contrast</h1>
 <p><img src="Incarceration_2020.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>This <a href="https://www.sentencingproject.org/the-facts/#map">data</a> was used for the map above. We manually made a dataset that listed all the ratios by state in order to make the dataset used for the visualization.</p>
-<p>Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. Many of the states that are considered relatively liberal like California and New York actually have some of the higher rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as “Three Strike, You’re Out”. This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a <a href="(http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)">study</a> conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law’s implementation found that black defendants made 43% of all three-strikes defendants.This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California’s total populations. On top of this the law has not been proven to reduce crime rates, but still remains in effect.</p>
+<p>Interestingly, when it comes to racial disparity in incarceration rates Southern states have much less disparity. This is because although Southern states sentence people for longer which increases the total incarceration rate, many other states have laws and other circumstances that lead to higher rates of incarceration for people of color.</p>
+<p>Many of the states that are considered relatively liberal like California and New York actually have some of the highest rates of disparity. This could be in part to laws that are unique to each state. In the case of California, a law known colloquially as “Three Strike, You’re Out”. This law was designed to address habitual offenders by automatically increasing their sentence to 25 to life after committing three crimes. Only one of these crimes had to be serious or violent which has led many people to go to prison for non-violent offenses such as drug possession. According to a <a href="(http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf)">study</a> conducted by the Center of Juvenile and Criminal Justice in 1996 only a year after the law’s implementation found that black defendants made 43% of all three-strikes defendants.This obviously lead to even higher incarceration rates for Black Californians who already made up 31% of the state prisoner population at the time while only comprising 7% of California’s total populations. On top of this the law has not been proven to reduce crime rates, but still remains in effect.</p>
 <p>Wisconsin has an unusually high disparity. As this <a href="https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160">article</a> explains, that Wisconsin has some of the most residentially segregated counties in the country. This has made it easier for police to occupy neighborhoods that are almost entirely Black. As a result, about 1 in every 36 black residents in Wisconsin are currently in prison according to <a href="https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf">a report by The Sentencing Project.</a></p>
 <p>New Jersey also has very high racial disparity. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.</p>
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
-<h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
+<h1>More Exploration through Shiny App</h1>
 <iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
 </iframe>
-<div id="histogram" class="section level2">
-<h2>Histogram</h2>
-</div>
-<div id="interactive-map" class="section level2">
-<h2>Interactive Map</h2>
+<div id="interactive-map-histogram-and-table" class="section level2">
+<h2>Interactive Map, Histogram, and Table</h2>
 <p>To better visualize mass incarceration’s take-over county by county, we created an interactive map in our shiny app using the <code>Leaflet</code> package. The data this visualization is based on is from <a href="https://github.com/vera-institute/incarceration-trends">the Vera Institute of Justice</a> and consists of a total of <span class="math inline">\(121\)</span> demographic and geographic variables that span 1970 to 2018, including <code>fips</code>, <code>total_pop_15to64</code>, and <code>total_jail_pop</code>. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the <strong>year</strong> selected on the slider bar and the <strong>demographic choice</strong> selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the <strong>jail/prison population rate</strong> of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a <strong>deeper shade of red</strong>, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don’t have sufficient information will appear grey on the map. Some of our codes creating this map are included below.</p>
 <pre class="r"><code># will include updated version</code></pre>
 <p>Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right). The prison and jail incarceration rates combined are being shown. First, we can see the stark contrast between the colors of these three maps.</p>
 <p><img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"> <img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"> <img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;"></p>
 <p>2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of <span class="math inline">\(1000 - 5000\)</span> incarcerated per <span class="math inline">\(100,000\)</span>. Whereas in 1970, most of the country has a rate of <span class="math inline">\(0 - 500\)</span>. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of <span class="math inline">\(250 - 1000\)</span> which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Issaquena County, Mississippi, has a prison-jail incarceration rate high of <span class="math inline">\(7599.82\)</span> in 2007, which increased dramatically from <span class="math inline">\(4698.01\)</span> in 2000, and continued to climb to <span class="math inline">\(8741.08\)</span> in 2018 (despite the national-wide decrease in incarceration rate).</p>
 </div>
-<div id="table" class="section level2">
-<h2>Table</h2>
-</div>
 </div>
 <div id="conclusion-and-limitations" class="section level1">
 <h1>Conclusion and Limitations</h1>
-<p>As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It’s very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It’s an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from luicrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It’ll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates significantly.</p>
+<p>As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It’s very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It’s an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from luicrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It’ll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially.</p>
 <div id="citations" class="section level2">
 <h2>Citations</h2>
 <ul>
