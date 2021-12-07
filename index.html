@@ -11,19 +11,20 @@
     
     <title>Incarceration Rates in America</title>
 
+        <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
         <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-    <script src="index_files/navigation-1.1/tabsets.js"></script>
-    <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
-    <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
-    <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
-    <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
-    <script src="index_files/downcute-0.1/downcute_styles.js"></script>
-    <script src="index_files/downcute-0.1/downcute.js"></script>
-    <script src="index_files/prism-1.22/prism.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+        <script src="index_files/navigation-1.1/tabsets.js"></script>
+        <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
+        <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+        <script src="index_files/downcute-0.1/downcute_styles.js"></script>
+        <script src="index_files/downcute-0.1/downcute.js"></script>
+        <script src="index_files/prism-1.22/prism.js"></script>
     
     
     
@@ -110,7 +111,8 @@
 
 <body class="preload">
 
-                  <!-- downcute start -->   
+   	
+               <!-- downcute start -->   
    <div id="docute" class="Root theme-default">
      <div class="Page layout-narrow">
       <div class="Wrap">
@@ -122,12 +124,14 @@
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
             <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
-            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a><ul>
+            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
+            <ul>
             <li><a href="#histogram">Histogram</a></li>
             <li><a href="#interactive-map">Interactive Map</a></li>
             <li><a href="#table">Table</a></li>
             </ul></li>
-            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
+            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
+            <ul>
             <li><a href="#citations">Citations</a></li>
             </ul></li>
             </ul>
@@ -145,7 +149,8 @@
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
          <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
-         
+           
+
    
       
    
@@ -280,7 +285,7 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 <p>New Jersey has the highest racial disparity in the country with about 12.5 Black prisoners per white prisoners. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.</p>
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
-<h1>More Exploration through Shiny App</h1>
+<h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
 <iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
 </iframe>
 <div id="histogram" class="section level2">

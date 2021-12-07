@@ -56,7 +56,7 @@ county_shapefile <- county_shapefile %>%
 head(county_shapefile)
 
 # save the wrangled shapefile
-st_write(county_shapefile, "county_shapefile_wrangled.shp") # only run once, so the file does
+# st_write(county_shapefile, "county_shapefile_wrangled.shp") # only run once, so the file does
 #not get overwritten each time
 ```
 
@@ -64,10 +64,13 @@ st_write(county_shapefile, "county_shapefile_wrangled.shp") # only run once, so 
 ```{r, eval = TRUE}
 incarceration_trends <- incarceration_trends %>%
   separate(county_name, c("county", NA), sep = " ") %>%
-  filter(state != "AK", state != "HI") %>%
   mutate(
-    total_jail_prison_pop_rate = total_jail_pop_rate + total_prison_pop_rate
-  )
+    # add up prison and jail rates to create a new column
+    # if one of the entries is NA, add nothing
+    total_jail_prison_pop_rate = ifelse(is.na(total_jail_pop_rate), total_prison_pop_rate,
+                                        ifelse(is.na(total_prison_pop_rate), total_jail_pop_rate,
+                                               total_jail_pop_rate + total_prison_pop_rate))
+    )
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```

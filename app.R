@@ -43,7 +43,7 @@ ui <- navbarPage(
           selected = "Wisconsin"),
         
       ),
-      mainPanel(plotOutput(outputId = "hist", height= 700))
+      mainPanel(plotOutput(outputId = "hist", height = 700))
     )
   ),
   # Tab 2: Interactive Map
