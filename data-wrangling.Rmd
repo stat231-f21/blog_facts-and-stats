@@ -50,15 +50,18 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
 
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
-  select(-statefp, -countyfp) %>%
+  select(- statefp, - countyfp) %>%
   mutate(fips = as.numeric(geoid))
+
 head(county_shapefile)
+# save the wrangled shapefile
+st_write(county_shapefile, "county_shapefile_wrangled.shp")
 ```
 
 ## Incarceration Trends Wrangling
 ```{r, eval = TRUE}
 incarceration_trends <- incarceration_trends %>%
-  separate(county_name, c("county",NA), sep = " ") %>%
+  separate(county_name, c("county", NA), sep = " ") %>%
   filter(state != "AK", state != "HI")
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
@@ -66,17 +69,6 @@ write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 
 ## Incarceration by State Wrangling
 ```{r, eval = TRUE}
-
-
-
-#rename necessary columns
-
-
-#rename necessary columns
-
-incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
-#delete United States row and remove states and territories not in Continental United States
-incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
 #rename necessary columns
 incarceration_rates_race <- incarceration_rates_race %>% 
   rename(ID = "...3",
@@ -89,9 +81,9 @@ incarceration_rates_race <- incarceration_rates_race %>%
          ID != "Alaska") %>%
 #Make state names lowercase to match geom dataset and change rate column to numeric
   mutate(ID = tolower(ID),
-         rate_per_100 = as.numeric(rate_per_100),
          #Take out commas from rates column
-         rate_per_100 = gsub(",","", as.character(rate_per_100)))
+         rate_per_100 = gsub(",","", as.character(rate_per_100)),
+         rate_per_100 = as.numeric(rate_per_100))
 ```
 
 #Population Time-Series wrangling
@@ -123,45 +115,20 @@ simpleCap <- function(x) {
         sep = "", collapse = " ")
 }
 
-
 rates_by_race <- rates_by_race %>% 
   # change variable type of the rates of each race
   mutate(Black = as.numeric(Black),
          Latino = as.numeric(Latino),
          White = as.numeric(White),
-         ID = toupper(rates_by_race$ID))
-
-rates_by_race <- rates_by_race %>%
-  pivot_longer(!ID, names_to = "race", values_to = "rate")
-
-
-rates_by_race <- rates_by_race %>% rename(ID = State ) 
-rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
-
-rates_by_race <- rates_by_race %>%
-  pivot_longer(!ID, names_to = "race", values_to = "rate")
-
-simpleCap <- function(x) {
-  s <- strsplit(x, " ")[[1]]
-  paste(toupper(substring(s, 1,1)), substring(s, 2),
-        sep="", collapse=" ")
-}
-
-rates_by_race$ID <- sapply(rates_by_race$ID, simpleCap)
-
-
-write_csv(rates_by_race, "rates_by_race_wrangled.csv")
-
-
-rates_by_race %>% arrange(ID)
          # change the state names using the defined function
-         State = sapply(State, simpleCap))%>%
+         State = sapply(State, simpleCap)) %>%
+  arrange(State) %>%
   # pivot longer for graphing
   pivot_longer(!State, names_to = "race", values_to = "rate")
 
 write_csv(rates_by_race, "rates_by_race_wrangled.csv")
-
 ```
+
 #Ratio
 ```{r, eval = TRUE}
 # rename certain variables

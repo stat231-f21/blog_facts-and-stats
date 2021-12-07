@@ -93,7 +93,8 @@ incarceration_populations_longer <- incarceration_populations %>%
   # convert entries under "variables" into factors
   mutate(variables = as.factor(variables),
          # take out the "_" between words
-         variables = str_replace(variables, "_", " "))
+         variables = str_replace(variables, "_", " ")) %>%
+  na.omit()
 
 # create a time-laspe using gganimate
 incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
@@ -139,16 +140,23 @@ We used this [dataset](https://www.prisonpolicy.org/data/race_ethnicity_gender_2
 ```{r heat map, echo = TRUE, eval=FALSE}
 incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
 
-#rename necessary columns
-incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
-#delete United States row and remove states and territories not in Continental United States
-incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
-#Make state names lowercase to match geom dataset and change rate column to numeric
-incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))%>% mutate(rate_per_100 = as.numeric(rate_per_100))
+# Rename necessary columns
+incarceration_rates_race <- incarceration_rates_race %>% 
+  rename(ID = "...3",
+         rate_per_100 = "...26") %>% 
+  # Delete United States row and remove states and territories not in Continental United States
+  filter(ID != "United States", 
+         ID != "Puerto Rico", 
+         ID != "Geography", 
+         ID != "Hawaii", 
+         ID != "Alaska") %>%
+# Make state names lowercase to match geom dataset and change rate column to numeric
+  mutate(ID = tolower(ID),
+         # Take out commas from rates column
+         rate_per_100 = gsub(",","", as.character(rate_per_100)),
+         rate_per_100 = as.numeric(rate_per_100))
   
-#Take out commas from rates column
-incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
-#import geom dataset
+# Import geom dataset
 state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
   st_as_sf()
 
@@ -158,18 +166,18 @@ state_info <- data.frame(Region = state.region,
                          # Match state variable name in summary data
                          State = state.abb)
 
-#Join both datasets
+# Join both datasets
 incarceration_rates_race <- state_map %>% 
   left_join(state_info) %>% 
   left_join(incarceration_rates_race)
 
 #GGplot Visialization
-states<-ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
-geom_sf() +
+states <- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
+  geom_sf() +
   scale_fill_viridis(option = "magma", direction = -1) +
   theme_void() +
-  labs(title=" Prison Incarceration Rate by State 2010", fill = "Prisoners per \n100,000 residents")
-
+  labs(title = " Prison Incarceration Rate by State 2010", 
+       fill = "Prisoners per \n100,000 residents")
 ```
 # Racial Contrast
 
@@ -193,11 +201,7 @@ New Jersey has the highest racial disparity in the country with about 12.5 Black
 <iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px></iframe>
 
 ## Histogram
-
-## Interactive Map, Histogram, and Table
 The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
-=======
-The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx ppeople. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates of Black people almost always double that of white people.
 
 ## Interactive Map
 To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map. Some of our codes creating this map are included below. 
@@ -220,6 +224,8 @@ Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (
 # Conclusion and Limitations
 
 As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It's very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It's an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from lucrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It'll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially. 
+
+Although we were able to get data down to the county level, most of the analysis we were able to do was on the national level. The information we found while looking at some of the outliers when it came to incarceration rates or racial disparity in incarceration showed that it would be more effective to look at the specific circumstances that have led to mass incarceration rates in each state or even county. As we said in our introduction, it is the state prison systems that hold the majority of people behind bars in this country so if we were to continue this research we would focus on specific states to understand the circumstances and work backwards to see if states across the country share similar laws and practices that have led to high rates of incarceration. By doing this we would be able to start addressing specific issues rather than just pointing out that the issues exist.
 
 
 ## Citations
