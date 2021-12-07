@@ -143,13 +143,11 @@ incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_
 incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 #delete United States row and remove states and territories not in Continental United States
 incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
-#Make state names lowercase to match geom dataset
-incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))
+#Make state names lowercase to match geom dataset and change rate column to numeric
+incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))%>% mutate(rate_per_100 = as.numeric(rate_per_100))
+  
 #Take out commas from rates column
 incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
-#Convert rates column to numeric
-incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = as.numeric(rate_per_100))
-
 #import geom dataset
 state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
   st_as_sf()
@@ -196,10 +194,12 @@ New Jersey has the highest racial disparity in the country with about 12.5 Black
 
 ## Histogram
 
+## Interactive Map, Histogram, and Table
+The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
+=======
 The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx ppeople. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates of Black people almost always double that of white people.
 
 ## Interactive Map
-
 To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map. Some of our codes creating this map are included below. 
 
 ```{r map code, echo = TRUE}

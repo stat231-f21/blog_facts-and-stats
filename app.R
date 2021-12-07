@@ -34,7 +34,10 @@ rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(La
 rates_by_race <- rates_by_race %>%
   pivot_longer(!ID, names_to = "race", values_to = "rate")
 
-rates_by_race <- rates_by_race%>% mutate(ID = toupper(rates_by_race$ID))
+rates_by_race$ID <- gsub("^(\\w)(\\w+)", "\\U\\1\\L\\2", 
+                         rates_by_race$ID, perl = TRUE)
+rates_by_race %>% arrange(ID)
+
 # ==========================================================
 
 ## Widgets
@@ -49,7 +52,7 @@ state_options <- unique(rates_by_race$ID)
 ui <- navbarPage(
   theme = shinytheme("sandstone"),
   title = "Incarceration Rates in America",
-  # Tab 1: Histogram
+  # Tab 1: Bar Graph
   tabPanel(
     title = "Bar Graph",
     sidebarLayout(
@@ -58,7 +61,7 @@ ui <- navbarPage(
           inputId = "histvar",
           label = "Choose a state:",
           choices = state_options,
-          selected = "wisconsin"),
+          selected = "Wisconsin"),
         
       ),
       mainPanel(plotOutput(outputId = "hist", height= 700))
