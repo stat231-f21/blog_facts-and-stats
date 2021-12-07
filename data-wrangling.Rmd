@@ -84,7 +84,7 @@ incarceration_rates_race <- incarceration_rates_race  %>% mutate(rate_per_100 = 
 ```{r, eval = TRUE}
 incarceration_populations <- incarceration_populations %>% 
   rename(total_incarcerated = "...7") %>% 
-  rename( year = "Bureau of Justice Statistics") %>% 
+  rename(year = "Bureau of Justice Statistics") %>% 
   rename(total_supervised = "...2") %>%
   rename(local_jail = "...8") %>%
   rename(state_prison = "...10") %>%
@@ -115,15 +115,16 @@ incarceration_populations <- incarceration_populations  %>%
 
 #Incarceration Rates by Race wrangling
 ```{r, eval = TRUE}
-rates_by_race <- rates_by_race %>% rename(ID = State ) 
-rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))
-rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
+rates_by_race <- rates_by_race %>% 
+  rename(ID = State) %>%
+  mutate(ID = tolower(rates_by_race$ID)) %>%
+  mutate(Black = as.numeric(Black),
+         Latino = as.numeric(Latino),
+         White = as.numeric(White),
+         ID = toupper(rates_by_race$ID))
 
 rates_by_race <- rates_by_race %>%
   pivot_longer(!ID, names_to = "race", values_to = "rate")
-
-rates_by_race <- rates_by_race%>% mutate(ID = toupper(rates_by_race$ID))
-
 ```
 #Ratio
 ```{r, eval = TRUE}
