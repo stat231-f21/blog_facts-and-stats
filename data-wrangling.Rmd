@@ -65,6 +65,7 @@ head(county_shapefile)
 incarceration_trends <- incarceration_trends %>%
   separate(county_name, c("county", NA), sep = " ") %>%
   filter(state != "AK", state != "HI") %>%
+  mutate_all(~replace(., is.na(.), 0)) %>%
   mutate(
     total_jail_prison_pop_rate = total_jail_pop_rate + total_prison_pop_rate
   )
