@@ -41,15 +41,6 @@ state_info <- data.frame(Region = state.region,
                          # Match state variable name in summary data
                          State = state.abb)
 
-#Create dataset with coordinate information for counties
-county_map <- maps::map("county", plot = FALSE, fill = TRUE) %>% 
-  st_as_sf() 
-
-#delete state name from county name
-county_map <-county_map %>%
-  separate(ID, c("state","county"), sep = ',')
-
-
 state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
   st_as_sf()
 
