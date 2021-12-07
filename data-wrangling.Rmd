@@ -154,9 +154,8 @@ write_csv(rates_by_race, "rates_by_race_wrangled.csv")
 
 
 rates_by_race %>% arrange(ID)
-
          # change the state names using the defined function
-         State = sapply(State, simpleCap)) %>%
+         State = sapply(State, simpleCap))%>%
   # pivot longer for graphing
   pivot_longer(!State, names_to = "race", values_to = "rate")
 

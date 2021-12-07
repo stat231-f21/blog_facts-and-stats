@@ -124,7 +124,7 @@ incarceration_time_animation <- ggplot(data = incarceration_populations_longer, 
 
 
 # Incarceration Rates by States (2010)
-A standard measure for incarceration rates across the globe is to look at how many people are imprisoned for every 100,000 residents in the country, state, or county of interest. The data for thae map below comes from the [Prison Policy Initiative](https://www.prisonpolicy.org/data/) and breaks down the incarceration rate by race/ethnicity.
+A standard measure for incarceration rates across the globe is to look at how many people are imprisoned for every 100,000 residents in the country, state, or county of interest. The data for the map below comes from the [Prison Policy Initiative](https://www.prisonpolicy.org/data/) and breaks down the incarceration rate by race/ethnicity.
 
 ```{r, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("Incarceration_2010.png")
@@ -224,4 +224,26 @@ As discussed in the introduction, it is hard to pinpoint a singular cause for ma
 
 ## Citations
 * Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.
-* Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Nov].https://github.com/vera-institute/incarceration-trends. 
+
+* Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Dec]. https://github.com/vera-institute/incarceration-trends.
+
+* Bureau of Justice Statistics. 2018. Total Correctional Population Counts by Status; [2021 Dec].
+https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx
+
+* Prison Policy Initiative. 2020. U.S. incarceration rates by race and ethnicity; [2021 Dec]. https://www.prisonpolicy.org/graphs/raceinc.html
+* Sentencing Project. 2019. State-by-State Data; [2021 Dec]. https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR
+* United States Census Bureau. 2021. Cartographic Boundary Files - Shapefile; [2021 Dec]. https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+* History.com Editors. “War on Drugs.” History.com, A&amp;E Television Networks, 31 May 2017, https://www.history.com/topics/crime/the-war-on-drugs. 
+* Misachi, John. “The Largest Jails in the United States.” WorldAtlas, WorldAtlas, 28 Sept. 2017, https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html. 
+* Lopez, G. (2017, May 30). Why you can't blame mass incarceration on the war on&nbsp;drugs. Vox. Retrieved December 7, 2021, from https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in. 
+* State reforms reverse decades of incarceration growth. The Pew Charitable Trusts. (n.d.). Retrieved December 7, 2021, from https://www.pewtrusts.org/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth. 
+* New prison and jail population figures released by U.S. Department of Justice. Retrieved December 7, 2021, from https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141. 
+* Frederick, B., &amp; Mai, C. (2017, July 20). The Prison Paradox. Vera Institute of Justice. Retrieved December 7, 2021, from https://www.vera.org/publications/for-the-record-prison-paradox-incarceration-not-safer. 
+* Long road to nowhere: How southern states struggle with long-term incarceration. SPLC Action Fund. (2021, February 24). Retrieved December 7, 2021, from https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration. 
+* Davis, C., Estes, R., &amp; Schiraldi, V. (1996, March). "Three Strikes": The New Apartheid . Retrieved December 7, 2021, from http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf. 
+* NBCUniversal News Group. (2021, November 12). Wisconsin leads nation in imprisonment rates of black people. NBCNews.com. Retrieved December 7, 2021, from https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160. 
+* Nellis, A. (2021, October). The Color of Justice: Racial and Ethnic Disparity in State Prisons. Retrieved December 7, 2021, from https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf. 
+*  Atmonavage, J. (2021, October 18). N.J. continues to have worst racial disparities nationwide in its prisons, report says. nj.com. Retrieved December 7, 2021, from https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html. 
+
+
+
