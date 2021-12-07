@@ -12,9 +12,9 @@ library(reactable)
 
 # ====================================================
 ## Import data
-incarceration_trends <- read_csv("incarceration_trends_wrangled_7.csv")
+incarceration_trends <- read_csv("incarceration_trends_wrangled.csv")
 rates_by_race <- read.csv("rates_by_race_wrangled.csv")
-county_shapefile <- read_sf("county_shapefile.shp")
+county_shapefile <- read_sf("county_shapefile_wrangled.shp")
 filtered <- incarceration_trends
 
 # ==========================================================
@@ -61,7 +61,7 @@ ui <- navbarPage(
                              choices = demographic_choices,
                              selected = "2018",
                              multiple = FALSE),),
-    mainPanel(leafletOutput("mymap", width = "900px", height = "600px"))
+    mainPanel(leafletOutput("mymap", width = "800px", height = "600px"))
   ),
   # Tab 3: Table
   tabPanel(
