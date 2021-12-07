@@ -66,9 +66,13 @@ write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 
 ## Incarceration by State Wrangling
 ```{r, eval = TRUE}
+<<<<<<< HEAD
 
 #rename necessary columns
 
+=======
+#rename necessary columns
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
 incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 #delete United States row and remove states and territories not in Continental United States
 incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
@@ -77,18 +81,13 @@ incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(inc
   
 #Take out commas from rates column
 incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
-
-
-
-#names(incarceration_rates ) <- c('GEOID', 'GEOID2', 'State', 'total_incarcerated', 'total_white', 'total_black','total_native', 'total_asian', 'total_pacific_islander', 'total_other', 'total_two_or_more', 'ort', 'total_white_non-hispanic', 'blank', '' )
-
 ```
 
 #Population Time-Series wrangling
 ```{r, eval = TRUE}
 incarceration_populations <- incarceration_populations %>% 
   rename(total_incarcerated = "...7") %>% 
-  rename( year = "Bureau of Justice Statistics") %>% 
+  rename(year = "Bureau of Justice Statistics") %>% 
   rename(total_supervised = "...2") %>%
   rename(local_jail = "...8") %>%
   rename(state_prison = "...10") %>%
@@ -120,6 +119,20 @@ incarceration_populations <- incarceration_populations  %>%
 #Incarceration Rates by Race wrangling
 ```{r, eval = TRUE}
 
+<<<<<<< HEAD
+=======
+rates_by_race <- rates_by_race %>% 
+  rename(ID = State) %>%
+  mutate(ID = tolower(rates_by_race$ID)) %>%
+  mutate(Black = as.numeric(Black),
+         Latino = as.numeric(Latino),
+         White = as.numeric(White),
+         ID = toupper(rates_by_race$ID))
+
+rates_by_race <- rates_by_race %>%
+  pivot_longer(!ID, names_to = "race", values_to = "rate")
+
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
 rates_by_race <- rates_by_race %>% rename(ID = State ) 
 rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
 
@@ -137,7 +150,11 @@ rates_by_race$ID <- sapply(rates_by_race$ID, simpleCap)
 
 write_csv(rates_by_race, "rates_by_race_wrangled.csv")
 
+<<<<<<< HEAD
 
+=======
+rates_by_race %>% arrange(ID)
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
 ```
 #Ratio
 ```{r, eval = TRUE}
