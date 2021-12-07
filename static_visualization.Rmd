@@ -1,7 +1,7 @@
 ---
-title: "Maps"
+title: "Static Visualization"
 author: "Facts & Stats"
-date: "11/8/2021"
+date: "12/7/2021"
 output: html_document
 ---
 
