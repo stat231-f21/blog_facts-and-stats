@@ -57,7 +57,7 @@ head(county_shapefile)
 
 ## Incarceration Trends Wrangling
 ```{r, eval = TRUE}
-incarceration_trends<- incarceration_trends %>%
+incarceration_trends <- incarceration_trends %>%
   separate(county_name, c("county",NA), sep = " ") %>%
   filter(state != "AK", state != "HI")
 
@@ -68,6 +68,7 @@ write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```{r, eval = TRUE}
 
 
+
 #rename necessary columns
 
 
@@ -76,53 +77,55 @@ write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 #delete United States row and remove states and territories not in Continental United States
 incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
+#rename necessary columns
+incarceration_rates_race <- incarceration_rates_race %>% 
+  rename(ID = "...3",
+         rate_per_100 = "...26") %>% 
+  #delete United States row and remove states and territories not in Continental United States
+  filter(ID != "United States", 
+         ID != "Puerto Rico", 
+         ID != "Geography", 
+         ID != "Hawaii", 
+         ID != "Alaska") %>%
 #Make state names lowercase to match geom dataset and change rate column to numeric
-incarceration_rates_race <- incarceration_rates_race %>% mutate(ID = tolower(incarceration_rates_race$ID))%>% mutate(rate_per_100 = as.numeric(rate_per_100))
-  
-#Take out commas from rates column
-incarceration_rates_race$rate_per_100<-gsub(",","",as.character(incarceration_rates_race$rate_per_100))
+  mutate(ID = tolower(ID),
+         rate_per_100 = as.numeric(rate_per_100),
+         #Take out commas from rates column
+         rate_per_100 = gsub(",","", as.character(rate_per_100)))
 ```
 
 #Population Time-Series wrangling
 ```{r, eval = TRUE}
 incarceration_populations <- incarceration_populations %>% 
-  rename(total_incarcerated = "...7") %>% 
-  rename(year = "Bureau of Justice Statistics") %>% 
-  rename(total_supervised = "...2") %>%
-  rename(local_jail = "...8") %>%
-  rename(state_prison = "...10") %>%
-  rename(federal_prison = "...11")
-
-
-incarceration_populations <- incarceration_populations %>% filter(total_incarcerated != "Total/c")%>%filter(!row_number() %in% c(1))%>%
-  separate(year, c("year",NA), sep = "/d")
-
-incarceration_populations$total_incarcerated<-gsub(",","",as.character(incarceration_populations$total_incarcerated))
-
-incarceration_populations$total_supervised<-gsub(",","",as.character(incarceration_populations$total_supervised))
-
-incarceration_populations$local_jail<-gsub(",","",as.character(incarceration_populations$local_jail))
-
-incarceration_populations$state_prison<-gsub(",","",as.character(incarceration_populations$state_prison))
-
-incarceration_populations$federal_prison<-gsub(",","",as.character(incarceration_populations$federal_prison))
-
-incarceration_populations <- incarceration_populations  %>% 
-  mutate(total_incarcerated = as.numeric(total_incarcerated))%>% 
-  mutate(year = as.numeric(year)) %>% 
-  mutate(total_supervised = as.numeric(total_supervised)) %>% 
-  mutate(local_jail = as.numeric(local_jail)) %>%
-  mutate(state_prison = as.numeric(state_prison)) %>%
-  mutate(federal_prison = as.numeric(federal_prison))
+  rename(total_incarcerated = "...7",
+         year = "Bureau of Justice Statistics",
+         total_supervised = "...2",
+         local_jail = "...8",
+         state_prison = "...10",
+         federal_prison = "...11") %>%
+  filter(total_incarcerated != "Total/c", !row_number() %in% c(1)) %>%
+  separate(year, c("year",NA), sep = "/d") %>%
+  mutate(
+    total_incarcerated = as.numeric(gsub(",","", as.character(total_incarcerated))),
+    total_supervised = as.numeric(gsub(",","", as.character(total_supervised))),
+    local_jail = as.numeric(gsub(",","", as.character(local_jail))),
+    state_prison = as.numeric(gsub(",","", as.character(state_prison))),
+    federal_prison = as.numeric(gsub(",","", as.character(federal_prison))),
+    year = as.numeric(year))
 ```
 
 #Incarceration Rates by Race wrangling
 ```{r, eval = TRUE}
+# define a function to capitalize each word of state names
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1, 1)), substring(s, 2),
+        sep = "", collapse = " ")
+}
 
 
 rates_by_race <- rates_by_race %>% 
-  rename(ID = State) %>%
-  mutate(ID = tolower(rates_by_race$ID)) %>%
+  # change variable type of the rates of each race
   mutate(Black = as.numeric(Black),
          Latino = as.numeric(Latino),
          White = as.numeric(White),
@@ -152,14 +155,22 @@ write_csv(rates_by_race, "rates_by_race_wrangled.csv")
 
 rates_by_race %>% arrange(ID)
 
+         # change the state names using the defined function
+         State = sapply(State, simpleCap)) %>%
+  # pivot longer for graphing
+  pivot_longer(!State, names_to = "race", values_to = "rate")
+
+write_csv(rates_by_race, "rates_by_race_wrangled.csv")
+
 ```
 #Ratio
 ```{r, eval = TRUE}
-
-ratio_bw <- ratio_bw %>% rename(ID = State ) %>% rename(ratio= "Ratio (B/W)" ) 
-
-ratio_bw <- ratio_bw %>% mutate(ID = tolower(ratio_bw$ID))
-
-ratio_bw <- ratio_bw %>% mutate(ratio = as.numeric(ratio))
+# rename certain variables
+ratio_bw <- ratio_bw %>% 
+  rename(ID = State,
+        ratio = "Ratio (B/W)") %>%
+  # change variable types
+  mutate(ID = tolower(ID),
+        ratio = as.numeric(ratio))
 ```
 
