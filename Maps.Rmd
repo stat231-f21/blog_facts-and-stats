@@ -25,13 +25,7 @@ library(htmlwidgets) # interactive map labels
 
 # Import dataframes
 ```{r, eval = TRUE}
-# Incarceration Trends
-incarceration_trends <-read_csv("incarceration_trends.csv")
-incarceration_trends_jail_jurisdiction <-read_csv("incarceration_trends_jail_jurisdiction.csv")
 incarceration_rates_race # data frame wrangled in `data-wrangling`, 2010 data
-county_shapefile 
-incarceration_trends_1970
-incarceration_trends_2018
 incarceration_populations
 ```
 
@@ -59,96 +53,33 @@ county_map <-county_map %>%
 state_map <- maps::map("state", plot = FALSE, fill = TRUE) %>% 
   st_as_sf()
 
-
-
-
-
 incarceration_rates_race <- state_map %>% 
   left_join(state_info) %>% 
   left_join(incarceration_rates_race)
-
-rates_by_race_map <- state_map %>% 
-  left_join(state_info) %>% 
-  left_join(rates_by_race)
 
 ratio_bw_map <- state_map %>% 
   left_join(state_info) %>% 
   left_join(ratio_bw)
 
-class(incarceration_rates_race$Total_Incarcerated)
-
-  
 #Map of Incarceration Rates by State
 ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 geom_sf() +
-  scale_fill_viridis(option = "magma", direction = -1,  limits=c(0, 1500), labels= seq(0, 1500, 500), breaks=seq(0, 1500, 500)) +
+  scale_fill_viridis(option = "magma", direction = -1,  limits = c(0, 1500), labels = seq(0, 1500, 500), breaks = seq(0, 1500, 500)) +
   theme_void() +
-  labs(title=" Prison Incarceration Rate by State 2010", fill = "Prisoners per \n100,000 residents")
+  labs(title = "Prison Incarceration Rate by State 2010", 
+       fill = "Prisoners per \n100,000 residents")
+
 ggsave("Incarceration_2010.png")
 
 #Map of Black to White ratio of prisoners by state
 ggplot(ratio_bw_map, aes(fill = ratio)) +
 geom_sf() +
-  scale_fill_viridis(direction = -1, limits=c(0, 12.5)) +
-  theme_void()+
-  labs(title=" Incarceration Disparity Between Black and white Americans 2020", fill = "Black/white Ratio ")
+  scale_fill_viridis(direction = -1, limits = c(0, 12.5)) +
+  theme_void() +
+  labs(title = "Incarceration Disparity Between Black and white Americans 2020", 
+       fill = "Black/white Ratio ")
 
 ggsave("Incarceration_2020.png")
-```
-
-# Leaflet Maps by County (1970 vs 2018)
-```{r, eval = TRUE}
-# combine the shapefile and the incarceration trends dataframe for both years respectively
-incarceration_1970_map <- geo_join(county_shapefile, incarceration_trends_1970, 'fips', 'fips', how = "left")
-incarceration_2018_map <- geo_join(county_shapefile, incarceration_trends_2018, 'fips', 'fips', how = "left")
-
-# make a palette
-bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
-pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
-
-# create a map for 1970
-leaflet(data = incarceration_1970_map) %>% 
-  addProviderTiles(provider = "CartoDB.Positron") %>%
-  setView(-95.7129, 37.0902, zoom = 3) %>%
-  addPolygons(fillColor = ~ pal(total_jail_pop_rate),
-              stroke = FALSE,
-              smoothFactor = .5,
-              opacity = 1,
-              fillOpacity = 0.7,
-              highlightOptions = highlightOptions(weight = 5,
-                                                  fillOpacity = 1,
-                                                  color = "black",
-                                                  bringToFront = TRUE),
-              popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
-                               "State: ", state %>% str_to_title(), "<br>",
-                               "Total Jail Population: ", total_jail_pop, "<br>",
-                               "Total Jail-Population rate: ",
-                                  total_jail_pop_rate %>% round(2))) %>%
-  addLegend("bottomright",
-            pal = pal,
-            values = ~ total_jail_pop_rate,
-            title = "Total Jail Population Rate (per 100,000",
-            opacity = 0.7)
-
-# create a map for 2018
-leaflet(data = incarceration_2018_map) %>% 
-  addProviderTiles(provider = "CartoDB.Positron") %>%
-  setView(-95.7129, 37.0902, zoom = 3) %>%
-  addPolygons(fillColor = ~ pal(total_jail_pop_rate),
-              stroke = FALSE,
-              smoothFactor = .5,
-              opacity = 1,
-              fillOpacity = 0.7,
-              highlightOptions = highlightOptions(weight = 5,
-                                                  fillOpacity = 1,
-                                                  color = "black",
-                                                  bringToFront = TRUE),
-              popup = ~ paste0("County Name: ", county_name %>% str_to_title(), "<br>",
-                               "State: ", state %>% str_to_title(), "<br>",
-                               "Total Jail Population: ", total_jail_pop, "<br>",
-                               "Total Jail-Population rate: ",
-                                  total_jail_pop_rate %>% round(2)))
-
 ```
 
 # Timelaspe Incarcerated Population
@@ -162,7 +93,8 @@ incarceration_populations_longer <- incarceration_populations %>%
   # convert entries under "variables" into factors
   mutate(variables = as.factor(variables),
          # take out the "_" between words
-         variables = str_replace(variables, "_", " "))
+         variables = str_replace(variables, "_", " ")) %>%
+  na.omit()
 
 # create a time-laspe using gganimate
 incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 

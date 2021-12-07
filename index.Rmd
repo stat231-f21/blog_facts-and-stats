@@ -93,7 +93,8 @@ incarceration_populations_longer <- incarceration_populations %>%
   # convert entries under "variables" into factors
   mutate(variables = as.factor(variables),
          # take out the "_" between words
-         variables = str_replace(variables, "_", " "))
+         variables = str_replace(variables, "_", " ")) %>%
+  na.omit()
 
 # create a time-laspe using gganimate
 incarceration_time_animation <- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 

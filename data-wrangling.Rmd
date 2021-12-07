@@ -50,15 +50,18 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
 
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
-  select(-statefp, -countyfp) %>%
+  select(- statefp, - countyfp) %>%
   mutate(fips = as.numeric(geoid))
+
 head(county_shapefile)
+# save the wrangled shapefile
+st_write(county_shapefile, "county_shapefile_wrangled.shp")
 ```
 
 ## Incarceration Trends Wrangling
 ```{r, eval = TRUE}
 incarceration_trends <- incarceration_trends %>%
-  separate(county_name, c("county",NA), sep = " ") %>%
+  separate(county_name, c("county", NA), sep = " ") %>%
   filter(state != "AK", state != "HI")
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")

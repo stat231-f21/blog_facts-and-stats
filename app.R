@@ -13,20 +13,9 @@ library(reactable)
 # ====================================================
 ## Import data
 incarceration_trends <- read_csv("incarceration_trends_wrangled_7.csv")
-
-rates_by_race<- read.csv("rates_by_race_wrangled.csv")
+rates_by_race <- read.csv("rates_by_race_wrangled.csv")
+county_shapefile <- read_sf("county_shapefile.shp")
 filtered <- incarceration_trends
-
-# read in shapefile
-county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
-  janitor::clean_names() 
-
-# take out statefp and countyfp and rename geoid column into fips
-county_shapefile <- county_shapefile %>%
-  select(-statefp, -countyfp) %>%
-  mutate(fips = as.numeric(geoid))
-
-
 
 # ==========================================================
 
@@ -36,7 +25,7 @@ year_choices <- unique(incarceration_trends$year)
 demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
 
 # Bar Graph
-state_options <- unique(rates_by_race$ID)
+state_options <- unique(rates_by_race$State)
 
 ## UI
 ui <- navbarPage(
@@ -92,7 +81,7 @@ ui <- navbarPage(
 ## Server
 server <- function(input, output) {
   data_for_hist <- reactive({
-    data <- rates_by_race %>% filter(ID == input$histvar)
+    data <- rates_by_race %>% filter(State == input$histvar)
   })
 
   # Tab 1: Histogram
