@@ -41,7 +41,7 @@ rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
 ratio_bw <- read_csv("ratio_bw.csv")
 ```
 
-## Data Wrangling
+## Shapefile Wrangling
 ```{r, eval = TRUE}
 # read in shapefile
 unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
@@ -159,7 +159,7 @@ rates_by_race <- rates_by_race %>%
 write_csv(rates_by_race, "rates_by_race_wrangled.csv")
 ```
 
-#Ratio
+#Ratio Wrangling
 ```{r, eval = TRUE}
 # rename certain variables
 ratio_bw <- ratio_bw %>% 
