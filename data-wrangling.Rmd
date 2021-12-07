@@ -31,7 +31,6 @@ options(scipen = 1, knitr.kable.NA = '')
 ```
 
 ## Data Import
-
 ```{r, eval = TRUE}
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
@@ -41,8 +40,8 @@ incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_
 rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
 ratio_bw <- read_csv("ratio_bw.csv")
 ```
-## Data Wrangling
 
+## Data Wrangling
 ```{r, eval = TRUE}
 # read in shapefile
 unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
@@ -56,17 +55,16 @@ county_shapefile <- county_shapefile %>%
 head(county_shapefile)
 ```
 
-#Incarceration Trends Wrangling
+## Incarceration Trends Wrangling
 ```{r, eval = TRUE}
 incarceration_trends<- incarceration_trends %>%
   separate(county_name, c("county",NA), sep = " ") %>%
-  filter(state != "AK", state != "HI") %>%
-  mutate(county = tolower(incarceration_trends_2003$county))
+  filter(state != "AK", state != "HI")
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```
 
-#Incarceration by State Wrangling
+## Incarceration by State Wrangling
 ```{r, eval = TRUE}
 incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 
