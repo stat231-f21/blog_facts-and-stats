@@ -66,7 +66,13 @@ write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 
 ## Incarceration by State Wrangling
 ```{r, eval = TRUE}
+<<<<<<< HEAD
+
 #rename necessary columns
+
+=======
+#rename necessary columns
+<<<<<<< HEAD
 incarceration_rates_race <- incarceration_rates_race %>% 
   rename(ID = "...3",
          rate_per_100 = "...26") %>% 
@@ -76,6 +82,12 @@ incarceration_rates_race <- incarceration_rates_race %>%
          ID != "Geography", 
          ID != "Hawaii", 
          ID != "Alaska") %>%
+=======
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
+incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
+#delete United States row and remove states and territories not in Continental United States
+incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
+>>>>>>> 3ebf0e7012c00096bb963bac6e3873e4e0c4346a
 #Make state names lowercase to match geom dataset and change rate column to numeric
   mutate(ID = tolower(ID),
          rate_per_100 = as.numeric(rate_per_100),
@@ -105,6 +117,12 @@ incarceration_populations <- incarceration_populations %>%
 
 #Incarceration Rates by Race wrangling
 ```{r, eval = TRUE}
+<<<<<<< HEAD
+=======
+
+<<<<<<< HEAD
+=======
+>>>>>>> 3ebf0e7012c00096bb963bac6e3873e4e0c4346a
 rates_by_race <- rates_by_race %>% 
   rename(State = ID) %>%
   mutate(State = tolower(State),
@@ -114,11 +132,32 @@ rates_by_race <- rates_by_race %>%
          State = toupper(State)) %>%
   pivot_longer(!ID, names_to = "race", values_to = "rate")
 
+<<<<<<< HEAD
+=======
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
+rates_by_race <- rates_by_race %>% rename(ID = State ) 
+rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
 
-rates_by_race$ID <- gsub("^(\\w)(\\w+)", "\\U\\1\\L\\2", 
-  rates_by_race$ID, perl = TRUE)
+rates_by_race <- rates_by_race %>%
+  pivot_longer(!ID, names_to = "race", values_to = "rate")
+>>>>>>> 3ebf0e7012c00096bb963bac6e3873e4e0c4346a
 
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
+}
+
+rates_by_race$ID <- sapply(rates_by_race$ID, simpleCap)
+
+
+write_csv(rates_by_race, "rates_by_race_wrangled.csv")
+
+<<<<<<< HEAD
+
+=======
 rates_by_race %>% arrange(ID)
+>>>>>>> 975a559764bd19706ce0b77eb0d59c6794f8c7fc
 ```
 #Ratio
 ```{r, eval = TRUE}

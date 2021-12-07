@@ -14,6 +14,7 @@ library(reactable)
 ## Import data
 incarceration_trends <- read_csv("incarceration_trends_wrangled_7.csv")
 
+rates_by_race<- read.csv("rates_by_race_wrangled.csv")
 filtered <- incarceration_trends
 
 # read in shapefile
@@ -25,18 +26,7 @@ county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
   mutate(fips = as.numeric(geoid))
 
-rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
 
-rates_by_race <- rates_by_race %>% rename(ID = State ) 
-rates_by_race <- rates_by_race %>% mutate(ID = tolower(rates_by_race$ID))
-rates_by_race <- rates_by_race%>% mutate(Black = as.numeric(Black))%>% mutate(Latino = as.numeric(Latino))%>% mutate(White = as.numeric(White))
-
-rates_by_race <- rates_by_race %>%
-  pivot_longer(!ID, names_to = "race", values_to = "rate")
-
-rates_by_race$ID <- gsub("^(\\w)(\\w+)", "\\U\\1\\L\\2", 
-                         rates_by_race$ID, perl = TRUE)
-rates_by_race %>% arrange(ID)
 
 # ==========================================================
 
