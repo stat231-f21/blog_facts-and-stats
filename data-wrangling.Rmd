@@ -108,8 +108,8 @@ incarceration_populations <- incarceration_populations %>%
 # define a function to capitalize each word of state names
 simpleCap <- function(x) {
   s <- strsplit(x, " ")[[1]]
-  paste(toupper(substring(s, 1,1)), substring(s, 2),
-        sep="", collapse=" ")
+  paste(toupper(substring(s, 1, 1)), substring(s, 2),
+        sep = "", collapse = " ")
 }
 
 rates_by_race <- rates_by_race %>% 
