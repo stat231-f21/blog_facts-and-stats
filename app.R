@@ -22,8 +22,8 @@ filtered <- incarceration_trends
 ## Widgets
 # For interactive maps widget:
 year_choices <- unique(incarceration_trends$year)
-demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
-demographic_choices_names <- c("Total Jail + Prison Pop Rate","Female Prison Pop Rate","Male Jail Prison Pop Rate", "AAPI Jail Prison Pop Rate","Black Jail Prison Pop Rate", "Latinx Jail Prison Pop Rate", "Native Jail Prison Pop Rate", "White Jail Prison Pop Rate")
+demographic_choices <- c("total_jail_prison_pop_rate","female_jail_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
+demographic_choices_names <- c("Total Jail + Prison Pop Rate","Female Jail + Prison Pop Rate","Male Jail + Prison Pop Rate", "AAPI Jail + Prison Pop Rate","Black Jail + Prison Pop Rate", "Latinx Jail + Prison Pop Rate", "Native Jail + Prison Pop Rate", "White Jail + Prison Pop Rate")
 names(demographic_choices) <- demographic_choices_names
 
 # Bar Graph
