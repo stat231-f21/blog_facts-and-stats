@@ -158,7 +158,7 @@ server <- function(input, output) {
       addLegend("bottomright",
                 pal = pal,
                 values = ~ total_jail_prison_pop_rate,
-                title = paste0(input$demographicInput),
+                title = gsub("_"," ", paste0(input$demographicInput)),
                 opacity = 0.7)
   }
   )
