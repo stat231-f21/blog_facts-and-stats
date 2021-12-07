@@ -23,6 +23,8 @@ filtered <- incarceration_trends
 # For interactive maps widget:
 year_choices <- unique(incarceration_trends$year)
 demographic_choices <- c("total_jail_prison_pop_rate","female_prison_pop_rate","male_jail_prison_pop_rate", "aapi_jail_prison_pop_rate","black_jail_prison_pop_rate", "latinx_jail_prison_pop_rate", "native_jail_prison_pop_rate", "white_jail_prison_pop_rate")
+demographic_choices_names <- c("Total Jail + Prison Pop Rate","Female Prison Pop Rate","Male Jail Prison Pop Rate", "AAPI Jail Prison Pop Rate","Black Jail Prison Pop Rate", "Latinx Jail Prison Pop Rate", "Native Jail Prison Pop Rate", "White Jail Prison Pop Rate")
+names(demographic_choices) <- demographic_choices_names
 
 # Bar Graph
 state_options <- unique(rates_by_race$State)
@@ -58,7 +60,7 @@ ui <- navbarPage(
                              sep = ''),
                  selectInput(inputId = "demographicInput",
                              label = "Demographics:",
-                             choices = gsub("_"," ", as.character(demographic_choices)),
+                             choices = demographic_choices,
                              selected = "2018",
                              multiple = FALSE),),
     mainPanel(leafletOutput("mymap", width = "800px", height = "600px"))
@@ -83,7 +85,7 @@ server <- function(input, output) {
   data_for_hist <- reactive({
     data <- rates_by_race %>% filter(State == input$histvar)
   })
-
+  
   # Tab 1: Histogram
   output$hist <- renderPlot({
     ggplot(data = data_for_hist(), aes(x = race, y = rate)) +
@@ -122,7 +124,7 @@ server <- function(input, output) {
   
   output$mymap <- renderLeaflet({
     # create customized color bins 
-    bins <- c(0, 500, 1000, 2500, 5000, 10000, 15000, 20000, 30000)
+    bins <- c(0, 100, 250, 500, 1000, 2500, 5000, 10000, 30000)
     # choose a palette suitable for this map
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
@@ -158,7 +160,7 @@ server <- function(input, output) {
                 values = ~ total_jail_prison_pop_rate,
                 title = paste0(input$demographicInput),
                 opacity = 0.7)
-    }
+  }
   )
   
   # Tab 3: Table
@@ -203,7 +205,7 @@ server <- function(input, output) {
         selected = current_selection
       )
     }
-      
+    
     filtered <- if (length(input$county_filter) > 0) {
       filtered[filtered$county %in% input$county_filter, ]
     } else {
