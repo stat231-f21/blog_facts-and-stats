@@ -35,20 +35,11 @@ options(scipen = 1, knitr.kable.NA = '')
 ```{r, eval = TRUE}
 # Incarceration Trends
 incarceration_trends <- vroom("incarceration_trends.csv")
-incarceration_trends_jail_jurisdiction <- vroom("incarceration_trends_jail_jurisdiction.csv")
-
 incarceration_rates <- read_csv("prison_policy_initiative_incarceration_by_race.csv")
 incarceration_populations <- read_csv("bjs_total_correctional_population_counts_by_status_TM 5_26_21.csv")
-
 incarceration_rates_race <- read_csv("prison_policy_initiative_incarceration_by_race.csv") # data from 2010
-
 rates_by_race <- read_csv("sentencing_project_rates_by_race.csv")
-
 ratio_bw <- read_csv("ratio_bw.csv")
-
-head(incarceration_trends)
-tail(incarceration_trends)
-head(incarceration_trends_jail_jurisdiction)
 ```
 ## Data Wrangling
 
