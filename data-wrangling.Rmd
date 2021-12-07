@@ -58,40 +58,30 @@ unzip(zipfile = "geography resource/cb_2018_us_county_500k.zip")
 county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
   janitor::clean_names() 
 
-# add leading zeros to flip codes in incarceration trends dataset
-#incarceration_trends <- incarceration_trends %>%
-  #mutate(fips = ifelse(nchar(fips) == 4, paste0("0", fips), fips))
-
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
   select(-statefp, -countyfp) %>%
   mutate(fips = as.numeric(geoid))
-
 head(county_shapefile)
-
-# filter the years that I want to focus on in leaflet maps contrasting 1970 and 2018
-incarceration_trends_1970 <- incarceration_trends %>%
-  filter(year == "1970")
-incarceration_trends_2018 <- incarceration_trends %>%
-  filter(year == "2018")
 ```
 
 #Incarceration Trends Wrangling
 ```{r, eval = TRUE}
 incarceration_trends<- incarceration_trends %>%
-  separate(county_name, c("county",NA), sep = " ")
-
-incarceration_trends_2003<-incarceration_trends %>% filter(year==2003, state!="AK", state!="HI" )
-
-incarceration_trends_2003<-incarceration_trends_2003 %>% mutate(county = tolower(incarceration_trends_2003$county))
+  separate(county_name, c("county",NA), sep = " ") %>%
+  filter(state != "AK", state != "HI") %>%
+  mutate(county = tolower(incarceration_trends_2003$county))
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```
 
 #Incarceration by State Wrangling
 ```{r, eval = TRUE}
+<<<<<<< HEAD
 
 #rename necessary columns
+=======
+>>>>>>> 7663d95640a912281b1b71ac865dddfc037ae5f8
 incarceration_rates_race <- incarceration_rates_race %>% rename(ID = "...3" ) %>% rename(rate_per_100 = "...26")
 #delete United States row and remove states and territories not in Continental United States
 incarceration_rates_race <- incarceration_rates_race %>% filter(ID!="United States", ID!="Puerto Rico", ID!="Geography", ID!="Hawaii", ID!="Alaska")
