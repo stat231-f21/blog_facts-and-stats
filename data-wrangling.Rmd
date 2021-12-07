@@ -67,6 +67,7 @@ incarceration_trends <- incarceration_trends %>%
   mutate(
     # add up prison and jail rates to create a new column
     # if one of the entries is NA, add nothing
+    # sum(..., na.rm = TRUE) did not work, so use ifelse instead
     total_jail_prison_pop_rate = ifelse(is.na(total_jail_pop_rate), total_prison_pop_rate,
                                         ifelse(is.na(total_prison_pop_rate), total_jail_pop_rate,
                                                total_jail_pop_rate + total_prison_pop_rate)),
