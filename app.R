@@ -122,7 +122,7 @@ server <- function(input, output) {
   
   output$mymap <- renderLeaflet({
     # create customized color bins 
-    bins <- c(0, 50, 100, 250, 500, 1000, 2500, 5000, 10000)
+    bins <- c(0, 500, 1000, 2500, 5000, 10000, 15000, 20000, 30000)
     # choose a palette suitable for this map
     pal <- colorBin(palette = "OrRd", bins = bins, na.color = "#D3D3D3")
     
@@ -150,7 +150,7 @@ server <- function(input, output) {
                                    "Total Population: ", total_pop,"<br>",
                                    "Total Jail Population Rate: ", total_jail_pop_rate, "<br>",
                                    "Total Prison Population Rate: ", total_prison_pop_rate, "<br>",
-                                   "Total Jail-Prison Population rate: ",
+                                   "Total Jail + Prison Population rate: ",
                                    total_jail_prison_pop_rate %>% round(2))) %>%
       # add a legend that shows the meaning of the color
       addLegend("bottomright",
