@@ -58,7 +58,7 @@ ui <- navbarPage(
                              sep = ''),
                  selectInput(inputId = "demographicInput",
                              label = "Demographics:",
-                             choices = demographic_choices,
+                             choices = gsub("_"," ", as.character(demographic_choices)),
                              selected = "2018",
                              multiple = FALSE),),
     mainPanel(leafletOutput("mymap", width = "800px", height = "600px"))
