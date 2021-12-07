@@ -1,3 +1,45 @@
+<<<<<<< HEAD
+ID,race,rate
+Wisconsin,Black,2742
+Wisconsin,Latino,475
+Wisconsin,White,230
+Oklahoma,Black,2395
+Oklahoma,Latino,480
+Oklahoma,White,511
+Idaho,Black,2387
+Idaho,Latino,673
+Idaho,White,502
+Montana,Black,2272
+Montana,Latino,293
+Montana,White,371
+Arizona,Black,2105
+Arizona,Latino,742
+Arizona,White,428
+Iowa,Black,2084
+Iowa,Latino,327
+Iowa,White,225
+Alaska,Black,1987
+Alaska,Latino,238
+Alaska,White,417
+Oregon,Black,1932
+Oregon,Latino,376
+Oregon,White,344
+Vermont,Black,1737
+Vermont,Latino,NA
+Vermont,White,239
+Nebraska,Black,1733
+Nebraska,Latino,395
+Nebraska,White,195
+Kansas,Black,1661
+Kansas,Latino,362
+Kansas,White,265
+South Dakota,Black,1660
+South Dakota,Latino,432
+South Dakota,White,280
+Delaware,Black,1654
+Delaware,Latino,355
+Delaware,White,324
+=======
 State,race,rate
 Alabama,Black,1132
 Alabama,Latino,NA
@@ -11,12 +53,120 @@ Arizona,White,428
 Arkansas,Black,1597
 Arkansas,Latino,252
 Arkansas,White,450
+>>>>>>> eb01228bdcdd262cdd0df5a03026074d4fd62429
 California,Black,1623
 California,Latino,353
 California,White,175
 Colorado,Black,1603
 Colorado,Latino,518
 Colorado,White,236
+<<<<<<< HEAD
+Arkansas,Black,1597
+Arkansas,Latino,252
+Arkansas,White,450
+Texas,Black,1547
+Texas,Latino,471
+Texas,White,452
+Nevada,Black,1543
+Nevada,Latino,319
+Nevada,White,379
+Ohio,Black,1530
+Ohio,Latino,312
+Ohio,White,273
+Pennsylvania,Black,1523
+Pennsylvania,Latino,469
+Pennsylvania,White,206
+Connecticut,Black,1512
+Connecticut,Latino,579
+Connecticut,White,156
+Michigan,Black,1479
+Michigan,Latino,NA
+Michigan,White,230
+Indiana,Black,1443
+Indiana,Latino,243
+Indiana,White,320
+Louisiana,Black,1411
+Louisiana,Latino,28
+Louisiana,White,381
+Florida,Black,1411
+Florida,Latino,227
+Florida,White,340
+Utah,Black,1383
+Utah,Latino,299
+Utah,White,167
+Kentucky,Black,1370
+Kentucky,Latino,188
+Kentucky,White,466
+West Virginia,Black,1337
+West Virginia,Latino,155
+West Virginia,White,348
+Wyoming,Black,1337
+Wyoming,Latino,525
+Wyoming,White,381
+Maine,Black,1331
+Maine,Latino,NA
+Maine,White,143
+Missouri,Black,1297
+Missouri,Latino,214
+Missouri,White,336
+Virginia,Black,1246
+Virginia,Latino,135
+Virginia,White,287
+New Mexico,Black,1229
+New Mexico,Latino,393
+New Mexico,White,216
+Washington,Black,1195
+Washington,Latino,287
+Washington,White,222
+Illinois,Black,1166
+Illinois,Latino,223
+Illinois,White,156
+Alabama,Black,1132
+Alabama,Latino,NA
+Alabama,White,421
+Mississippi,Black,1107
+Mississippi,Latino,211
+Mississippi,White,398
+Minnesota,Black,1023
+Minnesota,Latino,186
+Minnesota,White,105
+Newjersey,Black,1009
+Newjersey,Latino,162
+Newjersey,White,81
+Georgia,Black,1006
+Georgia,Latino,216
+Georgia,White,361
+Tennessee,Black,989
+Tennessee,Latino,163
+Tennessee,White,296
+Hawaii,Black,947
+Hawaii,Latino,84
+Hawaii,White,410
+North Dakota,Black,848
+North Dakota,Latino,407
+North Dakota,White,172
+South Carolina,Black,823
+South Carolina,Latino,172
+South Carolina,White,217
+Rhode Island,Black,821
+Rhode Island,Latino,239
+Rhode Island,White,131
+North Carolina,Black,810
+North Carolina,Latino,194
+North Carolina,White,209
+New York,Black,754
+New York,Latino,285
+New York,White,96
+Maryland,Black,746
+Maryland,Latino,123
+Maryland,White,141
+New Hampshire,Black,742
+New Hampshire,Latino,241
+New Hampshire,White,269
+Massachusetts,Black,466
+Massachusetts,Latino,260
+Massachusetts,White,63
+=======
 Connecticut,Black,1512
 Connecticut,Latino,579
 Connecticut,White,156
@@ -149,3 +299,4 @@ Wisconsin,White,230
 Wyoming,Black,1337
 Wyoming,Latino,525
 Wyoming,White,381
+>>>>>>> eb01228bdcdd262cdd0df5a03026074d4fd62429

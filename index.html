@@ -11,20 +11,19 @@
     
     <title>Incarceration Rates in America</title>
 
-        <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
         <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-        <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-        <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-        <script src="index_files/navigation-1.1/tabsets.js"></script>
-        <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
-        <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
-        <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
-        <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
-        <script src="index_files/downcute-0.1/downcute_styles.js"></script>
-        <script src="index_files/downcute-0.1/downcute.js"></script>
-        <script src="index_files/prism-1.22/prism.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+    <script src="index_files/navigation-1.1/tabsets.js"></script>
+    <link href="index_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+    <script src="index_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+    <link href="index_files/downcute-0.1/downcute.css" rel="stylesheet" />
+    <link href="index_files/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+    <script src="index_files/downcute-0.1/downcute_styles.js"></script>
+    <script src="index_files/downcute-0.1/downcute.js"></script>
+    <script src="index_files/prism-1.22/prism.js"></script>
     
     
     
@@ -111,8 +110,7 @@
 
 <body class="preload">
 
-   	
-               <!-- downcute start -->   
+                  <!-- downcute start -->   
    <div id="docute" class="Root theme-default">
      <div class="Page layout-narrow">
       <div class="Wrap">
@@ -124,14 +122,12 @@
             <li><a href="#change-in-incarceration-population">Change in Incarceration Population</a></li>
             <li><a href="#incarceration-rates-by-states-2010">Incarceration Rates by States (2010)</a></li>
             <li><a href="#racial-contrast">Racial Contrast</a></li>
-            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
-            <ul>
+            <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a><ul>
             <li><a href="#histogram">Histogram</a></li>
             <li><a href="#interactive-map">Interactive Map</a></li>
             <li><a href="#table">Table</a></li>
             </ul></li>
-            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
-            <ul>
+            <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a><ul>
             <li><a href="#citations">Citations</a></li>
             </ul></li>
             </ul>
@@ -149,8 +145,7 @@
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
          <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
-           
-
+         
    
       
    
@@ -199,7 +194,8 @@
   # convert entries under &quot;variables&quot; into factors
   mutate(variables = as.factor(variables),
          # take out the &quot;_&quot; between words
-         variables = str_replace(variables, &quot;_&quot;, &quot; &quot;))
+         variables = str_replace(variables, &quot;_&quot;, &quot; &quot;)) %&gt;%
+  na.omit()
 
 # create a time-laspe using gganimate
 incarceration_time_animation &lt;- ggplot(data = incarceration_populations_longer, aes(x = year, y = counts)) + 
@@ -284,7 +280,7 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 <p>New Jersey has the highest racial disparity in the country with about 12.5 Black prisoners per white prisoners. As discussed in this <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html">article</a>, one possible cause for this are mandatory minimum sentences associated with non-violent drug offenses which have disproportionately affected Black and Latinx defendants. State leaders have begun to make active efforts to reduce the prison population, but over half of the prison population remains Black and Governor Phil Murphy has refused to address mandatory minimum sentencing directly.</p>
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
-<h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
+<h1>More Exploration through Shiny App</h1>
 <iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
 </iframe>
 <div id="histogram" class="section level2">
@@ -306,6 +302,7 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 <div id="conclusion-and-limitations" class="section level1">
 <h1>Conclusion and Limitations</h1>
 <p>As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It’s very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It’s an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from lucrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It’ll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially.</p>
+<p>Although we were able to get data down to the county level, most of the analysis we were able to do was on the national level. The information we found while looking at some of the outliers when it came to incarceration rates or racial disparity in incarceration showed that it would be more effective to look at the specific circumstances that have led to mass incarceration rates in each state or even county. As we said in our introduction, it is the state prison systems that hold the majority of people behind bars in this country so if we were to continue this research we would focus on specific states to understand the circumstances and work backwards to see if states across the country share similar laws and practices that have led to high rates of incarceration. By doing this we would be able to start addressing specific issues rather than just pointing out that the issues exist.</p>
 <div id="citations" class="section level2">
 <h2>Citations</h2>
 <ul>
