@@ -94,14 +94,17 @@ incarceration_rates_race <- incarceration_rates_race %>%
 #Population Time-Series wrangling
 ```{r, eval = TRUE}
 incarceration_populations <- incarceration_populations %>% 
+  # rename the columns that are numbers
   rename(total_incarcerated = "...7",
          year = "Bureau of Justice Statistics",
          total_supervised = "...2",
          local_jail = "...8",
          state_prison = "...10",
          federal_prison = "...11") %>%
+  # take out empty rows at the top
   filter(total_incarcerated != "Total/c", !row_number() %in% c(1)) %>%
-  separate(year, c("year",NA), sep = "/d") %>%
+  separate(year, c("year", NA), sep = "/d") %>%
+  # take out "," in the population counts and convert them to doubles
   mutate(
     total_incarcerated = as.numeric(gsub(",","", as.character(total_incarcerated))),
     total_supervised = as.numeric(gsub(",","", as.character(total_supervised))),
@@ -156,6 +159,7 @@ incarceration_trends_map <- incarceration_trends_map %>%
 
 write_csv(incarceration_trends_map, "map_data/all_years_incarceration_trends_map.csv")
 
+# group the entries by year
 incarceration_trends_map <- incarceration_trends_map %>% 
   group_by(year)
 
