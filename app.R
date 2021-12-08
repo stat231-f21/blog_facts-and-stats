@@ -209,7 +209,7 @@ server <- function(input, output) {
         "bottomright",
         pal = pal,
         values = ~ total_jail_prison_pop_rate,
-        title = gsub("_", " ", paste0(input$demographicInput)),
+        title = str_to_title(gsub("_", " ", paste0(input$demographicInput))),
         opacity = 0.7
       )
   })
@@ -236,12 +236,13 @@ server <- function(input, output) {
   # This is the actual render code for the secondary plot
   output$secondaryMapPlot <- renderPlot({
     ggplot(rv$secondaryMapPlotData, aes(x = year, y = rv$secondaryMapPlotData[[paste0(input$demographicInput)]])) +
-      ggtitle(paste0("Time series for: ",rv$countyState), subtitle = paste0("Plotting selected variable: ",input$demographicInput)) +
+      ggtitle(paste0("Time series for: ",rv$countyState), subtitle = paste0("Plotting selected variable: ", str_to_title(gsub("_"," ", as.character(input$demographicInput))))) +
       geom_smooth(se = FALSE) +
       xlab("Year") +
       ylab("Incaceration Rate for Selected Demographic")
   })
   
+
   # ====================================================
   # Tab 2: Histogram
   
