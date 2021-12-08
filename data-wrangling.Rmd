@@ -17,6 +17,8 @@ library(sf) # spacial data
 library(tigris) # geojoin
 library(leaflet) # interactive maps
 library(htmlwidgets) # interactive map labels
+library(readr)
+library(rmapshaper)
 
 # set code chunk defaults
 knitr::opts_chunk$set(tidy = F, # display code as typed
@@ -51,9 +53,10 @@ county_shapefile <- read_sf("cb_2018_us_county_500k.shp") %>%
 # take out statefp and countyfp and rename geoid column into fips
 county_shapefile <- county_shapefile %>%
   select(- statefp, - countyfp) %>%
-  mutate(fips = as.numeric(geoid))
+  mutate(fips = as.numeric(geoid)) %>%
+  ms_simplify() #this function from rmapshaper significantly speeds up the map by making the county polygons less complicated
 
-head(county_shapefile)
+write_rds(county_shapefile, "county_shapefile_wrangled.rds")
 
 # save the wrangled shapefile
 # st_write(county_shapefile, "county_shapefile_wrangled.shp") # only run once, so the file does
@@ -157,6 +160,31 @@ rates_by_race <- rates_by_race %>%
   pivot_longer(!State, names_to = "race", values_to = "rate")
 
 write_csv(rates_by_race, "rates_by_race_wrangled.csv")
+```
+
+#Incarceration Rates Wrangling and File Splitting for Map
+```{r,eval = TRUE}
+
+incarceration_trends_map <- incarceration_trends %>% select (yfips, year, fips, state, county, total_pop, total_prison_pop_rate, female_prison_pop_rate, male_prison_pop_rate, aapi_prison_pop_rate, black_prison_pop_rate, latinx_prison_pop_rate, native_prison_pop_rate, white_prison_pop_rate, total_jail_pop_rate, female_jail_pop_rate, male_jail_pop_rate, aapi_jail_pop_rate, black_jail_pop_rate, latinx_jail_pop_rate, native_jail_pop_rate, white_jail_pop_rate)
+
+incarceration_trends_map <- incarceration_trends_map %>% rowwise() %>%
+  mutate(
+    total_jail_prison_pop_rate = sum(total_prison_pop_rate, total_jail_pop_rate, na.rm = TRUE),
+    female_jail_prison_pop_rate = sum(female_prison_pop_rate, female_jail_pop_rate,na.rm = TRUE),
+    male_jail_prison_pop_rate = sum(male_prison_pop_rate, male_jail_pop_rate,na.rm = TRUE),
+    aapi_jail_prison_pop_rate = sum(aapi_prison_pop_rate, aapi_jail_pop_rate,na.rm = TRUE),
+    black_jail_prison_pop_rate = sum(black_prison_pop_rate, black_jail_pop_rate,na.rm = TRUE),
+    latinx_jail_prison_pop_rate = sum(latinx_prison_pop_rate, latinx_jail_pop_rate,na.rm = TRUE),
+    native_jail_prison_pop_rate = sum(native_prison_pop_rate, native_jail_pop_rate,na.rm = TRUE),
+    white_jail_prison_pop_rate = sum(white_prison_pop_rate, white_jail_pop_ratena.rm = TRUE)
+  )
+
+write_csv(incarceration_trends_map, "map_data/all_years_incarceration_trends_map.csv")
+
+incarceration_trends_map <- incarceration_trends_map %>% group_by(year)
+
+group_walk(incarceration_trends_map, ~ write_csv(.x, paste0("map_data/",.y$year, "_incarceration_trends_map.csv")))
+
 ```
 
 #Ratio Wrangling

@@ -200,15 +200,32 @@ New Jersey has the highest racial disparity in the country with about 12.5 Black
 
 <iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px></iframe>
 
-## Histogram
-The first tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
-
 ## Interactive Map
-To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. After wrangling, the incarceration trends file was left-joined with the county shapefile, from which a map could be created from. In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map. Some of our codes creating this map are included below. 
+To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. In our data wrangling file, we combined jail and prison population incarceration rates (both total rates and for specific demographics) from the original dataset since using only local jails and state and federal prisons would not give as complete a visual picture as we wanted to illustrate with this map.
 
-```{r map code, echo = TRUE}
-# will include updated version
+In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map.
+
+After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function `rmapshaper::ms_simplify()` to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year's .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles.
+
+The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds. Much faster than our earlier versions of the map including the one we presented!
+
+```{r map code, eval=FALSE, echo=TRUE}
+
+  year_prison_jail <- reactive({
+    d <- read_csv(paste0(
+        "map_data/",
+        input$yearInput,
+        "_incarceration_trends_map.csv"
+      ))
+    
+    d <- left_join(county_shapefile, d, by = "fips")
+    
+    return(d)
+  })
+
 ```
+
+We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. 
 
 Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right). The prison and jail incarceration rates combined are being shown. First, we can see the stark contrast between the colors of these three maps.
 
@@ -218,12 +235,17 @@ Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (
 
 2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 500$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 1000$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Issaquena County, Mississippi, has a prison-jail incarceration rate high of $7599.82$ in 2007, which increased dramatically from $4698.01$ in 2000, and continued to climb to $8741.08$ in 2018 (despite the national-wide decrease in incarceration rate). 
 
-## Table
+## Histogram
+The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
 
+## Table
+Our table gives users the opportunity to sift through the source dataset, specifically the same wrangled dataset used for our map with all years. This gives access to the jail + prison incarceration rates for all demographics as well as general information, such total population for a county in a certain year.
 
 # Conclusion and Limitations
 
-As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It's very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced. Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It's an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from lucrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It'll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially. 
+As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It's very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced.
+
+Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It's an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from lucrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It'll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially. 
 
 Although we were able to get data down to the county level, most of the analysis we were able to do was on the national level. The information we found while looking at some of the outliers when it came to incarceration rates or racial disparity in incarceration showed that it would be more effective to look at the specific circumstances that have led to mass incarceration rates in each state or even county. As we said in our introduction, it is the state prison systems that hold the majority of people behind bars in this country so if we were to continue this research we would focus on specific states to understand the circumstances and work backwards to see if states across the country share similar laws and practices that have led to high rates of incarceration. By doing this we would be able to start addressing specific issues rather than just pointing out that the issues exist.
 
