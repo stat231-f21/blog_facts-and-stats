@@ -176,7 +176,7 @@ incarceration_trends_map <- incarceration_trends_map %>% rowwise() %>%
     black_jail_prison_pop_rate = sum(black_prison_pop_rate, black_jail_pop_rate,na.rm = TRUE),
     latinx_jail_prison_pop_rate = sum(latinx_prison_pop_rate, latinx_jail_pop_rate,na.rm = TRUE),
     native_jail_prison_pop_rate = sum(native_prison_pop_rate, native_jail_pop_rate,na.rm = TRUE),
-    white_jail_prison_pop_rate = sum(white_prison_pop_rate, white_jail_pop_ratena.rm = TRUE)
+    white_jail_prison_pop_rate = sum(white_prison_pop_rate, white_jail_pop_rate,na.rm = TRUE)
   )
 
 write_csv(incarceration_trends_map, "map_data/all_years_incarceration_trends_map.csv")
