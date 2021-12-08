@@ -1,7 +1,7 @@
 ---
 title: "Incarceration Rates in America"
 author: "Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick"
-date: "11/30/21"
+date: "12/08/21"
 output:
   rmdformats::downcute:
     thumbnails: false
@@ -198,7 +198,9 @@ New Jersey has the highest racial disparity in the country with about 12.5 Black
 
 # More Exploration through Shiny App {.tabset .tabset-fade .tabset-pills}
 
-<iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=800px width=1000px></iframe>
+### [We highly recommend visiting our Shiny App in a new window to ensure the embed does not crop at all.](https://adeatrick.shinyapps.io/blog_facts-and-stats/)
+
+<iframe src ="https://adeatrick.shinyapps.io/blog_facts-and-stats" height=850px width=1100px></iframe>
 
 ## Interactive Map
 To better visualize mass incarceration's take-over county by county, we created an interactive map in our shiny app using the `Leaflet` package. The data this visualization is based on is from [the Vera Institute of Justice](https://github.com/vera-institute/incarceration-trends) and consists of a total of $121$ demographic and geographic variables that span 1970 to 2018, including `fips`, `total_pop_15to64`, and `total_jail_pop`. In our data wrangling file, we combined jail and prison population incarceration rates (both total rates and for specific demographics) from the original dataset since using only local jails and state and federal prisons would not give as complete a visual picture as we wanted to illustrate with this map.

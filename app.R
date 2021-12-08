@@ -40,14 +40,14 @@ demographic_choices <-
   )
 demographic_choices_names <-
   c(
-    "Total Jail + Prison Pop Rate",
-    "Female Jail + Prison Pop Rate",
-    "Male Jail + Prison Pop Rate",
-    "AAPI Jail + Prison Pop Rate",
-    "Black Jail + Prison Pop Rate",
-    "Latinx Jail + Prison Pop Rate",
-    "Native Jail + Prison Pop Rate",
-    "White Jail + Prison Pop Rate"
+    "Total Jail & Prison Pop Rate",
+    "Female Jail & Prison Pop Rate",
+    "Male Jail & Prison Pop Rate",
+    "AAPI Jail & Prison Pop Rate",
+    "Black Jail & Prison Pop Rate",
+    "Latinx Jail & Prison Pop Rate",
+    "Native Jail & Prison Pop Rate",
+    "White Jail & Prison Pop Rate"
   )
 names(demographic_choices) <- demographic_choices_names
 
@@ -81,7 +81,7 @@ ui <- navbarPage(
       plotOutput("secondaryMapPlot")
     ),
     mainPanel(leafletOutput(
-      "mymap", width = "800px", height = "600px"
+      "mymap", width = "700px", height = "500px"
     ))
   ),
   # Tab 2: Bar Graph
@@ -102,7 +102,7 @@ ui <- navbarPage(
   tabPanel(
     title = "Table",
     titlePanel(
-      "Data Table for Interactive Map: Jail and Prison Combined Incarceration Rate 1970 - 2018"
+      "Data Table for Interactive Map: Jail & Prison Combined Incarceration Rate 1970 - 2018"
     ),
     sidebarLayout(
       sidebarPanel(
@@ -164,7 +164,7 @@ server <- function(input, output) {
     d <- year_prison_jail()
     # create the map using Leaflet
     d %>%
-      leaflet(height = 400, width = 600) %>%
+      leaflet() %>%
       addProviderTiles(provider = "CartoDB.Positron") %>%
       setView(-95.7129, 37.0902, zoom = 4) %>%
       # add counties
@@ -345,4 +345,4 @@ server <- function(input, output) {
 }
 
 ##Shiny App
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, options = list(height = 800, width = 900))

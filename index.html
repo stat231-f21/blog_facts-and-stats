@@ -7,7 +7,7 @@
 
         <meta name="author" content="Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick" />
     
-        <meta name="date" content="2021-11-30" />
+        <meta name="date" content="2021-12-08" />
     
     <title>Incarceration Rates in America</title>
 
@@ -148,7 +148,7 @@
       <p class="authors">
            <span class="glyphicon glyphicon-user"></span> Skye Wu, Diego Duckenfield-Lopez, and Alexander Deatrick
       </p>
-         <p class="date"><span class="glyphicon glyphicon-calendar"></span> 11/30/21</p>
+         <p class="date"><span class="glyphicon glyphicon-calendar"></span> 12/08/21</p>
            
 
    
@@ -286,8 +286,11 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 </div>
 <div id="more-exploration-through-shiny-app" class="section level1 tabset tabset-fade tabset-pills">
 <h1 class="tabset tabset-fade tabset-pills">More Exploration through Shiny App</h1>
-<iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="800px" width="1000px">
+<div id="we-highly-recommend-visiting-our-shiny-app-in-a-new-window-to-ensure-the-embed-does-not-crop-at-all." class="section level3">
+<h3><a href="https://adeatrick.shinyapps.io/blog_facts-and-stats/">We highly recommend visiting our Shiny App in a new window to ensure the embed does not crop at all.</a></h3>
+<iframe src="https://adeatrick.shinyapps.io/blog_facts-and-stats" height="850px" width="1100px">
 </iframe>
+</div>
 <div id="interactive-map" class="section level2">
 <h2>Interactive Map</h2>
 <p>To better visualize mass incarceration’s take-over county by county, we created an interactive map in our shiny app using the <code>Leaflet</code> package. The data this visualization is based on is from <a href="https://github.com/vera-institute/incarceration-trends">the Vera Institute of Justice</a> and consists of a total of <span class="math inline">\(121\)</span> demographic and geographic variables that span 1970 to 2018, including <code>fips</code>, <code>total_pop_15to64</code>, and <code>total_jail_pop</code>. In our data wrangling file, we combined jail and prison population incarceration rates (both total rates and for specific demographics) from the original dataset since using only local jails and state and federal prisons would not give as complete a visual picture as we wanted to illustrate with this map.</p>
