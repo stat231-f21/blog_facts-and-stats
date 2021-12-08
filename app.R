@@ -1,3 +1,8 @@
+# Responsibilities:
+# Skye — interactive map primary functions and aesthetics
+# Diego — histogram
+# Alex — secondary plot for map (time-series) and table
+
 library(shiny)
 library(shinythemes)
 library(tidyverse)
@@ -143,6 +148,7 @@ server <- function(input, output) {
         input$yearInput,
         "_incarceration_trends_map.csv"
       ))
+    # joins the file of the single year with the shapefile
     d <- left_join(county_shapefile, d, by = "fips")
     return(d)
   })
@@ -224,8 +230,8 @@ server <- function(input, output) {
   observeEvent(input$mymap_shape_click, {
     event <- input$mymap_shape_click
     
-    rv$fips <- str_sub(event$id,5,9)
-    rv$countyState <- str_sub(event$id,11,-1)
+    rv$fips <- str_sub(event$id, 5, 9)
+    rv$countyState <- str_sub(event$id, 11, -1)
     
     rv$secondaryMapPlotData <- incarceration_trends_table %>% filter(fips == rv$fips)
   })
@@ -234,7 +240,7 @@ server <- function(input, output) {
   output$secondaryMapPlot <- renderPlot({
     ggplot(rv$secondaryMapPlotData, aes(x = year, y = rv$secondaryMapPlotData[[paste0(input$demographicInput)]])) +
       ggtitle(paste0("Time series for: ", rv$countyState), subtitle = paste0("Plotting selected variable: ", gsub("_", " ", paste0(input$demographicInput)))) +
-      ggtitle(paste0("Time series for: ",rv$countyState), subtitle = paste0("Plotting selected variable: ", str_to_title(gsub("_"," ", as.character(input$demographicInput))))) +
+      ggtitle(paste0("Time series for: ", rv$countyState), subtitle = paste0("Plotting selected variable: ", str_to_title(gsub("_"," ", as.character(input$demographicInput))))) +
       geom_smooth(se = FALSE) +
       xlab("Year") +
       ylab("Incaceration Rate for Selected Demographic")

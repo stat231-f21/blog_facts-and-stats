@@ -4,6 +4,9 @@ author: "Facts & Stats"
 date: "12/7/2021"
 output: html_document
 ---
+## Responsibilities
+Skye — time-series animation
+Diego — static maps 
 
 ```{r setup, include=FALSE}
 library(scales)

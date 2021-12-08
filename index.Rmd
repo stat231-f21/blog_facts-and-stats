@@ -213,29 +213,30 @@ At first glance, when we contrast the state of incarceration of 1970 (left), 200
 <img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 1em;">
 <img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 2em;">
 
-2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 250$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 2500$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Madison County, Louisiana, has a prison & jail incarceration rate high of $10543.97$ in 2007, which increased dramatically from $64.39$ in 2000, and still remained at a horrifying $9227.41$ in 2018 (admist the national-wide decrease in incarceration rate). 
+2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 250$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 2500$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates, confirming the worry that mass incarceration will remain a huge threat to equality and justice in this country despite the national-wide slow decrease in incarceration rate. For example, Madison County, Louisiana, has a prison & jail incarceration rate high of $10543.97$ in 2007, which increased dramatically from $64.39$ in 1970, and still remained at a horrifying $9227.41$ in 2018. There is indeed a decline while substantial and fundamental change is still urgent.
 
-After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function `rmapshaper::ms_simplify()` to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year's .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles. It is still somewhat slow on the first load, but re-renders of the map after selecting a new year now only take a couple of seconds.
+The map requires a substantial amount of data — jail, prison incarceration rates of every demographic group for almost 40 years. After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function `rmapshaper::ms_simplify()` to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year's .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles. It is still somewhat slow on the first load, but re-renders of the map after selecting a new year now only take a couple of seconds.
 
-The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds. Much faster than our earlier versions of the map, including the one we presented to class!
+The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds.
 
 ```{r map code, eval=FALSE, echo=TRUE}
-
-  year_prison_jail <- reactive({
+# creates reactive variable that is responsive to the year option
+year_prison_jail <- reactive({
     d <- read_csv(paste0(
         "map_data/",
         input$yearInput,
         "_incarceration_trends_map.csv"
       ))
-    
+    # joins the file of the single year with the shapefile
     d <- left_join(county_shapefile, d, by = "fips")
     
     return(d)
   })
-
 ```
 
-We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. 
+We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. Using Hampshire County as an example, one can see an almost uninterrupted climb (there is a small dip in 2000) from around $100$ in 1970 to around $275$ in 2018. Comparing to the country as a whole, Hampshire County's prison & jail incarceration rate is relatively lower and demonstrates a trend of slow decline. Such a trend shows up in the time series graphs for most U.S counties and echoes the national trend we've seen from the time series animation earlier.
+
+The function of selecting **demographic groups** adds another dimension to our visualization. 
 
 
 ## Histogram
@@ -257,12 +258,9 @@ Although we were able to get data down to the county level, most of the analysis
 
 ## Citations
 * Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.
-
 * Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Dec]. https://github.com/vera-institute/incarceration-trends.
-
 * Bureau of Justice Statistics. 2018. Total Correctional Population Counts by Status; [2021 Dec].
 https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx
-
 * Prison Policy Initiative. 2020. U.S. incarceration rates by race and ethnicity; [2021 Dec]. https://www.prisonpolicy.org/graphs/raceinc.html
 * Sentencing Project. 2019. State-by-State Data; [2021 Dec]. https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR
 * United States Census Bureau. 2021. Cartographic Boundary Files - Shapefile; [2021 Dec]. https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
@@ -276,7 +274,4 @@ https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctio
 * Davis, C., Estes, R., &amp; Schiraldi, V. (1996, March). "Three Strikes": The New Apartheid . Retrieved December 7, 2021, from http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf. 
 * NBCUniversal News Group. (2021, November 12). Wisconsin leads nation in imprisonment rates of black people. NBCNews.com. Retrieved December 7, 2021, from https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160. 
 * Nellis, A. (2021, October). The Color of Justice: Racial and Ethnic Disparity in State Prisons. Retrieved December 7, 2021, from https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf. 
-*  Atmonavage, J. (2021, October 18). N.J. continues to have worst racial disparities nationwide in its prisons, report says. nj.com. Retrieved December 7, 2021, from https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html. 
-
-
-
+*  Atmonavage, J. (2021, October 18). N.J. continues to have worst racial disparities nationwide in its prisons, report says. nj.com. Retrieved December 7, 2021, from https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html.

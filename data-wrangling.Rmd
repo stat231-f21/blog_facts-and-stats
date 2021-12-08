@@ -2,6 +2,10 @@
 title: "data-wrangling"
 output: pdf_document
 ---
+## Responsibilities:
+Skye — data import, shapefile, incarceration trends, time series
+Diego — incarceration by state, rates by race, ratio
+Alexander — incarceration trends map
 
 ```{r setup, include = FALSE}
 # load packages
