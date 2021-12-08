@@ -1,6 +1,6 @@
 # Responsibilities:
 # Skye — interactive map primary functions and aesthetics
-# Diego — histogram
+# Diego — bar graph
 # Alex — secondary plot for map (time-series) and table
 
 library(shiny)
@@ -248,7 +248,7 @@ server <- function(input, output) {
   
 
   # ====================================================
-  # Tab 2: Histogram
+  # Tab 2: Bar Graph
   
   data_for_hist <- reactive({
     data <- rates_by_race %>% filter(State == input$histvar)
