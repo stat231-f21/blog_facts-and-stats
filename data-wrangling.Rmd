@@ -65,37 +65,9 @@ write_rds(county_shapefile, "county_shapefile_wrangled.rds")
 
 ## Incarceration Trends Wrangling
 ```{r, eval = TRUE}
+# add a space between words in county names
 incarceration_trends <- incarceration_trends %>%
-  separate(county_name, c("county", NA), sep = " ") %>%
-  mutate(
-    # add up prison and jail rates to create a new column
-    # if one of the entries is NA, add nothing
-    # sum(..., na.rm = TRUE) did not work, so use ifelse instead
-    total_jail_prison_pop_rate = ifelse(is.na(total_jail_pop_rate), total_prison_pop_rate,
-                                        ifelse(is.na(total_prison_pop_rate), total_jail_pop_rate,
-                                               total_jail_pop_rate + total_prison_pop_rate)),
-    female_jail_prison_pop_rate = ifelse(is.na(female_jail_pop_rate), female_prison_pop_rate,
-                                        ifelse(is.na(female_prison_pop_rate), female_jail_pop_rate, 
-                                               female_jail_pop_rate + female_prison_pop_rate)),
-    male_jail_prison_pop_rate = ifelse(is.na(male_jail_pop_rate), male_prison_pop_rate,
-                                        ifelse(is.na(male_prison_pop_rate), male_jail_pop_rate, 
-                                               male_jail_pop_rate + male_prison_pop_rate)),
-    aapi_jail_prison_pop_rate = ifelse(is.na(aapi_jail_pop_rate), aapi_prison_pop_rate,
-                                        ifelse(is.na(aapi_prison_pop_rate), aapi_jail_pop_rate, 
-                                               aapi_jail_pop_rate + aapi_prison_pop_rate)),
-    black_jail_prison_pop_rate = ifelse(is.na(black_jail_pop_rate), black_prison_pop_rate,
-                                        ifelse(is.na(black_prison_pop_rate), black_jail_pop_rate, 
-                                               black_jail_pop_rate + black_prison_pop_rate)),
-    latinx_jail_prison_pop_rate = ifelse(is.na(latinx_jail_pop_rate), latinx_prison_pop_rate,
-                                        ifelse(is.na(latinx_prison_pop_rate), latinx_jail_pop_rate, 
-                                               latinx_jail_pop_rate + latinx_prison_pop_rate)),
-    native_jail_prison_pop_rate = ifelse(is.na(native_jail_pop_rate), native_prison_pop_rate,
-                                        ifelse(is.na(native_prison_pop_rate), native_jail_pop_rate, 
-                                               native_jail_pop_rate + native_prison_pop_rate)),
-    white_jail_prison_pop_rate = ifelse(is.na(white_jail_pop_rate), white_prison_pop_rate,
-                                        ifelse(is.na(white_prison_pop_rate), white_jail_pop_rate, 
-                                               white_jail_pop_rate + white_prison_pop_rate))
-    )
+  separate(county_name, c("county", NA), sep = " ")
 
 write_csv(incarceration_trends, "incarceration_trends_wrangled.csv")
 ```
@@ -164,12 +136,13 @@ write_csv(rates_by_race, "rates_by_race_wrangled.csv")
 
 #Incarceration Rates Wrangling and File Splitting for Map
 ```{r,eval = TRUE}
-
+# only keep necessary columns
 incarceration_trends_map <- incarceration_trends %>% 
   select (yfips, year, fips, state, county, total_pop, total_prison_pop_rate, female_prison_pop_rate, male_prison_pop_rate, aapi_prison_pop_rate, black_prison_pop_rate, latinx_prison_pop_rate, native_prison_pop_rate, white_prison_pop_rate, total_jail_pop_rate, female_jail_pop_rate, male_jail_pop_rate, aapi_jail_pop_rate, black_jail_pop_rate, latinx_jail_pop_rate, native_jail_pop_rate, white_jail_pop_rate)
 
 incarceration_trends_map <- incarceration_trends_map %>% 
   rowwise() %>%
+  # add up prison and jail rates to create new sum columns
   mutate(
     total_jail_prison_pop_rate = sum(total_prison_pop_rate, total_jail_pop_rate, na.rm = TRUE),
     female_jail_prison_pop_rate = sum(female_prison_pop_rate, female_jail_pop_rate,na.rm = TRUE),
