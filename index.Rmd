@@ -179,6 +179,7 @@ states <- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
   labs(title = " Prison Incarceration Rate by State 2010", 
        fill = "Prisoners per \n100,000 residents")
 ```
+
 # Racial Contrast
 
 ```{r, echo=FALSE, out.width = '100%'}
@@ -236,19 +237,69 @@ year_prison_jail <- reactive({
 
 We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. Using Hampshire County as an example, one can see an almost uninterrupted climb (there is a small dip in 2000) from around $100$ in 1970 to around $275$ in 2018. Comparing to the country as a whole, Hampshire County's prison & jail incarceration rate is relatively lower and demonstrates a trend of slow decline. Such a trend shows up in the time series graphs for most U.S counties and echoes the national trend we've seen from the time series animation earlier.
 
-The function of selecting **demographic groups** adds another dimension to our visualization. 
+The function of selecting **demographic groups** adds another dimension to our visualization. The shade of red that a specific county is colored by is according to the number of incarcerated people out of $100,000$ people of the _selected demographic group_. As shown below, the prison & jail incarceration rate of the Black population is significantly higher nation-wide (as one can see from the deeper shade of red comparing to earlier maps of the total population).
 
+<img src="incarceration_rate_bycounty_2007_Black.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 2em;">
 
-## Histogram
-The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
+This means that out of $100,000$ **Black people** in America, a **significantly higher portion** of them are being incarcerated comparing to when racial/ethnic categories are not taken into account. This gives an even more jarring visualization comparing to the static map earlier that only contrasts the Black and white populations. More exploration of racial and ethnic disparities could be done in the next tab — bar graph — where incarceration rates among Black, white, and Latinx are being directly compared.
+
+## Bar Graph
+The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates among Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the bar graph, incarceration rates are almost always at least double between Black and white populations. For all the states in America, the incarceration rates of Black people are always significantly higher than the other two groups.
+
+For example, we can contrast Wisconsin (left) — the state that leads in incarceration rates of Black people in America — and Massachusetts (right), a supposedly more liberal coastal state. 
+
+<img src="bar_graph_Wisconsin.png" style="float: left; width: 48%; margin-right: 1%; margin-bottom: 2em;">
+<img src="bar_graph_Massachusetts.png" style="float: left; width: 48%; margin-right: 1%; margin-bottom: 2em;">
+
+Although the two bar graphs are on different scales (the Wisconsin one being $0 - 3000$ and the Massachusetts one being $0 - 500$), a similar disparities can be identified. The Black vs. white ratios between the two states are incredibly similar. In Massachusetts specifically, Latinx people are also being incarcerated at a disproportionately higher rate. Considering there are more Latinx people residing in MA($12%$) than in WI ($6%$), this contrast makes sense. However, MA is $78%$ white, $8%$ Black, and $12%$ Hispanic/Latinx (There are overlaps because Hispanic/Latinx is an ethnic category instead of racial). There is still a clear disproportion of racial minorities being affected by mass incarceration.
 
 ## Table
-Our table gives users the opportunity to sift through the source dataset, specifically the same wrangled dataset used for our map with all years. This gives access to the jail + prison incarceration rates for all demographics as well as general information, such as total population for a county in a certain year.
+Our table gives users the opportunity to sift through the source dataset, specifically the same wrangled dataset used for our map with all years. This gives access to the jail $ prison incarceration rates for all demographics as well as general information, such as total population for a county in a certain year. Users can use the side bar on the left to choose a specific **state**, **county**, and **year** they want to explore. They also also explore the table by directly typing into the boxes on top of each column to filter through the dataset and get to the rows they are interested in.
 
-As in our Shiny App project, we also included the feature in this table which allows any user to easily copy/paste out a JSON representation of that row.
+As in our Shiny App project, we also included the feature in this table which allows any user to easily copy/paste out a **JSON representation** of that row.
+
+Some of our main codes creating this table in our shiny app is included below. Specifically, it shows how we use an observer to read reactive values, call reactive expressions, and automatically re-execute when those dependencies change. 
+
+```{r table, echo = TRUE, eval=FALSE}
+observe({
+    # Filter data according to state
+    filtered <- if (length(input$state_filter) > 0) {
+      incarceration_trends[incarceration_trends$state %in% input$state_filter, ]
+    } else {
+      incarceration_trends
+    }
+    
+    current_selection <- input$county_filter
+    # Once state is chosen, look at the counties within that state
+    if (length(input$state_filter) > 0) {
+      updateSelectInput(
+        session = getDefaultReactiveDomain(),
+        "county_filter",
+        choices = unique(filtered$county),
+        selected = current_selection
+      )
+    }
+    # Filter data according to county
+    filtered <- if (length(input$county_filter) > 0) {
+      filtered[filtered$county %in% input$county_filter,]
+    } else {
+      filtered
+    }
+    # Filter data according to year
+    filtered <- if (length(input$year_filter) > 0) {
+      filtered[filtered$year %in% input$year_filter,]
+    } else {
+      filtered
+    }
+    
+    input$state_filter
+    
+    updateReactable("table", data = filtered)
+  })
+```
+
 
 # Conclusion and Limitations
-
 As discussed in the introduction, it is hard to pinpoint a singular cause for mass incarceration and racial disparities in incarceration rates across the country. When looking at three states with high racial disparity in incarceration rates, we found three very different laws and local circumstances that were contributing to this phenomenon. It's very hard to address any of the circumstances or laws head-on because none of them explicitly mention race. The disparity in incarceration often comes from how laws are enforced.
 
 Policing tactics that target Black and brown neighborhoods along with prosecutors who are often less lenient with Black and Latinx defendants cause much of the racial disparity in prison populations. So it would not be enough to simply rewrite laws that disproportionately affect marginalized population because they only represent one part of the systemic issue. Also it would not be effective to simply make incarceration rates equal across races. Even the incarceration rates for white residents in the vast majority of states are much higher than the global average incarceration rate. The United States has become overly dependent on prisons as a form of social control. It's an ineffective form of control, but many private companies who provide services like food for prisons have benefitted from lucrative government contracts. These private interests incentivize prisons to keep their populations as high as possible in order to maintain high demand for these services. It'll be very difficult to get rid of these private interests who have been very successful at lobbying. Only significant divestment in prisons will lower incarceration rates substantially. 

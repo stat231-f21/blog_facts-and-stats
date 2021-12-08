@@ -127,7 +127,7 @@
             <li><a href="#more-exploration-through-shiny-app">More Exploration through Shiny App</a>
             <ul>
             <li><a href="#interactive-map">Interactive Map</a></li>
-            <li><a href="#histogram">Histogram</a></li>
+            <li><a href="#bar-graph">Bar Graph</a></li>
             <li><a href="#table">Table</a></li>
             </ul></li>
             <li><a href="#conclusion-and-limitations">Conclusion and Limitations</a>
@@ -297,30 +297,73 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 <p>In our shiny app, the map is responsive to the <strong>year</strong> selected on the slider bar and the <strong>demographic choice</strong> selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the <strong>jail/prison population rate</strong> of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a <strong>deeper shade of red</strong>, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don’t have sufficient information will appear grey on the map.</p>
 <p>At first glance, when we contrast the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right), we can see the stark contrast between the colors of these three maps. The prison and jail incarceration rates combined are being shown.</p>
 <p><img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 1em;"> <img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 1em;"> <img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 2em;"></p>
-<p>2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of <span class="math inline">\(1000 - 5000\)</span> incarcerated per <span class="math inline">\(100,000\)</span>. Whereas in 1970, most of the country has a rate of <span class="math inline">\(0 - 500\)</span>. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of <span class="math inline">\(250 - 1000\)</span> which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Madison County, Louisiana, has a prison &amp; jail incarceration rate high of <span class="math inline">\(10543.97\)</span> in 2007, which increased dramatically from <span class="math inline">\(64.39\)</span> in 2000, and still remained at a horrifying <span class="math inline">\(9227.41\)</span> in 2018 (admist the national-wide decrease in incarceration rate).</p>
-<p>After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function <code>rmapshaper::ms_simplify()</code> to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year’s .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles. It is still somewhat slow on the first load, but re-renders of the map after selecting a new year now only take a couple of seconds.</p>
-<p>The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds. Much faster than our earlier versions of the map, including the one we presented to class!</p>
-<pre class="r"><code>  year_prison_jail &lt;- reactive({
+<p>2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of <span class="math inline">\(1000 - 5000\)</span> incarcerated per <span class="math inline">\(100,000\)</span>. Whereas in 1970, most of the country has a rate of <span class="math inline">\(0 - 250\)</span>. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of <span class="math inline">\(250 - 2500\)</span> which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates, confirming the worry that mass incarceration will remain a huge threat to equality and justice in this country despite the national-wide slow decrease in incarceration rate. For example, Madison County, Louisiana, has a prison &amp; jail incarceration rate high of <span class="math inline">\(10543.97\)</span> in 2007, which increased dramatically from <span class="math inline">\(64.39\)</span> in 1970, and still remained at a horrifying <span class="math inline">\(9227.41\)</span> in 2018. There is indeed a decline while substantial and fundamental change is still urgent.</p>
+<p>The map requires a substantial amount of data — jail, prison incarceration rates of every demographic group for almost 40 years. After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function <code>rmapshaper::ms_simplify()</code> to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year’s .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles. It is still somewhat slow on the first load, but re-renders of the map after selecting a new year now only take a couple of seconds.</p>
+<p>The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds.</p>
+<pre class="r"><code># creates reactive variable that is responsive to the year option
+year_prison_jail &lt;- reactive({
     d &lt;- read_csv(paste0(
         &quot;map_data/&quot;,
         input$yearInput,
         &quot;_incarceration_trends_map.csv&quot;
       ))
-    
+    # joins the file of the single year with the shapefile
     d &lt;- left_join(county_shapefile, d, by = &quot;fips&quot;)
     
     return(d)
   })</code></pre>
-<p>We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA.</p>
+<p>We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. Using Hampshire County as an example, one can see an almost uninterrupted climb (there is a small dip in 2000) from around <span class="math inline">\(100\)</span> in 1970 to around <span class="math inline">\(275\)</span> in 2018. Comparing to the country as a whole, Hampshire County’s prison &amp; jail incarceration rate is relatively lower and demonstrates a trend of slow decline. Such a trend shows up in the time series graphs for most U.S counties and echoes the national trend we’ve seen from the time series animation earlier.</p>
+<p>The function of selecting <strong>demographic groups</strong> adds another dimension to our visualization. The shade of red that a specific county is colored by is according to the number of incarcerated people out of <span class="math inline">\(100,000\)</span> people of the <em>selected demographic group</em>. As shown below, the prison &amp; jail incarceration rate of the Black population is significantly higher nation-wide (as one can see from the deeper shade of red comparing to earlier maps of the total population).</p>
+<p><img src="incarceration_rate_bycounty_2007_Black.png" style="float: left; width: 100%; margin-right: 1%; margin-bottom: 2em;"></p>
+<p>This means that out of <span class="math inline">\(100,000\)</span> <strong>Black people</strong> in America, a <strong>significantly higher portion</strong> of them are being incarcerated comparing to when racial/ethnic categories are not taken into account. This gives an even more jarring visualization comparing to the static map earlier that only contrasts the Black and white populations. More exploration of racial and ethnic disparities could be done in the next tab — bar graph — where incarceration rates among Black, white, and Latinx are being directly compared.</p>
 </div>
-<div id="histogram" class="section level2">
-<h2>Histogram</h2>
-<p>The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.</p>
+<div id="bar-graph" class="section level2">
+<h2>Bar Graph</h2>
+<p>The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates among Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the bar graph, incarceration rates are almost always at least double between Black and white populations. For all the states in America, the incarceration rates of Black people are always significantly higher than the other two groups.</p>
+<p>For example, we can contrast Wisconsin (left) — the state that leads in incarceration rates of Black people in America — and Massachusetts (right), a supposedly more liberal coastal state.</p>
+<p><img src="bar_graph_Wisconsin.png" style="float: left; width: 48%; margin-right: 1%; margin-bottom: 2em;"> <img src="bar_graph_Massachusetts.png" style="float: left; width: 48%; margin-right: 1%; margin-bottom: 2em;"></p>
+<p>Although the two bar graphs are on different scales (the Wisconsin one being <span class="math inline">\(0 - 3000\)</span> and the Massachusetts one being <span class="math inline">\(0 - 500\)</span>), a similar disparities can be identified. The Black vs. white ratios between the two states are incredibly similar. In Massachusetts specifically, Latinx people are also being incarcerated at a disproportionately higher rate. Considering there are more Latinx people residing in MA(<span class="math inline">\(12%\)</span>) than in WI (<span class="math inline">\(6%\)</span>), this contrast makes sense. However, MA is <span class="math inline">\(78%\)</span> white, <span class="math inline">\(8%\)</span> Black, and <span class="math inline">\(12%\)</span> Hispanic/Latinx (There are overlaps because Hispanic/Latinx is an ethnic category instead of racial). There is still a clear disproportion of racial minorities being affected by mass incarceration.</p>
 </div>
 <div id="table" class="section level2">
 <h2>Table</h2>
-<p>Our table gives users the opportunity to sift through the source dataset, specifically the same wrangled dataset used for our map with all years. This gives access to the jail + prison incarceration rates for all demographics as well as general information, such as total population for a county in a certain year.</p>
-<p>As in our Shiny App project, we also included the feature in this table which allows any user to easily copy/paste out a JSON representation of that row.</p>
+<p>Our table gives users the opportunity to sift through the source dataset, specifically the same wrangled dataset used for our map with all years. This gives access to the jail $ prison incarceration rates for all demographics as well as general information, such as total population for a county in a certain year. Users can use the side bar on the left to choose a specific <strong>state</strong>, <strong>county</strong>, and <strong>year</strong> they want to explore. They also also explore the table by directly typing into the boxes on top of each column to filter through the dataset and get to the rows they are interested in.</p>
+<p>As in our Shiny App project, we also included the feature in this table which allows any user to easily copy/paste out a <strong>JSON representation</strong> of that row.</p>
+<p>Some of our main codes creating this table in our shiny app is included below. Specifically, it shows how we use an observer to read reactive values, call reactive expressions, and automatically re-execute when those dependencies change.</p>
+<pre class="r"><code>observe({
+    # Filter data according to state
+    filtered &lt;- if (length(input$state_filter) &gt; 0) {
+      incarceration_trends[incarceration_trends$state %in% input$state_filter, ]
+    } else {
+      incarceration_trends
+    }
+    
+    current_selection &lt;- input$county_filter
+    # Once state is chosen, look at the counties within that state
+    if (length(input$state_filter) &gt; 0) {
+      updateSelectInput(
+        session = getDefaultReactiveDomain(),
+        &quot;county_filter&quot;,
+        choices = unique(filtered$county),
+        selected = current_selection
+      )
+    }
+    # Filter data according to county
+    filtered &lt;- if (length(input$county_filter) &gt; 0) {
+      filtered[filtered$county %in% input$county_filter,]
+    } else {
+      filtered
+    }
+    # Filter data according to year
+    filtered &lt;- if (length(input$year_filter) &gt; 0) {
+      filtered[filtered$year %in% input$year_filter,]
+    } else {
+      filtered
+    }
+    
+    input$state_filter
+    
+    updateReactable(&quot;table&quot;, data = filtered)
+  })</code></pre>
 </div>
 </div>
 <div id="conclusion-and-limitations" class="section level1">
@@ -331,23 +374,23 @@ states &lt;- ggplot(incarceration_rates_race, aes(fill = rate_per_100)) +
 <div id="citations" class="section level2">
 <h2>Citations</h2>
 <ul>
-<li><p>Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.</p></li>
-<li><p>Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Dec]. <a href="https://github.com/vera-institute/incarceration-trends" class="uri">https://github.com/vera-institute/incarceration-trends</a>.</p></li>
-<li><p>Bureau of Justice Statistics. 2018. Total Correctional Population Counts by Status; [2021 Dec]. <a href="https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx" class="uri">https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx</a></p></li>
-<li><p>Prison Policy Initiative. 2020. U.S. incarceration rates by race and ethnicity; [2021 Dec]. <a href="https://www.prisonpolicy.org/graphs/raceinc.html" class="uri">https://www.prisonpolicy.org/graphs/raceinc.html</a></p></li>
-<li><p>Sentencing Project. 2019. State-by-State Data; [2021 Dec]. <a href="https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR" class="uri">https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR</a></p></li>
-<li><p>United States Census Bureau. 2021. Cartographic Boundary Files - Shapefile; [2021 Dec]. <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html" class="uri">https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html</a></p></li>
-<li><p>History.com Editors. “War on Drugs.” History.com, A&amp;E Television Networks, 31 May 2017, <a href="https://www.history.com/topics/crime/the-war-on-drugs" class="uri">https://www.history.com/topics/crime/the-war-on-drugs</a>.</p></li>
-<li><p>Misachi, John. “The Largest Jails in the United States.” WorldAtlas, WorldAtlas, 28 Sept. 2017, <a href="https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html" class="uri">https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html</a>.</p></li>
-<li><p>Lopez, G. (2017, May 30). Why you can’t blame mass incarceration on the war on drugs. Vox. Retrieved December 7, 2021, from <a href="https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in" class="uri">https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in</a>.</p></li>
-<li><p>State reforms reverse decades of incarceration growth. The Pew Charitable Trusts. (n.d.). Retrieved December 7, 2021, from <a href="https://www.pewtrusts.org/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth" class="uri">https://www.pewtrusts.org/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth</a>.</p></li>
-<li><p>New prison and jail population figures released by U.S. Department of Justice. Retrieved December 7, 2021, from <a href="https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141" class="uri">https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141</a>.</p></li>
-<li><p>Frederick, B., &amp; Mai, C. (2017, July 20). The Prison Paradox. Vera Institute of Justice. Retrieved December 7, 2021, from <a href="https://www.vera.org/publications/for-the-record-prison-paradox-incarceration-not-safer" class="uri">https://www.vera.org/publications/for-the-record-prison-paradox-incarceration-not-safer</a>.</p></li>
-<li><p>Long road to nowhere: How southern states struggle with long-term incarceration. SPLC Action Fund. (2021, February 24). Retrieved December 7, 2021, from <a href="https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration" class="uri">https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration</a>.</p></li>
-<li><p>Davis, C., Estes, R., &amp; Schiraldi, V. (1996, March). “Three Strikes”: The New Apartheid . Retrieved December 7, 2021, from <a href="http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf" class="uri">http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf</a>.</p></li>
-<li><p>NBCUniversal News Group. (2021, November 12). Wisconsin leads nation in imprisonment rates of black people. NBCNews.com. Retrieved December 7, 2021, from <a href="https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160" class="uri">https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160</a>.</p></li>
-<li><p>Nellis, A. (2021, October). The Color of Justice: Racial and Ethnic Disparity in State Prisons. Retrieved December 7, 2021, from <a href="https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf" class="uri">https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf</a>.</p></li>
-<li><p>Atmonavage, J. (2021, October 18). N.J. continues to have worst racial disparities nationwide in its prisons, report says. nj.com. Retrieved December 7, 2021, from <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html" class="uri">https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html</a>.</p></li>
+<li>Alexander, Michelle. The New Jim Crow: Mass Incarceration in the Age of Colorblindness. New York, The New Press, 2010.</li>
+<li>Vera Institute. 2018. Incarceration Trends: GitHub; [2021 Dec]. <a href="https://github.com/vera-institute/incarceration-trends" class="uri">https://github.com/vera-institute/incarceration-trends</a>.</li>
+<li>Bureau of Justice Statistics. 2018. Total Correctional Population Counts by Status; [2021 Dec]. <a href="https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx" class="uri">https://bjs.ojp.gov/sites/g/files/xyckuh236/files/media/document/total_correctional_population_counts_by_status_TM%205_26_21.xlsx</a></li>
+<li>Prison Policy Initiative. 2020. U.S. incarceration rates by race and ethnicity; [2021 Dec]. <a href="https://www.prisonpolicy.org/graphs/raceinc.html" class="uri">https://www.prisonpolicy.org/graphs/raceinc.html</a></li>
+<li>Sentencing Project. 2019. State-by-State Data; [2021 Dec]. <a href="https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR" class="uri">https://www.sentencingproject.org/the-facts/#map?dataset-option=SIR</a></li>
+<li>United States Census Bureau. 2021. Cartographic Boundary Files - Shapefile; [2021 Dec]. <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html" class="uri">https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html</a></li>
+<li>History.com Editors. “War on Drugs.” History.com, A&amp;E Television Networks, 31 May 2017, <a href="https://www.history.com/topics/crime/the-war-on-drugs" class="uri">https://www.history.com/topics/crime/the-war-on-drugs</a>.</li>
+<li>Misachi, John. “The Largest Jails in the United States.” WorldAtlas, WorldAtlas, 28 Sept. 2017, <a href="https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html" class="uri">https://www.worldatlas.com/articles/the-largest-jails-in-the-united-states.html</a>.</li>
+<li>Lopez, G. (2017, May 30). Why you can’t blame mass incarceration on the war on drugs. Vox. Retrieved December 7, 2021, from <a href="https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in" class="uri">https://www.vox.com/policy-and-politics/2017/5/30/15591700/mass-incarceration-john-pfaff-locked-in</a>.</li>
+<li>State reforms reverse decades of incarceration growth. The Pew Charitable Trusts. (n.d.). Retrieved December 7, 2021, from <a href="https://www.pewtrusts.org/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth" class="uri">https://www.pewtrusts.org/research-and-analysis/issue-briefs/2017/03/state-reforms-reverse-decades-of-incarceration-growth</a>.</li>
+<li>New prison and jail population figures released by U.S. Department of Justice. Retrieved December 7, 2021, from <a href="https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141" class="uri">https://sentencingproject.salsalabs.org/the_daily_show_copy1?wvpId=f073b5eb-b9c5-11e7-b163-12c35146c141</a>.</li>
+<li>Frederick, B., &amp; Mai, C. (2017, July 20). The Prison Paradox. Vera Institute of Justice. Retrieved December 7, 2021, from <a href="https://www.vera.org/publications/for-the-record-prison-paradox-incarceration-not-safer" class="uri">https://www.vera.org/publications/for-the-record-prison-paradox-incarceration-not-safer</a>.</li>
+<li>Long road to nowhere: How southern states struggle with long-term incarceration. SPLC Action Fund. (2021, February 24). Retrieved December 7, 2021, from <a href="https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration" class="uri">https://www.splcactionfund.org/news/2021/02/24/long-road-nowhere-how-southern-states-struggle-long-term-incarceration</a>.</li>
+<li>Davis, C., Estes, R., &amp; Schiraldi, V. (1996, March). “Three Strikes”: The New Apartheid . Retrieved December 7, 2021, from <a href="http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf" class="uri">http://www.cjcj.org/uploads/cjcj/documents/three_strikes_the_new_apartheid.pdf</a>.</li>
+<li>NBCUniversal News Group. (2021, November 12). Wisconsin leads nation in imprisonment rates of black people. NBCNews.com. Retrieved December 7, 2021, from <a href="https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160" class="uri">https://www.nbcnews.com/news/us-news/wisconsin-leads-nation-imprisonment-rates-black-people-rcna4160</a>.</li>
+<li>Nellis, A. (2021, October). The Color of Justice: Racial and Ethnic Disparity in State Prisons. Retrieved December 7, 2021, from <a href="https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf" class="uri">https://www.sentencingproject.org/wp-content/uploads/2016/06/The-Color-of-Justice-Racial-and-Ethnic-Disparity-in-State-Prisons.pdf</a>.</li>
+<li>Atmonavage, J. (2021, October 18). N.J. continues to have worst racial disparities nationwide in its prisons, report says. nj.com. Retrieved December 7, 2021, from <a href="https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html" class="uri">https://www.nj.com/news/2021/10/nj-continues-to-have-worst-racial-disparities-nationwide-in-its-prisons-report-says.html</a>.</li>
 </ul>
 </div>
 </div>
