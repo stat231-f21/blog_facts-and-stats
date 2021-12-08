@@ -143,9 +143,7 @@ server <- function(input, output) {
         input$yearInput,
         "_incarceration_trends_map.csv"
       ))
-    
     d <- left_join(county_shapefile, d, by = "fips")
-    
     return(d)
   })
   
@@ -224,7 +222,6 @@ server <- function(input, output) {
   rv$secondaryMapPlotData <- incarceration_trends_table %>% filter(fips == "25015")
   
   observeEvent(input$mymap_shape_click, {
-    
     event <- input$mymap_shape_click
     
     rv$fips <- str_sub(event$id,5,9)
@@ -236,7 +233,7 @@ server <- function(input, output) {
   # This is the actual render code for the secondary plot
   output$secondaryMapPlot <- renderPlot({
     ggplot(rv$secondaryMapPlotData, aes(x = year, y = rv$secondaryMapPlotData[[paste0(input$demographicInput)]])) +
-      ggtitle(paste0("Time series for: ",rv$countyState), subtitle = paste0("Plotting selected variable: ",input$demographicInput)) +
+      ggtitle(paste0("Time series for: ", rv$countyState), subtitle = paste0("Plotting selected variable: ", gsub("_", " ", paste0(input$demographicInput)))) +
       geom_smooth(se = FALSE) +
       xlab("Year") +
       ylab("Incaceration Rate for Selected Demographic")
@@ -248,7 +245,6 @@ server <- function(input, output) {
   data_for_hist <- reactive({
     data <- rates_by_race %>% filter(State == input$histvar)
   })
-  
   
   output$hist <- renderPlot({
     ggplot(data = data_for_hist(), aes(x = race, y = rate)) +
