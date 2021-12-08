@@ -207,6 +207,14 @@ To better visualize mass incarceration's take-over county by county, we created 
 
 In our shiny app, the map is responsive to the **year** selected on the slider bar and the **demographic choice** selected on the drop down menu. Once the options are chosen, an interactive map that demonstrates the **jail/prison population rate** of the selected demographic group will show. To compare and contrast the rates by counties, a higher incarceration rate is corresponded to a **deeper shade of red**, and vice versa. Whenever a county is clicked on, a pop up will show more information about that county and its state of incarceration. Counties that don't have sufficient information will appear grey on the map.
 
+At first glance, when we contrast the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right), we can see the stark contrast between the colors of these three maps. The prison and jail incarceration rates combined are being shown.
+
+<img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 1em;">
+<img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 1em;">
+<img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 2em;">
+
+2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 250$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 2500$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Madison County, Louisiana, has a prison & jail incarceration rate high of $10543.97$ in 2007, which increased dramatically from $64.39$ in 2000, and still remained at a horrifying $9227.41$ in 2018 (admist the national-wide decrease in incarceration rate). 
+
 After several different attempts at making the map faster, we found two methods that worked effectively and have made the map quite usable. First, we found and added the function `rmapshaper::ms_simplify()` to our data wrangling of the shapefile. This function reduces polygon quality while maintaining integrity (i.e. all the polygons still border each other perfectly). Second, in data wrangling we split the source file up into 49 different files by year (one for each of 1970-2018). Our map loads a source file for each year dynamically when the user selects a different year. Because each year's .csv is roughly 1/49th the size of the full sized .csv file, these improvements made our map much faster and more usable than the glacial re-rendering of a massive dataset with full quality county shapefiles. It is still somewhat slow on the first load, but re-renders of the map after selecting a new year now only take a couple of seconds.
 
 The code below shows reactive variable year_prison_jail which quickly reads in a small .csv file for a single year and quickly left joins it with the county_shapefile. Although this might seem like a lot of data wrangling, because each file has been split up by year in advance the entire process takes only a few seconds. Much faster than our earlier versions of the map, including the one we presented to class!
@@ -229,13 +237,6 @@ The code below shows reactive variable year_prison_jail which quickly reads in a
 
 We also added a secondary plot to our map tab which dynamically updates a time series of the selected demographic variable of interest for any county the user selects. The default value when the map first loads is Hampshire County, MA. 
 
-Contrasting the state of incarceration of 1970 (left), 2007 (middle), and 2018 (right). The prison and jail incarceration rates combined are being shown. First, we can see the stark contrast between the colors of these three maps.
-
-<img src="incarceration_rate_bycounty_1970.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
-<img src="incarceration_rate_bycounty_2007.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
-<img src="incarceration_rate_bycounty_2018.png" style="float: left; width: 31%; margin-right: 1%; margin-bottom: 0.5em;">
-
-2007 is the peak of incarceration in America, and we can see that most of the counties have a rate of $1000 - 5000$ incarcerated per $100,000$. Whereas in 1970, most of the country has a rate of $0 - 500$. After the slight decline in incarceration rates, the 2018 map shows that most of the counties have a rate of $250 - 1000$ which is less severe than the state of 2007. However, one can also see that most of the counties that have the highest incarceration rates in America still maintain their extremely high rates — some even maintained their trend of increasing. For example, Issaquena County, Mississippi, has a prison-jail incarceration rate high of $7599.82$ in 2007, which increased dramatically from $4698.01$ in 2000, and continued to climb to $8741.08$ in 2018 (despite the national-wide decrease in incarceration rate). 
 
 ## Histogram
 The second tab of this shiny app is a bar graph meant to show the disparity in incarceration rates between Black, white, and Latinx prisoners. This shows much of the same information as the map of racial disparity above but visualizes the gaps in a way that is much clearer. As you will see by exploring the histogram, incarceration rates are almost always at least double between Black and white populations.
